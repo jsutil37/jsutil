@@ -1,0 +1,187 @@
+<!--
+	Unit Test Runner HTML Widget (html document fragment containing a <template> tag)
+	
+	latest online version at https://jsutil37.github.io/jsutil/UnitTestRunnerWidget.html
+	License: MIT
+	Github repository: https://github.com/jsutil37/jsutil
+	Test this by loading it into widgetTester.html
+	
+	How to Use:
+	
+	At the start of your html file, import the ES6 module: 
+	https://jsutil37.github.io/jsutil/util.js 
+	
+	Import this file with the help of the loadHTML() function made globally 
+	available by util.js as follows:
+	await loadHTML('https://jsutil37.github.io/jsutil/UnitTestRunnerWidget.html')
+	
+	Then use another function:
+	loadWidget("UnitTestRunnerWidget",<containerElement>) 
+	...that is also made globally available by util.js. 
+	
+-->
+<template class="UnitTestRunnerWidget">
+<script nomodule>
+	alert('a')
+	document.querySelector('.UnitTestRunnerWidget').innerText = 
+		'Sorry, UnitTestRunnerWidget needs a browser such as the latest version of Chrome, that supports ES6 modules!'
+	alert('b')
+</script>
+
+<!-- ALL other utils are loaded from util.js that is itself a module -->
+<script type="module" src="./util.js"></script>		
+<!--
+	<button type="button" onclick="alert('pass')">basic js test</button>
+	<br>
+-->
+<button type="button" class="buttonToRunUnitTests" onclick="onClickOfButtonToRunUnitTests(this)">Run unit tests</button>
+<br>
+<textarea style="width:99%;height:50px;background:#eeeeee" class="logWindow" readonly></textarea>
+<script>
+	
+	waitUntilSymbolAppearsAndThenRun
+	(
+	function()
+	{
+		$
+		(
+		$('.logWindow').toArray().forEach
+		(
+		function(el)
+		{
+			if($(el).val()==''){return}
+			$(el).val('LOG OF PREVIOUS RUN:\n\n'+$(el).val())
+		}
+		)
+		)
+	},
+	'$'
+	)
+	
+	function onClickOfButtonToRunUnitTests(btn)
+	{
+		btn.disabled = true
+		if(btn.evtListener)
+		{
+			runWithAlertOnException
+			(
+			{
+				fn:btn.evtListener,
+				exceptionMsgPrefix:'Internal Exception Not Due to a particular Unit Test!'
+			}
+			)
+			btn.disabled = false
+			return
+		}
+		alert('Use: \n'+
+		'connectTestRunnerWidgetToUnitTests\n'+
+		'(\n'+
+		'	{\n'+
+		'	widget: widget,\n'+
+		'	unitTests: <your array of unit test functions. Each unit test function returns \'true\' if the test passes, and \'false\' otherwise>\n'+
+		'	}\n'+
+		')\n'+
+		'... to handle the click of this button.')
+		btn.disabled = false
+	}
+	
+	function connectTestRunnerWidgetToUnitTests(params)
+	{
+		checkParams(params, ['widget','unitTests'])
+		let widget = params.widget
+		let unitTests = params.unitTests
+		assert(unitTests != null,"Parameter unitTests is null!!!")
+		let button = getNearestDescendantWhoseClassNameIs
+		(
+		{
+			el:widget,
+			className:'buttonToRunUnitTests'
+		}
+		)
+		button.evtListener = function(){runUnitTests(params)}
+	}
+	
+	function runUnitTest(testId,unitTest,testRunnerWidget)
+	{
+		let oldalert = alert
+		alert = function(s){l(s, testRunnerWidget)}
+		try
+		{
+			let startDateTime = new Date()
+			l('testId \''+testId+'\': Start time: '+startDateTime.toLocaleTimeString(), testRunnerWidget)
+			let tstart = performance.now()
+			let testResult = unitTest()
+			let tend = performance.now()
+			if(testResult)
+			{
+				testRunnerWidget.numOfPassedUnitTests++
+				l('testId \''+testId+'\' PASSED: End time: '+(new Date()).toLocaleTimeString(), testRunnerWidget)
+			}
+			else
+			{
+				l('testId \''+testId+'\' FAILED: End time: '+(new Date()).toLocaleTimeString(), testRunnerWidget)
+				testRunnerWidget.idsOfFailedUnitTests.push(testId)
+			}
+			l('Taken taken: '+ (tend - tstart) + 'millisec')
+		}
+		catch(e)
+		{
+			l('Exception running Test ID '+testId+'!!!\n'+e.stack)
+			testRunnerWidget.idsOfFailedUnitTests.push(testId)
+		}
+		testRunnerWidget.numOfUnitTests++
+		alert = oldalert
+	}
+	
+	function l(s, widget)//logs to string
+	{
+		let logWindow
+		if(widget)
+		{
+			logWindow = widget.logWindow
+		}
+		else
+		{
+			logWindow = window.logWindow
+		}
+		if(logWindow)
+		{
+			logWindow.value=logWindow.value+s+'\n'
+		}
+		else
+		{
+			console.log(s)
+		}
+	}
+	
+	var p = l
+	var log = l
+	
+	//unitTests: an map with key as test id (string)
+	//and value as parameterless unit test function that returns true/false based on success/failure
+	function runUnitTests(params)
+	{
+		checkParams(params, ['widget','unitTests'])
+		let widget = params.widget
+		let unitTests = params.unitTests
+		let logWindow = getNearestDescendantWhoseClassNameIs({el:widget,className:'logWindow'})
+		window.logWindow = logWindow
+		widget.logWindow = logWindow
+		widget.numOfUnitTests = 0
+		widget.numOfPassedUnitTests = 0
+		
+		//list of ids of failed unit tests
+		widget.idsOfFailedUnitTests = []
+		
+		widget.logWindow.value=''
+		l('NOTE: All alert() function calls that are called during a unit test, will be logged below instead', widget)
+		for(let testId in unitTests)
+		{
+			let unitTest = unitTests[testId]
+			runUnitTest(testId,unitTest,widget)
+		}
+		l('numOfUnitTests='+widget.numOfUnitTests+', numOfPassedUnitTests='+widget.numOfPassedUnitTests)
+		l("idsOfFailedUnitTests="+str(widget.idsOfFailedUnitTests))
+	}
+</script>
+</template>
