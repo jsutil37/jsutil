@@ -1,4 +1,4 @@
 # jsutil
 js utility functions
 
-https://github.com/jsutil37/jsutil
+https://jsutil37.github.io/jsutil/util.js
