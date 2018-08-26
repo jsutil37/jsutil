@@ -10,6 +10,7 @@ loadWidget - load a clone of the specified template into the specified div
 getTextAtUrl - gets the text at the specified url
 loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url  
 loadEs6Module - load only once, ES6 module from specified url
+loadScriptFromText - asynchronously load the specified text as a script  
 */
 import './util.js'
 
@@ -291,7 +292,8 @@ var inlineScriptIdCtr=0
 ///loads inline scripts (that don't have src attribute)
 ///Uses some evil things from https://stackoverflow.com/questions/25688786/how-to-know-that-dynamically-created-script-tag-was-executed
 ///that are needed to work around an apparent bug.
-async function loadScriptFromText(txt,scriptType)
+window.loadScriptFromText =
+async function (txt,scriptType)
 {
 	var head = document.getElementsByTagName('head')[0]
 	var script = document.createElement('script')
