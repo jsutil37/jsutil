@@ -1,9 +1,17 @@
 //loader util
-import './util.js'
+/*
+Functions made globally available (attached to the global 'window' object):
 
-//this polyfill is required for dynamic import of es6 modules
-//import { importModule } from "https://uupaa.github.io/dynamic-import-polyfill/importModule.js"
-//import * as SystemJs from 'https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.21.4/system-production.js'
+loadScript - load only once, usual non-ES6 js script from specified url
+loadCss - load only once, usual css file  from specified url
+loadAllTypesOfFiles - load once urls in arrays cssFilesToLoad and jsFilesToLoad
+loadHtml - load once html from specified url, expected to contain template tags
+loadWidget - load a clone of the specified template into the specified div
+getTextAtUrl - gets the text at the specified url
+loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url  
+loadEs6Module - load only once, ES6 module from specified url
+*/
+import './util.js'
 
 const scriptStartMarker = "/"+"*script start*"+"/"
 var loadedUrls = {}
@@ -217,6 +225,7 @@ async function loadHtml2(url)
 	try{txt = await getTextAtUrl(url)}catch(e){throw e}
 	appendHtmlToBody(txt)
 }
+
 window.loadHtml = addCommonLogicForResourceLoadingFn(loadHtml2)
 window.loadHTML = loadHtml
 
