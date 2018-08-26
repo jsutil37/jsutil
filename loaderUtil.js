@@ -322,7 +322,8 @@ async function (txt,scriptType)
 
 var es6moduleIdCtr =  0
 ///substitute for import() function that is still not supported by FireFox
-///returns a reference to the imported module
+///returns a reference to the imported module. Happens to work around CORS
+///issue as well...
 async function loadEs6Module2(url)
 {
 	console.log('here')
