@@ -143,8 +143,6 @@ function (params)
 	return retval
 }
 
-console.log('Here...')
-
 window.tabEleForTabPaneThatContains = 
 function (el)
 {
@@ -162,8 +160,6 @@ function (el)
 	({el:tabContentDivParent,className:'nav-link',attrName:'href',attrVal:'#'+tabPaneDiv.id})
 	return tabEle
 }
-
-console.log('Here2...')
 
 window.makeallancestorsvisible =
 function (el,nodesMadeVisible)
