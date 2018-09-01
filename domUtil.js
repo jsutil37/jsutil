@@ -143,6 +143,8 @@ function (params)
 	return retval
 }
 
+console.log('Here...')
+
 window.tabEleForTabPaneThatContains = 
 function (el)
 {
@@ -160,6 +162,8 @@ function (el)
 	({el:tabContentDivParent,className:'nav-link',attrName:'href',attrVal:'#'+tabPaneDiv.id})
 	return tabEle
 }
+
+console.log('Here2...')
 
 window.makeallancestorsvisible =
 function (el,nodesMadeVisible)
@@ -190,7 +194,12 @@ function (el,nodesMadeVisible)
 window.appendHtmlToBody =
 function(html)
 {
-	let eles = $.parseHTML(html,document)//3rd param is 'keepScripts' and is recommended to be 'false' for future compatibility 
+	/*3rd param is 'keepScripts' and is recommended to be 'false' for future 
+	compatibility. But we are keeping this as true because this is needed for 
+	loading bootstrap deferred, as well as for import HTML.
+	*/
+	let eles = $.parseHTML(html,document,true)
+
 	$('body').append(eles)
 	//console.log('Appended HTML \''+html+'\' to the body...')
 }
