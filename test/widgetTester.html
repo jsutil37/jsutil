@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Widget Tester</title>
+		<!--
+///		Hopefully babel include below is taking care of this as well:
+			<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>			
+		-->
+		<!--
+		We will get into webcomponents AFTER we enable base ES6 module support:
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.0.2/webcomponents-loader.js"></script>
+		Above gives error: Cannot find:
+		https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.0.2/bundles/webcomponents-sd-ce-pf.js
+		-->		
+		<!-- God alone knows how multiple includes of two below files will be optimized out (unsolvable problem?) -->
+		<!-- Comment out below lines in case needed to test native broswer support in a sureshot way... -->
+		<!--
+		<script nomodule src="https://unpkg.com/browser-es-module-loader/dist/babel-browser-build.js"></script>		
+		<script nomodule src="https://unpkg.com/browser-es-module-loader"></script>
+		-->
+		
+		<!-- ALL other utils are loaded from util.js that is itself a module -->
+		<script>
+			//wt workaround for import.meta not being supported by firefox
+			function getPathOfUtilDotJs(){return '../util.js'}
+		</script>	
+		<script type="module" src="../util.js"></script>		
+		<!-- -->		
+		<!-- BEGIN test for $("textarea").resize thingy - ->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script>
+		if($("textarea").resizable==null)
+		{
+			alert('FAIL')
+		}
+		else
+		{
+			alert('PASS')
+		}
+		</script>
+		< ! - - END test for $("textarea").resize thingy -->
+	</head>
+	<body>	
+	(To unload the current widget(s), just refresh the page)<br>
+	Enter url of template of the widget to test:<input type="text" id="textBoxForUrlOfWidget" value="../UnitTestRunnerWidget.html"><br>
+	Enter id of widget template:<input type="text" id="textBoxForIdOfWidgetTemplate" value="UnitTestRunnerWidget"> 
+	<button type="button" id="buttonToStartWidgetLoading" onclick="buttonToStartWidgetLoading_onclick()">Load Widget</button>
+	<div id="divIntoWhichToLoadTheWidget">
+	</div>
+	<script>
+		console.log('here')
+		/**/
+		async function buttonToStartWidgetLoading_onclick()
+		{
+			let url = $("#textBoxForUrlOfWidget").val() 
+			await loadHTML(url)
+			let templateId = $("#textBoxForIdOfWidgetTemplate").val() 
+			let container = el("divIntoWhichToLoadTheWidget")
+			container.innerHTML = ''
+			loadWidget(templateId,container)
+			alert('So... did the widget load???')
+		}
+		//a('Hey!')		
+		/**/
+	</script>		
+	<script nomodule>	
+		document.body.innerText = 'Sorry, this web page needs a browser such as the latest version of Chrome, that supports ES6 modules!'
+	</script>
+	</body>
+</html>

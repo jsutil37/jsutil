@@ -21,56 +21,50 @@
 	
 -->
 <template class="UnitTestRunnerWidget">
+	<button type="button" class="buttonToRunUnitTests" onclick="onClickOfButtonToRunUnitTests(this)">Run unit tests</button>
+	<br>
+	<textarea style="width:99%;height:50px;background:#eeeeee" class="logWindow" readonly></textarea>
+	<script>
+		//Initialization function to be called from here.
+		//Later on use observer. 
+	</script>
+</template>
 <script nomodule>
-	alert('a')
 	document.querySelector('.UnitTestRunnerWidget').innerText = 
 		'Sorry, UnitTestRunnerWidget needs a browser such as the latest version of Chrome, that supports ES6 modules!'
-	alert('b')
 </script>
 
 <!-- ALL other utils are loaded from util.js that is itself a module -->
-<script type="module" src="./util.js"></script>		
-<!--
-	<button type="button" onclick="alert('pass')">basic js test</button>
-	<br>
--->
-<button type="button" class="buttonToRunUnitTests" onclick="onClickOfButtonToRunUnitTests(this)">Run unit tests</button>
-<br>
-<textarea style="width:99%;height:50px;background:#eeeeee" class="logWindow" readonly></textarea>
 <script>
+	//utw workaround for import.meta not being supported by firefox
+	function getPathOfUtilDotJs(){return './util.js'}
+</script>
+<script type="module">
+	import * as u from './util.js'
 	
-	waitUntilSymbolAppearsAndThenRun
-	(
-	function()
+	window.onClickOfButtonToRunUnitTests =
+	function(btn)
 	{
-		$
+		disableBtnWhileRunning
 		(
-		$('.logWindow').toArray().forEach
-		(
-		function(el)
 		{
-			if($(el).val()==''){return}
-			$(el).val('LOG OF PREVIOUS RUN:\n\n'+$(el).val())
+			btn:btn,
+			fn:
+			function()
+			{
+				onClickOfButtonToRunUnitTests_afterButtonDisabled(btn)
+			},
+			exceptionMsgPrefix:
+			'Internal Exception Not Due to a particular Unit Test!'
 		}
 		)
-		)
-	},
-	'$'
-	)
-	
-	function onClickOfButtonToRunUnitTests(btn)
+	}
+
+	function onClickOfButtonToRunUnitTests_afterButtonDisabled(btn)
 	{
-		btn.disabled = true
 		if(btn.evtListener)
 		{
-			runWithAlertOnException
-			(
-			{
-				fn:btn.evtListener,
-				exceptionMsgPrefix:'Internal Exception Not Due to a particular Unit Test!'
-			}
-			)
-			btn.disabled = false
+			btn.evtListener()	
 			return
 		}
 		alert('Use: \n'+
@@ -82,7 +76,6 @@
 		'	}\n'+
 		')\n'+
 		'... to handle the click of this button.')
-		btn.disabled = false
 	}
 	
 	function connectTestRunnerWidgetToUnitTests(params)
@@ -184,4 +177,3 @@
 		l("idsOfFailedUnitTests="+str(widget.idsOfFailedUnitTests))
 	}
 </script>
-</template>
