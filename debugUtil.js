@@ -1,3 +1,5 @@
+let dbgload = window.dbgload
+dbgload && console.log('start')
 window.assert =
 function(x,errMsg)
 {
@@ -46,6 +48,7 @@ function(params, arrayOfKeys)
 	}
 	)
 }
+window.checkArgs = window.checkParams
 
 window.runWithAlertOnException =
 async function (params)
@@ -98,6 +101,9 @@ function checkThat_internal(params)
 window.onerror = 
 function(message, url, line)
 {
-	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+message + '\nurl:' + url+'\nline: '+line
+	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+message + '\nurl:' + url+
+		'\nline: '+line
 	alert(s)
 }
+
+dbgload && console.log('reached end')
