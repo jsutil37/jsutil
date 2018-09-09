@@ -8,10 +8,8 @@ In your html file, do the following at the start of the file:
 ```html
 <script>
 var urlOfUtilDotJs = 'https://jsutil37.github.io/jsutil/util.js'
-
 //workaround for import.meta not being supported by firefox
-window.absPathOfUtilDotJs = 
-		new URL(urlOfUtilDotJs,window.location.href).href
+function getPathOfUtilDotJs(){return urlOfUtilDotJs}
 </script>
 <script type="module">
 import * as u from 'https://jsutil37.github.io/jsutil/util.js'
