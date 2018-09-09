@@ -1,6 +1,8 @@
 //wrapper around jquery's blockui plugin
-
+let dbgload = window.dbgload
+dbgload && console.log('here')
 import './util.js'
+dbgload && console.log('end here')
 
 import "https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"
 
@@ -22,7 +24,7 @@ function composeWaitMsg()
 			}
 			else
 			{
-				s='<br>' + '$nbsp;'.repeat(ctr)+msg
+				s='\n' + ' '.repeat(ctr)+msg
 			}
 		}
 	)
@@ -43,6 +45,15 @@ function unblockUiIfCtrPermits()
 	}
 }
 
+window.disableBtnWhileRunning = 
+function(args)
+{
+	checkArgs(args, ['btn', 'fn','exceptionMsgPrefix'])
+	args.btn.disabled = true
+	showCaughtError(args)
+	args.btn.disabled = false
+}
+
 window.blockAndUnblockUI =
 async function (fn,msg)
 {
@@ -58,3 +69,4 @@ async function (fn,msg)
 	unblockUiIfCtrPermits()
 }
 export var blockAndUnblockUI = blockAndUnblockUI
+dbgload && console.log('reached end')
