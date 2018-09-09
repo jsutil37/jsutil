@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<!-- <script src="https://jsutil37.github.io/jsutil/util.js"></script> -->		
+		<!-- <script src="https://jsutil37.github.io/jsutil/util.js"></script> -->
 		<script>
-		console.log('start...')
-		//workaround for import.meta not being supported by firefox
-		window.absPathOfUtilDotJs = 
-			new URL('./util.js',window.location.href).href
+			console.log('start...')
+			//workaround for import.meta not being supported by firefox
+			function getPathOfUtilDotJs(){return '../util.js'}
 		</script>
-		<script type="module" src="./util.js"></script>		
+		<script type="module" src="../util.js"></script>
 		<title>ES6 module tester</title>
 	</head>
 	<body>
+		Enter the url of the es6 module to test:
+		<input type="text" id="textboxForUrlOfEs6Module" value="../ufil.js"><br>
+		The module must export its tests as 'tests' (an array of functions with 
+		return type 'boolean').
+		<button type="button" onclick="onLoadScriptButtonClick()">
+			Load script!
+		</button><br>
+		<div id="container"></div>
 		<script type="module">
-			/*script start*/
+			console.log("here...")
 		blockAndUnblockUI
 		(
 			async function()
 			{
 				//await loadHTML("https://jsutil37.github.io/jsutil/UnitTestRunnerWidget.html")
-				try{await loadHTML("UnitTestRunnerWidget.html")}catch(e){throw e}		
+				try{await loadHTML("../UnitTestRunnerWidget.html")}
+				catch(e){throw e}		
 				loadWidget("UnitTestRunnerWidget", el("container"))
 			},
 			"Loading unit test runner widget..."
@@ -32,8 +40,11 @@
 			try
 			{
 				console.log('here...')
+				var absUrl = getFullUrlOfXThatIsRelativeToTheWindowUrl(
+					$("#textboxForUrlOfEs6Module").val())
+				a('absUrl='+absUrl)
 				es6module = await
-					loadEs6Module($("#textboxForUrlOfEs6Module").val())
+					loadEs6Module(absUrl)
 				console.log('here...')
 			}
 			catch(e)
@@ -66,14 +77,8 @@
 		}
 		)
 		}
+
+		console.log("End of script in Es6ModuleTester.html...")
 		</script>
-		Enter the url of the es6 module to test:
-		<input type="text" id="textboxForUrlOfEs6Module" value="./util.js"><br>
-		The module must export its tests as 'tests' (an array of functions with 
-		return type 'boolean').
-		<button type="button" onclick="onLoadScriptButtonClick()">
-			Load script!
-		</button><br>
-		<div id="container"></div>
 	</body>
 </html>
