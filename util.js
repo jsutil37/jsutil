@@ -9,8 +9,8 @@
 //"use strict";
 //x=null//uncomment this and you will see that in a js file imported as a 
 //module, "use strict" is not necessary
-
-console.log('util.js: loading started. This log message is expected to come only once per page load...')		
+let dbgload = window.dbgload
+dbgload && console.log('util.js: loading started. This log message is expected to come only once per page load...')		
 
 //Put basic functions and shortcuts at the top, and those that depend on them, 
 //further below:
@@ -39,7 +39,9 @@ import './blockUiUtil.js'
 import './taResizeUtil.js'
 
 //It has been experimentally validated that relative paths are relative to this file's folder:
+dbgload && console.log('here')
 import * as u from "./util.js"
+dbgload && console.log('end here')
 window.u = u
 
 //CSS is always loaded in the <head> tag
@@ -54,11 +56,12 @@ window.jsFilesToLoad = []
 loadAllTypesOfFiles()
 
 //bootstrap js needs to be at the end of the document... so:
-appendHtmlToBodyAfterDocumentIsReady
+appendHtmlTxtToBodyAfterDocumentIsReady
 (
 '<'+'script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"'+
 ' integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></'+
-'script>'
+'script>',
+'allUrlsAreAbsolute'
 )
 /**/
 
@@ -90,4 +93,4 @@ function(str)
 	}
 }
 
-console.log('util.js loaded!!!')
+dbgload && console.log('util.js loaded!!!')

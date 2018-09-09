@@ -1,4 +1,6 @@
 //loader util
+let dbgload = window.dbgload
+dbgload && console.log('start')
 /*
 Functions made globally available (attached to the global 'window' object):
 
@@ -12,7 +14,21 @@ loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url
 loadEs6Module - load only once, ES6 module from specified url
 loadScriptFromText - asynchronously load the specified text as a script  
 */
+dbgload && console.log('before util import')
 import './util.js'
+dbgload && console.log('after util import')
+
+window.getFullUrlOfUrlXThatIsRelativeToUrlY =
+function(x,y){return new URL(x,y).href}
+
+window.getFullUrlOfXThatIsRelativeToTheWindowUrl = 
+function (x)
+{return getFullUrlOfUrlXThatIsRelativeToUrlY(x,window.location.href)}
+
+//workaround for import.meta not being supported by firefox
+const absPathOfUtilDotJs = 
+getFullUrlOfXThatIsRelativeToTheWindowUrl(getPathOfUtilDotJs())
+dbgload && console.log('absPathOfUtilDotJs='+absPathOfUtilDotJs)
 
 const scriptStartMarker = "/"+"*script start*"+"/"
 var loadedUrls = {}
@@ -23,7 +39,7 @@ async function checkUrlExists(url)
 {
 	return new Promise
 	(
-	function(resolve)
+	function(resolve,reject)
 	{
 	$.ajax
 	(
@@ -40,12 +56,12 @@ async function checkUrlExists(url)
 					// page does not exist
 					let s = 'Error!!!, (url does not exist?), url=\''+url+'\', status='+status+', error='+error
 					a(s)
-					throw new Error(s)
+					reject(new Error(s))
 				}
 	}
 	);
 	}
-	)	
+	).catch(function(e){throw e})
 }
 
 function urlRelativeToThisFile(url)
@@ -62,8 +78,8 @@ function urlRelativeToThisFile(url)
 	//a('baseurl='+baseurl)
 	//a('url to make absolute=\''+url+'\'')	
 	*/
-	assert(window.absPathOfUtilDotJs,'window.absPathOfUtilDotJs is not defined')
-	return new URL(url, window.absPathOfUtilDotJs).href;
+	assert(absPathOfUtilDotJs,'internal error: absPathOfUtilDotJs is not defined')
+	return new URL(url, absPathOfUtilDotJs).href;
 	//a('101: url='+url)
 }
 
@@ -135,7 +151,10 @@ function addCommonLogicForResourceLoadingFn(fn)
 {
 	return 	async function(url,integrity,crossOrigin,resourceType)
 			{
-				url = urlRelativeToThisFile(url)
+				dbgload && console.log('url='+url)
+				//should make into abs url ONLY IF not already an abs url
+				url = getFullUrlOfXThatIsRelativeToTheWindowUrl(url)
+				dbgload && console.log('url='+url)
 				try{if(await checkAndRecordUrl(url)){return}}catch(e){throw e}
 				try{return await fn(url,integrity,crossOrigin,resourceType)}
 					catch(e){throw e}
@@ -211,7 +230,14 @@ async function ()
 	(
 		(filetype)=>
 		{
-			filetype.listOfUrls.forEach(filetype.loaderFn)
+			filetype.listOfUrls.forEach
+			(
+				async function(url)
+				{
+					url = urlRelativeToThisFile(url)
+					try{await filetype.loaderFn(url)}catch(e){throw e}
+				}
+			)
 		}
 	)
 }
@@ -224,7 +250,7 @@ async function loadHtml2(url)
 {
 	let txt
 	try{txt = await getTextAtUrl(url)}catch(e){throw e}
-	appendHtmlToBody(txt)
+	appendHtmlTxtToBody(txt,url)
 }
 
 window.loadHtml = addCommonLogicForResourceLoadingFn(loadHtml2)
@@ -326,14 +352,16 @@ var es6moduleIdCtr =  0
 ///issue as well...
 async function loadEs6Module2(url)
 {
-	console.log('here')
+	//console.log('Entry')
 	es6moduleIdCtr++
 	let es6moduleId = es6moduleIdCtr
 	var html = 	'import * as module'+es6moduleId+' from "'+url+'"\n'+
 				'window.module'+es6moduleId+'=module'+es6moduleId+'\n'
-	console.log('here')
+	//console.log("html:"+html)
 	try{await loadScriptFromText(html,'module')}catch(e){throw e}
-	console.log('here')
+	//console.log('here')
 	return window['module'+es6moduleId]
 }
 window.loadEs6Module = addCommonLogicForResourceLoadingFn(loadEs6Module2)
+
+dbgload && console.log('reached end')

@@ -1,5 +1,8 @@
 //synchronization utilities
+let dbgload = window.dbgload
+dbgload && console.log('start')
 import './util.js'
+dbgload && console.log('After import of util.js...')
 
 window.onDocumentReady =
 function(func)
@@ -7,10 +10,21 @@ function(func)
 	$(document).ready(func)
 }
 
-window.appendHtmlToBodyAfterDocumentIsReady =
-function(html)
+window.appendHtmlTxtToBodyAfterDocumentIsReady =
+function(html, url)
 {	
-	onDocumentReady(function(){appendHtmlToBody(html)})
+	let dbg = false
+	onDocumentReady
+	(
+		function()
+		{
+			dbg && console.log(
+				'Before appending '+html+' to the document body...')
+			appendHtmlTxtToBody(html, url)
+			dbg && console.log(
+				'After appending '+html+' to the document body...')
+		}
+	)
 }
 
 ///Periodically checks whether the specified 'condition function' is true, at an interval specified
@@ -73,3 +87,5 @@ function (fn,symName,sleeptime,timeout)
 	timeout
 	)
 }
+
+dbgload && console.log('reached end')

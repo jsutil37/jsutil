@@ -30,7 +30,7 @@ String.prototype.replaceAll =
 function(search, replacement)
 {
     var target = this
-    return target.split(search).join(replacement)
+    return mysplit(target,search).join(replacement)
 }
 
 window.capitalizeFirstLetter = 
@@ -38,5 +38,16 @@ function(string)
 {
 	if(string == ''){return ''}
 	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+///no regex confusion for delim!
+window.mysplit = 
+function(s,delim)
+{
+	let idx= s.indexOf(delim)
+	if(idx==-1){return [s]}
+	let arr = [s.substring(0,idx)]
+	s=s.substring(idx+delim.length)
+	return arr.concat(mysplit(s,delim))
 }
 

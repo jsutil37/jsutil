@@ -1,3 +1,5 @@
+let dbgload = window.dbgload
+dbgload && console.log('start')
 //object utils
 import './stringUtil.js'
 import './debugUtil.js'
@@ -59,3 +61,5 @@ function(m1,m2)
 	}
 	return true
 }
+
+dbgload && console.log('reached end')
