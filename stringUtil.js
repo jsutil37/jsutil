@@ -50,4 +50,3 @@ function(s,delim)
 	s=s.substring(idx+delim.length)
 	return arr.concat(mysplit(s,delim))
 }
-

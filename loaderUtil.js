@@ -11,6 +11,7 @@ loadHtml - load once html from specified url, expected to contain template tags
 loadWidget - load a clone of the specified template into the specified div
 getTextAtUrl - gets the text at the specified url
 loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url  
+							Works around CORS issues...
 loadEs6Module - load only once, ES6 module from specified url
 loadScriptFromText - asynchronously load the specified text as a script  
 */
@@ -300,7 +301,8 @@ async function (url)
 	)
 }
 
-async function loadScriptFromTextAtUrl2(url)
+async function loadScriptFromTextAtUrl2(
+	url, integrity, crossOrigin, resourceType)
 {
 	let data
 	try{data = await getTextAtUrl(url)}catch(e){throw e}
@@ -309,17 +311,23 @@ async function loadScriptFromTextAtUrl2(url)
 		data = partBetween(data, scriptStartMarker,"<"+"/script>")
 	}
 	if(url){data = "// from " +url +"\n"+data}
-	return await loadScriptFromText(data,'text/javascript')
+	return await loadScriptFromText(data, resourceType)
 }
-window.loadScriptFromTextAtUrl = 
+let loadScriptFromTextAtUrl3 = 
 addCommonLogicForResourceLoadingFn(loadScriptFromTextAtUrl2)
+window.loadScriptFromTextAtUrl = 
+async function(url,resourceType)
+{
+	try{return await loadScriptFromTextAtUrl3(url,null,null,resourceType)}
+	catch(e){throw e}
+}
 
 var inlineScriptIdCtr=0
 ///loads inline scripts (that don't have src attribute)
 ///Uses some evil things from https://stackoverflow.com/questions/25688786/how-to-know-that-dynamically-created-script-tag-was-executed
 ///that are needed to work around an apparent bug.
 window.loadScriptFromText =
-async function (txt,scriptType)
+async function (txt, scriptType)
 {
 	var head = document.getElementsByTagName('head')[0]
 	var script = document.createElement('script')
