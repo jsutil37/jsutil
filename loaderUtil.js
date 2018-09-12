@@ -329,6 +329,7 @@ var inlineScriptIdCtr=0
 window.loadScriptFromText =
 async function (txt, scriptType)
 {
+	txt =txt.replaceAll('\r\n','\n')
 	var head = document.getElementsByTagName('head')[0]
 	var script = document.createElement('script')
 	script.type = (scriptType==null)?'text/javascript':scriptType	
