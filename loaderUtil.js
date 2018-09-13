@@ -342,15 +342,15 @@ async function (txt, scriptType)
 			"let script = document.getElementById('script"+inlineScriptId+"');",
             "let event = new UIEvent('load');",
             "script.dispatchEvent(event);"
-			].join('');
+			].join('\n');
 	script.innerHTML = txt
 	return new Promise
 	(
-	function(resolve,reject)
+	function(resolve)
 	{		
 		script.onload = function(){resolve(null)}
 		head.appendChild(script)
-		console.log('here')
+		window.dbgload && console.log('here')
 	}
 	)
 }
