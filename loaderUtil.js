@@ -344,7 +344,7 @@ async function (txt, scriptType)
             "script.dispatchEvent(event);"
 			].join('\n');
 	script.innerHTML = txt
-	return new Promise
+	let p = new Promise
 	(
 	function(resolve)
 	{		
@@ -353,6 +353,8 @@ async function (txt, scriptType)
 		window.dbgload && console.log('here')
 	}
 	)
+	p.catch(function(e){throw e})
+	return p
 }
 
 var es6moduleIdCtr =  0
