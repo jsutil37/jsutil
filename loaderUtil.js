@@ -348,7 +348,7 @@ async function (txt, scriptType)
 			";\n(function () {",//leading semicolon seems to fix a js parser bug
 			"console.log('This is from script"+inlineScriptId+"')",
 			"let script = document.getElementById('script"+inlineScriptId+"')",
-			"if (typeof exports!='undefined'){let script.exports = exports}",
+			"if (typeof exports!='undefined'){script.exports = exports}",
             "let event = new UIEvent('load')",
 			"script.dispatchEvent(event)",
 			"}())"
