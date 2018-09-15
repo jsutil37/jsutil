@@ -340,12 +340,12 @@ async function (txt, scriptType)
 	let inlineScriptId = inlineScriptIdCtr
 	script.id = 'script'+inlineScriptId
 	txt+= 	[
-			"\nfunction () {",
+			"\n(function () {",
 			"console.log('This is from script"+inlineScriptId+"')",
 			"let script = document.getElementById('script"+inlineScriptId+"')",
             "let event = new UIEvent('load')",
 			"script.dispatchEvent(event)",
-			"}()"
+			"})()"
 			].join('\n');
 	script.innerHTML = txt
 	let p = new Promise
