@@ -78,7 +78,8 @@
 		'... to handle the click of this button.')
 	}
 	
-	function connectTestRunnerWidgetToUnitTests(params)
+	window.connectTestRunnerWidgetToUnitTests = 
+	function (params)
 	{
 		checkParams(params, ['widget','unitTests'])
 		let widget = params.widget
