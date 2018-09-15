@@ -47,6 +47,7 @@ async function checkUrlExists(url)
 	{
 	type: 'HEAD',
 	//headers: {'Access-Control-Allow-Origin': '*'},
+	dataType: 'text/plain',
     url: url,
 	success: 	function() 
 				{
