@@ -340,7 +340,7 @@ async function (txt, scriptType)
 	let inlineScriptId = inlineScriptIdCtr
 	script.id = 'script'+inlineScriptId
 	txt+= 	[
-			"\n(function () {",
+			";\n(function () {",//leading semicolon seems to fix a js parser bug
 			"console.log('This is from script"+inlineScriptId+"')",
 			"let script = document.getElementById('script"+inlineScriptId+"')",
             "let event = new UIEvent('load')",
