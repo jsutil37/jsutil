@@ -1,0 +1,10 @@
+<script>
+    console.log('start...')
+    //workaround for import.meta not being supported by firefox
+    function getPathOfUtilDotJs(){return 'https://jsutil37.github.io/jsutil/util.js'}
+</script>
+<script type="module">
+    import * as u from 'https://jsutil37.github.io/jsutil/util.js'
+
+    loadScriptFromText("import * as u from 'https://jsutil37.github.io/jsutil/util.js'","module")
+</script>

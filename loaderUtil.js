@@ -118,7 +118,7 @@ async function loadScript2(url,integrity,crossOrigin,scriptType)
 		{
 			script.integrity = integrity
 		}
-		script.crossOrigin = crossOrigin
+		script.crossOrigin = 'anonymous'//crossOrigin
 		//script.async = false
 		// Then bind the event to the callback function.
 		// There are several events for cross browser compatibility.
@@ -181,7 +181,7 @@ async function loadCss2(url,integrity,crossOrigin)
 		{
 			link.integrity = integrity
 		}
-		link.crossOrigin = crossOrigin
+		link.crossOrigin = 'anonymous'//crossOrigin
 		//link.async = false
 		
 		// Then bind the event to the callback function.
