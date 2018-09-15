@@ -345,7 +345,7 @@ async function (txt, scriptType)
 			"let script = document.getElementById('script"+inlineScriptId+"')",
             "let event = new UIEvent('load')",
 			"script.dispatchEvent(event)",
-			"})()"
+			"}())"
 			].join('\n');
 	script.innerHTML = txt
 	let p = new Promise
