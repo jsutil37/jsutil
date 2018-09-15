@@ -14,6 +14,11 @@ loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url
 							Works around CORS issues...
 loadEs6Module - load only once, ES6 module from specified url
 loadScriptFromText - asynchronously load the specified text as a script  
+					 To allow the script to export out values, use a 
+					 module-level variable named 'exports' and in addition to 
+					 using 'export <something>' syntax, also do 
+					 'exports.something = something'. The exports object is 
+					 returned by loadScriptFromText()
 */
 dbgload && console.log('before util import')
 import './util.js'
@@ -343,6 +348,7 @@ async function (txt, scriptType)
 			";\n(function () {",//leading semicolon seems to fix a js parser bug
 			"console.log('This is from script"+inlineScriptId+"')",
 			"let script = document.getElementById('script"+inlineScriptId+"')",
+			"if (typeof exports!='undefined'){let script.exports = exports}",
             "let event = new UIEvent('load')",
 			"script.dispatchEvent(event)",
 			"}())"
@@ -352,7 +358,10 @@ async function (txt, scriptType)
 	(
 	function(resolve)
 	{		
-		script.onload = function(){resolve(script)}
+		script.onload = function()
+		{
+			resolve((typeof exports!='undefined')?exports:null)
+		}
 		head.appendChild(script)
 		window.dbgload && console.log('here')
 	}
