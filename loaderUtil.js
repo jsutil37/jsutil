@@ -45,7 +45,8 @@ async function checkUrlExists(url)
 	$.ajax
 	(
 	{
-    type: 'HEAD',
+	type: 'HEAD',
+	headers: {'Access-Control-Allow-Origin': '*'},
     url: url,
 	success: 	function() 
 				{
