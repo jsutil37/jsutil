@@ -14,11 +14,13 @@ loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url
 							Works around CORS issues...
 loadEs6Module - load only once, ES6 module from specified url
 loadScriptFromText - asynchronously load the specified text as a script  
-					 To allow the script to export out values, use a 
-					 module-level variable named 'exports' and in addition to 
-					 using 'export <something>' syntax, also do 
-					 'exports.something = something'. The exports object is 
-					 returned by loadScriptFromText()
+					 To allow the script to export out values, declare a 
+					 module-level variable by saying:
+					 
+					 let exports={}
+					 
+					 ...and in addition to using 'export <something>' syntax,
+					 also do 'exports.something = something'. The exports object is returned by loadScriptFromText()
 */
 dbgload && console.log('before util import')
 import './util.js'
