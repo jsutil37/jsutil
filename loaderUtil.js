@@ -362,7 +362,7 @@ async function (txt, scriptType)
 	{		
 		script.onload = function()
 		{
-			resolve((typeof exports!='undefined')?exports:null)
+			resolve((script.exports!=null)?script.exports:null)
 		}
 		head.appendChild(script)
 		window.dbgload && console.log('here')
