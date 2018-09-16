@@ -1,4 +1,13 @@
-//synchronization utilities
+/*
+synchronization utilities
+
+exported functions:
+onDocumentReady()
+appendHtmlTxtToBodyAfterDocumentIsReady()
+waitToRun(fn,conditionfn,sleeptime,timeout,timeoutsofar)
+waitUntilSymbolAppearsAndThenRun((fn,symName,sleeptime,timeout)
+*/
+
 let dbgload = window.dbgload
 dbgload && console.log('start')
 import './util.js'
