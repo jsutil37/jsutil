@@ -1,4 +1,8 @@
 //loader util
+//Part of https://github.com/jsutil37/jsutil (MIT License)
+//Set your editor to:
+// - view 1 tab as 4 spaces
+// - right margin after 80 character columns. Do not exceed the right margin
 let dbgload = window.dbgload
 dbgload && console.log('start')
 /*
@@ -8,7 +12,8 @@ loadScript - load only once, usual non-ES6 js script from specified url
 loadCss - load only once, usual css file  from specified url
 loadAllTypesOfFiles - load once urls in arrays cssFilesToLoad and jsFilesToLoad
 loadHtml - load once html from specified url, expected to contain template tags
-loadWidget - load a clone of the specified template into the specified div
+loadWidget -	load a clone of the specified template css class into the 
+				specified container element
 getTextAtUrl - gets the text at the specified url
 loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url  
 							Works around CORS issues...
@@ -34,8 +39,17 @@ function (x)
 {return getFullUrlOfUrlXThatIsRelativeToUrlY(x,window.location.href)}
 
 //workaround for import.meta not being supported by firefox
-const absPathOfUtilDotJs = 
-getFullUrlOfXThatIsRelativeToTheWindowUrl(getPathOfUtilDotJs())
+//well now import.meta is supported by firefox!
+let absPathOfUtilDotJs
+try
+{
+	absPathOfUtilDotJs = eval("import.meta.url")
+}
+catch(e)
+{
+	absPathOfUtilDotJs = 
+		getFullUrlOfXThatIsRelativeToTheWindowUrl(getPathOfUtilDotJs())
+}
 dbgload && console.log('absPathOfUtilDotJs='+absPathOfUtilDotJs)
 
 const scriptStartMarker = "/"+"*script start*"+"/"
