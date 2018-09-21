@@ -47,6 +47,7 @@ try
 }
 catch(e)
 {
+	console.log(e.message+'\n'+e.stack)
 	absPathOfUtilDotJs = getFullUrlOfXThatIsRelativeToTheWindowUrl(
 							window["getPathOfUtilDotJs"]())
 }
