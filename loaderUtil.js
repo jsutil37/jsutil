@@ -47,8 +47,8 @@ try
 }
 catch(e)
 {
-	absPathOfUtilDotJs = 
-		getFullUrlOfXThatIsRelativeToTheWindowUrl(getPathOfUtilDotJs())
+	absPathOfUtilDotJs = getFullUrlOfXThatIsRelativeToTheWindowUrl(
+							window["getPathOfUtilDotJs"]())
 }
 dbgload && console.log('absPathOfUtilDotJs='+absPathOfUtilDotJs)
 
