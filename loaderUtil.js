@@ -43,7 +43,7 @@ function (x)
 let absPathOfUtilDotJs
 try
 {
-	absPathOfUtilDotJs = eval("import.meta.url")
+	absPathOfUtilDotJs = import.meta.url
 }
 catch(e)
 {
