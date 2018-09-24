@@ -203,19 +203,38 @@ function(html,url)
 	let dbg = false
 	dbg && console.log(
 		'Before parsing html (note: the exceptions throw here might not get ' + 'caught!)')
-	let eles = $.parseHTML(html,document,true)
-	if(url!='allUrlsAreAbsolute')
-	{
-		transformUrlsOfElesToBeAbsolute(eles,url)
-	}
+	//let eles = $.parseHTML(html,document,true)//doesn't run <script src=""...
+	
+	//See https://howchoo.com/g/mmu0nguznjg/learn-the-slow-and-fast-way-to-append-elements-to-the-dom
+	let docFragment = document.createDocumentFragment()
 	dbg && console.log('After parsing html (note: the exceptions thrown here '+
 	'might not get caught!)')
 	let dbghtml=''
 	//let dbghtml='\''+html+'\''
 	dbg && console.log('Before appending HTML '+dbghtml+' to the body...')
-	$('body').append(eles)
+	let docFrag = document.body.appendChild(docFragment)
+	setInnerHTML(docFrag, html, url)
 	dbg && console.log('Appended HTML to the body  (note: the exceptions ' + 		'thrown here might not get caught!)...')
 }
+
+//See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
+//http://plnkr.co/edit/MMegiu?p=preview
+function setInnerHTML(elm, html,url) 
+{
+	elm.innerHTML = html;
+	if(url!='allUrlsAreAbsolute')
+	{
+		transformUrlsOfElesToBeAbsolute([elm],url)
+	}
+	Array.from(elm.querySelectorAll("script")).forEach(function(el) {
+	  let newEl = document.createElement("script");
+	  Array.from(el.attributes).forEach(function(el) { 
+		newEl.setAttribute(el.name, el.value)
+	  });
+	  newEl.appendChild(document.createTextNode(el.innerHTML));
+	  el.parentNode.replaceChild(newEl, el);
+	})
+  }
 
 function transformUrlsOfElesToBeAbsolute(eles,url)
 {
