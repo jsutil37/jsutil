@@ -196,25 +196,37 @@ function (el,nodesMadeVisible)
 window.appendHtmlTxtToBody =
 function(html,url)
 {
+	let dbg = false
+	dbg && console.log('Before parsing html...')
+
 	/*3rd param is 'keepScripts' and is recommended to be 'false' for future 
 	compatibility. But we are keeping this as true because this is needed for 
 	loading bootstrap deferred, as well as for import HTML.
 	*/
-	let dbg = false
-	dbg && console.log(
-		'Before parsing html (note: the exceptions throw here might not get ' + 'caught!)')
 	//let eles = $.parseHTML(html,document,true)//doesn't run <script src=""...
 	
 	//See https://howchoo.com/g/mmu0nguznjg/learn-the-slow-and-fast-way-to-append-elements-to-the-dom
-	let docFragment = document.createDocumentFragment()
-	dbg && console.log('After parsing html (note: the exceptions thrown here '+
-	'might not get caught!)')
-	let dbghtml=''
-	//let dbghtml='\''+html+'\''
-	dbg && console.log('Before appending HTML '+dbghtml+' to the body...')
-	let docFrag = document.body.appendChild(docFragment)
-	setInnerHTML(docFrag, html, url)
-	dbg && console.log('Appended HTML to the body  (note: the exceptions ' + 		'thrown here might not get caught!)...')
+	let docFragment = document.createRange().createContextualFragment(html)
+	dbg && console.log('After parsing html...')
+	
+	//let dbghtml=''
+	let dbghtml='\''+html+'\''
+	dbg && console.log('Before appending parsed HTML '+dbghtml+
+		' to the body...')
+	
+	dbg && console.log('Created a docFragment with children.length='+docFragment.children.length)
+	
+	dbg && console.log('Before setInnerHTML(),docFragment.html:\n'+
+		docFragment.innerHTML)
+	setInnerHTML(docFragment, html, url)
+	dbg && console.log('After setInnerHTML(),docFragment.html:\n'+
+		docFragment.innerHTML)
+	
+	dbg && console.log("Before appending doc fragment, "+
+		"document.body.children.length=" + document.body.children.length)
+	document.body.appendChild(docFragment)
+	dbg && console.log("After appending doc fragment, "+
+		"document.body.children.length=" + document.body.children.length)
 }
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
@@ -238,7 +250,7 @@ function setInnerHTML(elm, html,url)
 
 function transformUrlsOfElesToBeAbsolute(eles,url)
 {
-	let dbg = false
+	let dbg = false// true
 	dbg && console.log('here: eles==null = '+(eles==null))
 	if(eles != null)
 	{
@@ -259,13 +271,21 @@ function transformUrlsOfElesToBeAbsolute(eles,url)
 			dbg && console.log("ele='"+ele.outerHTML+"'...")
 			if(ele.src!=null && ele.src != "")
 			{
-				a('TODO...ele.src='+ele.src)
-				debugger
+				let urlToChange = ele.src
+				dbg && console.log('urlToChange=\''+urlToChange+'\'')
+				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
+					urlToChange,url)
+				dbg && console.log('changedUrl=\''+changedUrl+'\'') 
+				ele.src = changedUrl
 			}
 			if(ele.href!=null)
 			{
-				a('TODO...ele.href='+ele.href)
-				debugger
+				let urlToChange = ele.href
+				dbg && console.log('urlToChange=\''+urlToChange+'\'')
+				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
+					urlToChange,url)
+				dbg && console.log('changedUrl=\''+changedUrl+'\'') 
+				ele.href = changedUrl
 			}
 			if(ele.tagName=='SCRIPT')
 			{
