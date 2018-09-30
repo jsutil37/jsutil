@@ -20,6 +20,7 @@ import './debugUtil.js'
 
 //Below imports are done synchronously and this keeps things simple...
 import 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'
+
 assert($!=null)
 assert(window.$!=null)
 
@@ -32,11 +33,17 @@ assert($("textarea").resizable!=null)
 //Note: this is also needed by the jquery plugin blockUI
 
 import './objUtil.js'
-import './loaderUtil.js'
+import * as ldr from './loaderUtil.js'
 import './domUtil.js'
 import './syncUtil.js'
 import './blockUiUtil.js'
 import './taResizeUtil.js'
+
+//Guard against duplicate inclusion of the jquery imports by recording that 
+//they are imported:
+ldr.checkAndRecordUrl('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+ldr.checkAndRecordUrl
+("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
 
 //It has been experimentally validated that relative paths are relative to this file's folder:
 dbgload && console.log('here')
