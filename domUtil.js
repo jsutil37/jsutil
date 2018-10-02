@@ -194,10 +194,12 @@ function (el,nodesMadeVisible)
 ///url: url from which the html was imported. The html will be changed so that 
 ///relative links are made absolute w.r.t. this url.
 window.appendHtmlTxtToBody =
-function(html,url)
+function(html,url,doc)
 {
 	let dbg = false
 	dbg && console.log('Before parsing html...')
+
+	if(doc == null){doc = document}
 
 	/*3rd param is 'keepScripts' and is recommended to be 'false' for future 
 	compatibility. But we are keeping this as true because this is needed for 
@@ -206,7 +208,7 @@ function(html,url)
 	//let eles = $.parseHTML(html,document,true)//doesn't run <script src=""...
 	
 	//See https://howchoo.com/g/mmu0nguznjg/learn-the-slow-and-fast-way-to-append-elements-to-the-dom
-	let docFragment = document.createRange().createContextualFragment(html)
+	let docFragment = doc.createRange().createContextualFragment(html)
 	dbg && console.log('After parsing html...')
 	
 	//let dbghtml=''
@@ -214,7 +216,8 @@ function(html,url)
 	dbg && console.log('Before appending parsed HTML '+dbghtml+
 		' to the body...')
 	
-	dbg && console.log('Created a docFragment with children.length='+docFragment.children.length)
+	dbg && console.log('Created a docFragment with children.length='+
+		docFragment.children.length)
 	
 	dbg && console.log('Before setInnerHTML(),docFragment.html:\n'+
 		docFragment.innerHTML)
@@ -223,10 +226,10 @@ function(html,url)
 		docFragment.innerHTML)
 	
 	dbg && console.log("Before appending doc fragment, "+
-		"document.body.children.length=" + document.body.children.length)
-	document.body.appendChild(docFragment)
+		"doc.body.children.length=" + doc.body.children.length)
+	doc.body.appendChild(docFragment)
 	dbg && console.log("After appending doc fragment, "+
-		"document.body.children.length=" + document.body.children.length)
+		"doc.body.children.length=" + doc.body.children.length)
 }
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml

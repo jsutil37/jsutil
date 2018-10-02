@@ -11,7 +11,7 @@ Functions made globally available (attached to the global 'window' object):
 loadScript - load only once, usual non-ES6 js script from specified url
 loadCss - load only once, usual css file  from specified url
 loadAllTypesOfFiles - load once urls in arrays cssFilesToLoad and jsFilesToLoad
-loadHtml - load once html from specified url, expected to contain template tags
+loadHtml - load once html from specified url, that may contain template tags
 loadWidget -	load a clone of the specified template css class into the 
 				specified container element
 getTextAtUrl - gets the text at the specified url
@@ -269,8 +269,9 @@ async function ()
 
 ///This is really import
 ///Here the text at the url is just supposed to be some <template> nodes
-///Each template node should have some unique id so that the loadWidget
-///function can then do its magic
+///Each template node should have some unique class so that the loadWidget
+///function can then do its magic. We want to avoid ids instead of classes as
+///a kind of best practice.
 async function loadHtml2(url)
 {
 	let txt
