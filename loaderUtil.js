@@ -406,4 +406,15 @@ async function loadEs6Module2(url)
 }
 window.loadEs6Module = addCommonLogicForResourceLoadingFn(loadEs6Module2)
 
+window.addToWindowOnloadEventHandler = 
+function (fn)
+{
+	let prevonload = window.onload
+	window.onload = function()
+	{
+		if(prevonload){prevonload()}
+		fn()
+	}
+}
+
 dbgload && console.log('reached end')
