@@ -112,10 +112,11 @@ function urlRelativeToThisFile(url)
 ///Returns true if url was already checked and recorded
 export async function checkAndRecordUrl(url)
 {	
+	let dbg = window.dbgcheckAndRecordUrl
 	if(url in loadedUrls){return true}
-	console.log('Checking if url \''+url+'\' exists...')
+	dbg && console.log('Checking if url \''+url+'\' exists...')
 	try{await checkUrlExists(url)}catch(e){throw e}
-	loadedUrls[url]=0	
+	loadedUrls[url]=0
 	return false
 }
 
