@@ -29,6 +29,7 @@ $('head').prepend('<meta http-equiv="X-UA-Compatible" content="ie=edge">'+
 '<meta name="viewport" content="width=device-width, initial-scale=1.0">')
 
 import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 assert($("textarea").resizable!=null)
 //Note: this is also needed by the jquery plugin blockUI
 
