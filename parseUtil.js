@@ -1,5 +1,10 @@
 import './util.js'
 
+/**
+ * Given text that is JS code, returns an array of elements. Each element is an
+ * object having 2 members: 'type' and 'text'. 'text' is the text of the parsed
+ * node. 'type' can be three values: 'code', 'comment' and 'textInCode'  
+ */
 window.scriptCommentAndNonCommentAreas =
 function (scriptText)
 {
@@ -32,19 +37,24 @@ function (scriptText)
 	{
 		areaType = 'comment'
 		searchEndIdx = scriptText.indexOf("\n",idx3)
-		if(searchEndIdx==-1){searchEndIdx=scriptText.length}
+		if(searchEndIdx==-1){searchEndIdx=scriptText.length-1}
 	}
 	else
 	{
 		assert(idx4 == leastVal)
 		areaType = 'comment'
-		searchEndIdx = scriptText.indexOf("*/",idx4)
-		assert(searchEndIdx!=-1)
+		searchEndIdx = scriptText.indexOf("*/",idx4) 
+		assert(searchEndIdx>0)
+		searchEndIdx++//because this is the only ending thing that has two chars
 	}
 	let areaText = scriptText.substring(leastVal,searchEndIdx+1)
 	let retval = [{type:areaType, text:areaText}]
 	dbg && console.log('Parsed area \''+ str(retval) +'\'...')
-	let remainingText = scriptText.substring(searchEndIdx+1)
+	let remainingText = ""
+	if(searchEndIdx<scriptText.length-1)
+	{
+		remainingText = scriptText.substring(searchEndIdx+1)
+	}
 	let remainingAreas = scriptCommentAndNonCommentAreas(remainingText)
 	return retval.concat(remainingAreas)
 }

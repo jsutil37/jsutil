@@ -12,7 +12,7 @@
 		Above gives error: Cannot find:
 		https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.0.2/bundles/webcomponents-sd-ce-pf.js
 		-->		
-		<!-- God alone knows how multiple includes of two below files will be optimized out (unsolvable problem?) -->
+		<!-- how will multiple includes of two below files be optimized out (unsolvable problem?) -->
 		<!-- Comment out below lines in case needed to test native broswer support in a sureshot way... -->
 		<!--
 		<script nomodule src="https://unpkg.com/browser-es-module-loader/dist/babel-browser-build.js"></script>		
@@ -43,23 +43,34 @@
 	</head>
 	<body>	
 	(To unload the current widget(s), just refresh the page)<br>
+
+	<!--
 	Enter url of template of the widget to test:<input type="text" id="textBoxForUrlOfWidget" value="../UnitTestRunnerWidget.html"><br>
-	Enter id of widget template:<input type="text" id="textBoxForIdOfWidgetTemplate" value="UnitTestRunnerWidget"> 
+	Enter id of widget template:<input type="text" id="textBoxForIdOfWidgetTemplate" value="UnitTestRunnerWidget">
+	-->
+	Enter url of template of the widget to test:<input type="text" id="textBoxForUrlOfWidget" value="http://localhost/github/CollaboRate/CollaboRateV2.html"><br>
+	Enter class of widget template:<input type="text" id="textBoxForClassOfWidgetTemplate" value="CollaboRateWbsWizardTemplate">
+
+
 	<button type="button" id="buttonToStartWidgetLoading" onclick="buttonToStartWidgetLoading_onclick()">Load Widget</button>
 	<div id="divIntoWhichToLoadTheWidget">
 	</div>
 	<script>
-		console.log('here')
+		//console.log('here')
 		/**/
 		async function buttonToStartWidgetLoading_onclick()
 		{
 			let url = $("#textBoxForUrlOfWidget").val() 
 			await loadHTML(url)
-			let templateId = $("#textBoxForIdOfWidgetTemplate").val() 
+			let templateClass = $("#textBoxForClassOfWidgetTemplate").val() 
 			let container = el("divIntoWhichToLoadTheWidget")
-			container.innerHTML = ''
-			loadWidget(templateId,container)
-			alert('So... did the widget load???')
+			container.innerHTML = '<div></div>'
+			//loadWidget(templateId,container)
+			let childOfWidget = container.children[0]
+			loadWidgetContent(childOfWidget, null, templateClass, url)
+
+
+			setTimeout(()=>alert('So... did the widget load???'),500)
 		}
 		//a('Hey!')		
 		/**/

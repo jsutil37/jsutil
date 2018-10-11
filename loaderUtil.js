@@ -12,8 +12,9 @@ loadScript - load only once, usual non-ES6 js script from specified url
 loadCss - load only once, usual css file  from specified url
 loadAllTypesOfFiles - load once urls in arrays cssFilesToLoad and jsFilesToLoad
 loadHtml - load once html from specified url, that may contain template tags
-loadWidget -	load a clone of the specified template css class into the 
-				specified container element
+loadWidgetContent -	load a clone of the specified template css class into the 
+				specified container element (widget) as the widget content
+raiseWidgetOnload - to be called by html templates once they are loaded
 getTextAtUrl - gets the text at the specified url
 loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url  
 							Works around CORS issues...
@@ -283,12 +284,50 @@ async function loadHtml2(url)
 window.loadHtml = addCommonLogicForResourceLoadingFn(loadHtml2)
 window.loadHTML = loadHtml
 
+/**
+ * Loads the specified widget. Use as follows:
+ * <div><img src onerror="loadWidgetContent(this,a,b[,c])"></div>
+ * params: 
+ * childOfWidget: 		Pass a reference to the <img> element using 'this'.
+ * widgetOnloadFn: 		Give a name of a function that accepts one parameter
+ *						The function will be called on load of the widget,
+						with that widget as the function param.
+ * templateClass: 	The widget template class
+ * widgetContentUrl: 	The url of the html file that contains the widget
+ *	 					template. Optional if html import from this url is
+ *						done before, but specifying it will not have 
+ * 						side-effects
+ */
+window.loadWidgetContent = async function (
+	childOfWidget, widgetOnloadFn, templateClass, widgetContentUrl)
+{
+	if(widgetContentUrl){await loadHTML(widgetContentUrl)}
+	//console.log('childOfWidget='+childOfWidget.outerHTML)
+	let widget = childOfWidget.parentNode
+	widget.innerHTML = ''
+	widget.onload = widgetOnloadFn
+	await loadWidgetContent_inner(templateClass, widget)
+}
+
+/**
+ * To be called by widget templates (at least by adding:
+ * <img src onerror="raiseWidgetOnload(this)"> before the end of their 
+ * closing template tag) in order to provide support for detecting that the
+ * widget (and its content) have fully loaded.
+ */
+window.raiseWidgetOnload = function (widgetChild)
+{
+	//console.log('raiseWidgetOnload(): entry')
+	let widget = widgetChild.parentNode
+	widget.removeChild(widgetChild)
+	if(widget.onload){widget.onload(widget)}
+}
+
 ///Does not return anything. We search from the given container (that should be 
 ///suitably empty if needed) in order to uniquely identify the loaded widget.
 ///As far as possible the template for the widget should not contain any ids but
 ///should use classes instead.
-window.loadWidget =
-function (templateClass, container)
+function loadWidgetContent_inner(templateClass, container)
 {
 	assert(typeof templateClass == 'string',
 		'param \'templateClass\' should be a string!')

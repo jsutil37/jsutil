@@ -263,9 +263,7 @@ function transformUrlsOfElesToBeAbsolute(eles,url)
 	(
 		function(ele)
 		{
-			//Below 'unexpected' types of nodes are present below of the initial
-			//input to this function, that has the output of parseHTML() passed
-			//as 'eles' to this function:
+			//3=text node, 8=comment node
 			if(ele.nodeType == 3 || ele.nodeType == 8)
 			{
 				return;
@@ -277,7 +275,7 @@ function transformUrlsOfElesToBeAbsolute(eles,url)
 				let urlToChange = ele.src
 				dbg && console.log('urlToChange=\''+urlToChange+'\'')
 				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
-					urlToChange,url)
+					urlToChange, url)
 				dbg && console.log('changedUrl=\''+changedUrl+'\'') 
 				ele.src = changedUrl
 			}
@@ -286,7 +284,7 @@ function transformUrlsOfElesToBeAbsolute(eles,url)
 				let urlToChange = ele.href
 				dbg && console.log('urlToChange=\''+urlToChange+'\'')
 				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
-					urlToChange,url)
+					urlToChange, url)
 				dbg && console.log('changedUrl=\''+changedUrl+'\'') 
 				ele.href = changedUrl
 			}
@@ -306,14 +304,41 @@ function transformUrlOfScriptToBeAbsolute(ele,url)
 	let dbg = false
 	dbg && console.log('script innerHTML ='+ele.innerHTML)
 	dbg && console.log('url of HTML to load='+url)
-	if(ele.innerHTML.indexOf('import')==-1){return}	
-	dbg && console.log('The script innerHTML contains \'import\'!!!')
+	if(ele.innerHTML.indexOf('/*begin relpath*/')==-1){return}
+	dbg && console.log('The script contains \'/*'+'begin relpath*/\'!!!')
 	var scriptAreas = scriptCommentAndNonCommentAreas(ele.innerHTML)
 	dbg && console.log('scriptAreas:\n'+str(scriptAreas))
+	let relpathCaseState = 0
 	scriptAreas.forEach
 	(
 		(scriptArea,idx)=>
 		{
+			if(scriptArea.type=='comment' && 
+				scriptArea.text=='/*'+'begin relpath*/')
+			{relpathCaseState = 1;return}
+			if(relpathCaseState = 1 && scriptArea.type=='textInCode')
+			{relpathCaseState = 2;return}
+			if(relpathCaseState = 2 && scriptArea.type=='comment' && 
+				scriptArea.text=='/*'+'end relpath*/')
+			{
+				scriptArea.text = '/*end converted relpath*/'
+				let prevScriptAreaText = scriptAreas[idx-1].text
+				let urlToChange = prevScriptAreaText.substring(
+					1,prevScriptAreaText.length-1)
+				let openingQuoteChar = prevScriptAreaText.substr(0,1)
+				let closingQuoteChar = prevScriptAreaText.substr(
+					prevScriptAreaText.length-1)
+				assert(openingQuoteChar==closingQuoteChar)
+				dbg && console.log('urlToChange=\''+urlToChange+'\'')
+				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
+					urlToChange, url)
+				dbg && console.log('changedUrl=\''+changedUrl+'\'')
+				scriptAreas[idx-1].text = openingQuoteChar + changedUrl +
+				closingQuoteChar
+				scriptAreas[idx-2].text = '/*begin converted relpath*/'
+			}
+			relpathCaseState = 0
+			/*
 			if(scriptArea.type=='code' && scriptArea.text.indexOf('import')!=-1)
 			{
 				let trimTxt = scriptArea.text.trim()
@@ -341,8 +366,16 @@ function transformUrlOfScriptToBeAbsolute(ele,url)
 					debugger
 				}
 			}
+			*/
 		}
 	)
+
+	let s = ""
+	scriptAreas.forEach
+	(
+		(scriptArea,idx)=>{s+=scriptArea.text}
+	)
+	ele.innerHTML = s
 }
 
 dbgload && console.log('reached end')
