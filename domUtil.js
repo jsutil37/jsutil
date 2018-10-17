@@ -196,7 +196,7 @@ function (el,nodesMadeVisible)
 window.appendHtmlTxtToBody =
 function(html,url,doc)
 {
-	let dbg = false
+	let dbg = true
 	dbg && console.log('Before parsing html...')
 
 	if(doc == null){doc = document}
