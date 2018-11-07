@@ -1,0 +1,12 @@
+<pre>
+test for 'element load' event simulation
+    Use code execution in the inline script tag to confirm that its container has loaded 
+    (script should be at the end of the container)
+    
+    See https://developer.mozilla.org/en-US/docs/Web/API/Document/currentScript
+</pre>
+<div>
+<script>
+alert(document.currentScript.parentNode.outerHTML)
+</script>
+</div>
