@@ -60,3 +60,4 @@ function (fn,symName,sleeptime,timeout)
 	timeout
 	)
 }
+window.waitForSymbol=window.waitUntilSymbolAppearsAndThenRun
