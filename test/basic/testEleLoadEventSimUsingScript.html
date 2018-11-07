@@ -6,10 +6,10 @@ test for 'element load' event simulation
     See https://developer.mozilla.org/en-US/docs/Web/API/Document/currentScript
 </pre>
 <div>
-<script>
-alert(document.currentScript.parentNode.outerHTML)
-</script>
 <script type="module">
-alert(document.currentScript.parentNode.outerHTML)
+alert("a: "+document.currentScript.parentNode.outerHTML)
+</script>
+<script>
+alert("b: "+document.currentScript.parentNode.outerHTML)
 </script>
 </div>
