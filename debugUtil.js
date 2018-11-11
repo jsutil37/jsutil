@@ -1,5 +1,11 @@
 let dbgload = window.dbgload
 dbgload && console.log('start')
+
+window.callingFnName=
+function {
+return arguments.caller.caller.callee
+}
+
 window.assert =
 function(x,errMsg)
 {
