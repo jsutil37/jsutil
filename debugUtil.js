@@ -29,7 +29,7 @@ function(params, arrayOfKeys)
 	(
 	{
 		condition: (typeof(params)=="object"),
-		errMsgFn: function(){return 'param \'params\' to checkParams() is not an object!!!'}
+		errMsgFn: function(){return 'The param of'+callingFnName()+'() is not an object!!!'}
 	}
 	)	
 	checkThat
