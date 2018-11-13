@@ -2,7 +2,7 @@ let dbgload = window.dbgload
 dbgload && console.log('start')
 
 window.callingFnName=
-function {
+function (){
 return arguments.caller.caller.callee
 }
 
