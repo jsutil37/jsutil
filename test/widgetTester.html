@@ -48,8 +48,8 @@
 	Enter url of template of the widget to test:<input type="text" id="textBoxForUrlOfWidget" value="../UnitTestRunnerWidget.html"><br>
 	Enter id of widget template:<input type="text" id="textBoxForIdOfWidgetTemplate" value="UnitTestRunnerWidget">
 	-->
-	Enter url of template of the widget to test:<input type="text" id="textBoxForUrlOfWidget" value="http://localhost/github/CollaboRate/CollaboRateV2.html"><br>
-	Enter class of widget template:<input type="text" id="textBoxForClassOfWidgetTemplate" value="CollaboRateWbsWizardTemplate">
+	Enter url of template of the widget to test:<input type="text" id="textBoxForUrlOfWidget" value="http://localhost/github/CollaboRate/main/main.html"><br>
+	Enter class of widget template:<input type="text" id="textBoxForClassOfWidgetTemplate" value="main">
 
 
 	<button type="button" id="buttonToStartWidgetLoading" onclick="buttonToStartWidgetLoading_onclick()">Load Widget</button>
@@ -70,7 +70,15 @@
 			loadWidgetContent(childOfWidget, null, templateClass, url)
 
 
-			setTimeout(()=>alert('So... did the widget load???'),500)
+			setTimeout
+			(
+				()=>
+				{
+					alert('So... did the widget load???')
+					console.log('document.body.outerHTML.split(\'appdesc'+'desc\').length='+document.body.outerHTML.split('appdesc'+'desc').length)
+				},
+				500
+			)
 		}
 		//a('Hey!')		
 		/**/

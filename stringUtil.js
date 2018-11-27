@@ -50,3 +50,11 @@ function(s,delim)
 	s=s.substring(idx+delim.length)
 	return arr.concat(mysplit(s,delim))
 }
+
+window.upto100chars = 
+function(s)
+{
+	if(s==null){return ">>>NULL<<<"}
+	if(s.length<=100){return s}
+	return s.substr(0,100)
+}

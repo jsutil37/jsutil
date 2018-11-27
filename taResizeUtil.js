@@ -25,6 +25,7 @@ function makeTextareasResizable()
 
 function makeTextareaResizable(ta)
 {
+	//console.log('temp disabled');return
 	let nodesMadeVisible = []
 	if(true)//ta.id == 'signin-ta')
 	{

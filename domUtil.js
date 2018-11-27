@@ -196,7 +196,7 @@ function (el,nodesMadeVisible)
 window.appendHtmlTxtToBody =
 function(html,url,doc)
 {
-	let dbg = true
+	let dbg = false
 	dbg && console.log('Before parsing html...')
 
 	if(doc == null){doc = document}
@@ -224,23 +224,33 @@ function(html,url,doc)
 	setInnerHTML(docFragment, html, url)
 	dbg && console.log('After setInnerHTML(),docFragment.html:\n'+
 		docFragment.innerHTML)
-	
+	dbg && console.log('After setInnerHTML(),docFragment.children.length='+
+		docFragment.children.length)
 	dbg && console.log("Before appending doc fragment, "+
 		"doc.body.children.length=" + doc.body.children.length)
+	dbg && console.log("Before append, indexOf <span id=\"appdescdesc\""+
+		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
 	doc.body.appendChild(docFragment)
 	dbg && console.log("After appending doc fragment, "+
 		"doc.body.children.length=" + doc.body.children.length)
+	dbg && console.log("doc.body.innerHTML:\n"+doc.body.innerHTML)
+	dbg && console.log("indexOf <span id=\"appdescdesc\""+
+		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
 }
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
 //http://plnkr.co/edit/MMegiu?p=preview
 function setInnerHTML(elm, html,url) 
 {
+	let dbg=false
+	dbg && console.log('html:\n'+html)
 	elm.innerHTML = html;
+	dbg && console.log('elm.innerHTML:\n'+elm.innerHTML)
 	if(url!='allUrlsAreAbsolute')
 	{
 		transformUrlsOfElesToBeAbsolute([elm],url)
 	}
+	dbg && console.log('248: elm.innerHTML:\n'+elm.innerHTML)
 	Array.from(elm.querySelectorAll("script")).forEach(function(el) {
 	  let newEl = document.createElement("script");
 	  Array.from(el.attributes).forEach(function(el) { 
@@ -249,6 +259,7 @@ function setInnerHTML(elm, html,url)
 	  newEl.appendChild(document.createTextNode(el.innerHTML));
 	  el.parentNode.replaceChild(newEl, el);
 	})
+	dbg && console.log('At exit: elm.innerHTML:\n'+elm.innerHTML)
   }
 
 function transformUrlsOfElesToBeAbsolute(eles,url)

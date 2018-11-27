@@ -37,5 +37,10 @@ function(html, url)
 	)
 }
 
+window.loadNext = 
+function(fn)
+{
+	let prevOnload = window.onload
+}
 
 dbgload && console.log('reached end')

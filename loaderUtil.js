@@ -315,11 +315,16 @@ window.loadWidgetContent = async function (
  * closing template tag) in order to provide support for detecting that the
  * widget (and its content) have fully loaded.
  */
-window.raiseWidgetOnload = function (widgetChild)
+window.raiseWidgetOnload = function (args)
 {
+	checkArgs(args,['widgetChildToRemove','widget']);
+	let widget = args.widget
+	let widgetChildToRemove = args.widgetChildToRemove
+	checkThat({condition:(widget == null) != (widgetChildToRemove == null),
+	errMsgFn:()=>"one of 'widgetChildToRemove' or 'widget' must be null, and the other must be non-null"})
 	//console.log('raiseWidgetOnload(): entry')
-	let widget = widgetChild.parentNode
-	widget.removeChild(widgetChild)
+	if(!widget){widget = widgetChildToRemove.parentNode}
+	if(widgetChildToRemove){widget.removeChild(widgetChildToRemove)}
 	if(widget.onload){widget.onload(widget)}
 }
 
@@ -329,12 +334,36 @@ window.raiseWidgetOnload = function (widgetChild)
 ///should use classes instead.
 function loadWidgetContent_inner(templateClass, container)
 {
+	let dbg = false
+	dbg && console.log("templateClass="+templateClass)
+	dbg && console.log('container.outerHTML='+upto100chars(container.outerHTML))
 	assert(typeof templateClass == 'string',
 		'param \'templateClass\' should be a string!')
 	let template = document.querySelector("template."+templateClass)
 	assert(template, 'Cannot find template with class \''+templateClass+'\'!!!')
-	let clone = document.importNode(template.content, true)	
+	/*
+	console.log('typeof template.content = ' + typeof(template.content))
+	console.log('template.content.constructor.name = ' + 
+		template.content.constructor.name)
+	*/
+	//if(template.outerHTML.indexOf('appdescdesc')) {console.log('template contains appdescdesc')}
+	
+	//template.content does not have outerHTML
+	// 	if(template.content.outerHTML.indexOf('appdescdesc')) {alert('hmmm2')}
+	
+	let clone = document.importNode(template.content, true)
+	
+	//clone also does not have outerHTML
+	//if(clone.outerHTML.indexOf('appdescdesc')) {alert('hmmm3')}
+	
+	let idx1 = container.outerHTML.indexOf('appdescdesc')
+	dbg && console.log('Before append, container.outerHTML.indexOf(\'appdescdesc\')='+ 	idx1)
 	$(container).append(clone)
+	let idx2 = container.outerHTML.indexOf('appdescdesc')
+	dbg && console.log(
+		'After append, container.outerHTML.indexOf(\'appdescdesc\')='+ idx2)
+	dbg && console.log('document.body.outerHTML.split(\'appdescdesc\').length='+
+		document.body.outerHTML.split('appdescdesc').length)
 }
 
 window.getTextAtUrl =

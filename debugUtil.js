@@ -3,8 +3,47 @@ dbgload && console.log('start')
 
 window.callingFnName=
 function (){
-return arguments.caller.caller.callee
+	try {
+		throw new Error('')
+	} catch (e) 
+	{
+		let s = e.stack
+
+		//skip this function ('callingFnName') itself 
+		s = rightOf(s,'callingFnName')
+
+//skip the function that called callingFnName because otherwise we would end up returning the function's own name to itself:
+		s = rightOf(s, 'at ')
+		
+		//This 
+		return stringBetween(s,'at ' , '(').trim()
+	}
 }
+
+window.rightOf = (s,delim)=> {
+	let i = s.indexOf(delim)
+	if(i==-1) {
+		alert('internal error, please open the debug console and then continue')
+		debugger
+	}
+	return s.substr(i+delim.length)
+}
+
+window.stringBetween = function(s,startDelim,endDelim) {
+	let i = s.indexOf(startDelim)
+	if(i == -1) {
+		alert('internal error. Open the debug window.')
+		debugger
+	}
+	i+=startDelim.length
+	s=s.substr(i)
+	i=s.indexOf(endDelim)
+	if(i==-1) {
+		alert('internal error. Open the debug window.')
+		debugger
+	}
+	return s.substr(0,i)
+} 
 
 window.assert =
 function(x,errMsg)
@@ -25,18 +64,21 @@ function (s)
 window.checkParams = 
 function(params, arrayOfKeys)
 {
+	let cfn = callingFnName()
+	//alert('In checkParams(), cfn=\''+cfn+'\'')
 	checkThat
 	(
 	{
 		condition: (typeof(params)=="object"),
-		errMsgFn: function(){return 'The param of'+callingFnName()+'() is not an object!!!'}
+		errMsgFn: function(){return cfn+'(): The param of'+callingFnName()+'() is not an object!!!'}
 	}
 	)	
 	checkThat
 	(
 	{
-		condition: (typeof(arrayOfKeys)=="object" && Array.isArray(arrayOfKeys)),
-		errMsgFn: function(){return 'param \''+arrayOfKeys+'\' not an array!'}
+		condition: (typeof(arrayOfKeys)=="object" && 
+			Array.isArray(arrayOfKeys)),
+		errMsgFn: ()=> cfn+"(): param 'arrayOfKeys' is not an array! Instead its type is '"+typeof(arrayOfKeys)+"' and its value is '"+JSON.stringify(arrayOfKeys)+"'"
 	}
 	)
 		
@@ -48,11 +90,16 @@ function(params, arrayOfKeys)
 		(
 		{
 			condition: (key in params),
-			errMsgFn: function(){return 'param \''+key+'\' is missing!'}
+			errMsgFn: function(){return cfn+'(): param \''+key+'\' is missing!'}
 		}
 		)
 	}
 	)
+
+	checkThat({
+		condition: arrayOfKeys.length == Object.keys(params).length,
+		errMsgFn: ()=>{cfn+'(): mismatch in number of expected arguments! The expected arguments are '+JSON.stringify(arrayOfKeys)}
+	})
 }
 window.checkArgs = window.checkParams
 
@@ -79,36 +126,29 @@ window.showCaughtError = runWithAlertOnException
 window.checkThat =
 function (params)
 {
-	try
-	{
-		checkThat_internal(params)
-	}
-	catch(e)
-	{
-		a('Assertion failed.\n\nDetails:\n'+e.message+'\n'+e.stack)
-		throw e
-	}
-}
-
-function checkThat_internal(params)
-{
 	if(!('condition' in params))
 	{
-		throw new Error('param \'condition\' is missing!')
+		throw new Error('checkThat(): param \'condition\' is missing!')
 	}
 	if(!('errMsgFn' in params))
 	{
-		throw new Error('param \'errMsgFn\' is missing!')
+		throw new Error('checkThat(): param \'errMsgFn\' is missing!')
 	}
 	if(params.condition){return}
-	throw new Error(params.errMsgFn())
+	let msg = callingFnName() + "(): "+params.errMsgFn()
+	//window.alert(msg)//we have an error message shown by the global error
+	//handler
+	throw new Error(msg)
 }
 
 window.onerror = 
-function(message, url, line)
+function(message, url, line, col, error)
 {
 	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+message + '\nurl:' + url+
-		'\nline: '+line
+		'\nline: '+line+', col: '+col+
+		//'\nerror: '+error +
+		'\nerror.stack:\n'+error.stack
+	this.console.log(s)
 	alert(s)
 }
 

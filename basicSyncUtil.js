@@ -9,16 +9,17 @@ var fncallIdCtr=0
 window.waitToRun =
 function (fn,conditionfn,sleeptime,timeout,timeoutsofar)
 {
+	let dbg = false
 	fncallIdCtr++
 	let fncallId = fncallIdCtr
 	if(conditionfn())
 	{
-		console.log('fncallId='+fncallId+': The wait for the conditionfn '+
+		dbg && console.log('fncallId='+fncallId+': The wait for the conditionfn '+
 			conditionfn+' to come true, is over!')
 		setTimeout(fn,0)
 		return
 	}
-	console.log('fncallId='+fncallId+': The conditionfn '+conditionfn+
+	dbg && console.log('fncallId='+fncallId+': The conditionfn '+conditionfn+
 		' did not come true yet, waiting further to run the fn...')
 	
 	//set defaults:
@@ -53,7 +54,7 @@ function (fn,symName,sleeptime,timeout)
 	fn,
 	function()
 	{
-		console.log('Waiting for symbol \''+symName+'\' to appear...')
+		//console.log('Waiting for symbol \''+symName+'\' to appear...')
 		return (typeof(window[symName]) != 'undefined')
 	},
 	sleeptime,
