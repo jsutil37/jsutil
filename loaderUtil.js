@@ -317,15 +317,18 @@ window.loadWidgetContent = async function (
  */
 window.raiseWidgetOnload = function (args)
 {
+	let dbg = false
 	checkArgs(args,['widgetChildToRemove','widget']);
 	let widget = args.widget
 	let widgetChildToRemove = args.widgetChildToRemove
 	checkThat({condition:(widget == null) != (widgetChildToRemove == null),
 	errMsgFn:()=>"one of 'widgetChildToRemove' or 'widget' must be null, and the other must be non-null"})
-	//console.log('raiseWidgetOnload(): entry')
 	if(!widget){widget = widgetChildToRemove.parentNode}
 	if(widgetChildToRemove){widget.removeChild(widgetChildToRemove)}
-	if(widget.onload){widget.onload(widget)}
+	if(widget.onload){
+		dbg && console.log('Calling onload function of widget. widget=\''+widget.outerHTML+'\', onload=\''+widget.onload+'\'')
+		widget.onload(widget)
+	}
 }
 
 ///Does not return anything. We search from the given container (that should be 
