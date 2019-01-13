@@ -1,5 +1,5 @@
 /*Somehow it seems that if bootstrap comes before jquery-us CSS, then on FireFox the textarea resize gripper is displayed at incorrect location!*/
-@import url('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/theme.css');
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 
 
