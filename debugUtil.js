@@ -7,16 +7,20 @@ function (){
 		throw new Error('')
 	} catch (e) 
 	{
+		let dbg = false
 		let s = e.stack
-
+		dbg && console.log('e.stack='+s)
+		//debugger
 		//skip this function ('callingFnName') itself 
 		s = rightOf(s,'callingFnName')
-
+		dbg && console.log('rightOf \'callingFnName\'='+s)
 //skip the function that called callingFnName because otherwise we would end up returning the function's own name to itself:
-		s = rightOf(s, 'at ')
-		
+		s = rightOf(s, ' at ')
+		dbg && console.log('rightOf \' at \'=>>>'+s+'<<<')
 		//This 
-		return stringBetween(s,'at ' , '(').trim()
+		let retval = stringBetween(s,' at ' , '(').trim()
+		dbg && console.log('retval=\''+retval+'\'')
+		return retval
 	}
 }
 
@@ -64,8 +68,9 @@ function (s)
 window.checkParams = 
 function(params, arrayOfKeys)
 {
+	let dbg = false
 	let cfn = callingFnName()
-	//alert('In checkParams(), cfn=\''+cfn+'\'')
+	dbg && console.log('cfn=>>>'+cfn+'<<<')
 	checkThat
 	(
 	{
@@ -78,7 +83,7 @@ function(params, arrayOfKeys)
 	{
 		condition: (typeof(arrayOfKeys)=="object" && 
 			Array.isArray(arrayOfKeys)),
-		errMsgFn: ()=> cfn+"(): param 'arrayOfKeys' is not an array! Instead its type is '"+typeof(arrayOfKeys)+"' and its value is '"+JSON.stringify(arrayOfKeys)+"'"
+		errMsgFn: function() {return cfn+"(): param 'arrayOfKeys' is not an array! Instead its type is '"+typeof(arrayOfKeys)+"' and its value is '"+JSON.stringify(arrayOfKeys)+"'"}
 	}
 	)
 		
@@ -98,7 +103,7 @@ function(params, arrayOfKeys)
 
 	checkThat({
 		condition: arrayOfKeys.length == Object.keys(params).length,
-		errMsgFn: ()=>{cfn+'(): mismatch in number of expected arguments! The expected arguments are '+JSON.stringify(arrayOfKeys)}
+		errMsgFn: function(){return cfn+'(): mismatch in number of expected arguments! The expected arguments are '+JSON.stringify(arrayOfKeys)}
 	})
 }
 window.checkArgs = window.checkParams
@@ -124,7 +129,7 @@ window.showCaughtError = runWithAlertOnException
 
 ///params are {condition, errMsgFn}
 window.checkThat =
-function (params)
+function checkThat (params)
 {
 	if(!('condition' in params))
 	{
@@ -144,12 +149,36 @@ function (params)
 window.onerror = 
 function(message, url, line, col, error)
 {
-	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+message + '\nurl:' + url+
+	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+
+		message + '\nurl:' + url+
 		'\nline: '+line+', col: '+col+
-		//'\nerror: '+error +
-		'\nerror.stack:\n'+error.stack
+		'\nerror.stack:\n'+error?error.stack:'(error is null)'
 	this.console.log(s)
-	alert(s)
+	alert("(This has also been logged to the debug console)\n\n"+ s)
+}
+
+window.uniqueMsgCtr = (window.uniqueMsgCtr == null) ? 0 : window.uniqueMsgCtr
+
+window.uniqueMsg =
+function(s) {
+	uniqueMsgCtr++
+	return "unique msg #" + uniqueMsgCtr + ":\n"+s+"\nEND unique msg #" +
+		uniqueMsgCtr
+}
+
+window.bigLog = 
+function(err, s) {
+	let errPart = stringBetween(err.stack,' at ' , ')').trim()+')'
+	s=uniqueMsg(s)
+	let sArr = s.split("\n")
+	//console.log("bigLog(): fileName: '"+fileName+"', lineNumber: "+lineNumber)
+	console.log("bigLog(): "+errPart)
+	sArr.forEach(function (s) {
+		console.log(s)
+	})
+	//console.log("bigLog(): END fileName: '"+fileName+
+	//	"', lineNumber: "+lineNumber)
+	console.log("bigLog(): END "+errPart)
 }
 
 dbgload && console.log('reached end')
