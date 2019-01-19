@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<script type="module">
+	import * as u from "../../util.js"
+	console.log('here')
+	let s = `
+//some other script
+import * as u from "https://jsutil37.github.io/jsutil/util.js"
+alert('hello word')
+`
+//eval(s)
+let fn = async function() {
+	//alert('lll')
+	await loadScriptFromText(s,'module')
+}
+fn()
+</script>
+</body>
+</html>
