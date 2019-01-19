@@ -64,10 +64,11 @@
 			await loadHTML(url)
 			let templateClass = $("#textBoxForClassOfWidgetTemplate").val() 
 			let container = el("divIntoWhichToLoadTheWidget")
+			container.onload = function(){alert('onload() of the widget(container) called successfully.')}
 			container.innerHTML = '<div></div>'
 			//loadWidget(templateId,container)
 			let childOfWidget = container.children[0]
-			loadWidgetContent(childOfWidget, null, templateClass, url)
+			try{await loadWidgetContent(childOfWidget, null, templateClass, url)}catch(e){throw e}
 
 
 			setTimeout
