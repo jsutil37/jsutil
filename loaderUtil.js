@@ -19,12 +19,13 @@ getTextAtUrl - gets the text at the specified url
 loadScriptFromTextAtUrl - load only once, non-ES6 js script from specified url  
 							Works around CORS issues...
 loadEs6Module - load only once, ES6 module from specified url
-loadScriptFromText - asynchronously load the specified text as a script  
+loadScriptFromText - asynchronously load the specified text as a script of the 
+					specified type.
 					 To allow the script to export out values, declare a 
 					 module-level variable by saying:
 					 
 					 let exports={}
-					 
+					
 					 ...and in addition to using 'export <something>' syntax,
 					 also do 'exports.something = something'. The exports object is returned by loadScriptFromText()
 */
@@ -178,10 +179,14 @@ function addCommonLogicForResourceLoadingFn(fn)
 {
 	return 	async function(url,integrity,crossOrigin,resourceType)
 			{
+				let dbgload = false
 				dbgload && console.log('url='+url)
 				//should make into abs url ONLY IF not already an abs url
+				let oldUrl = url
 				url = getFullUrlOfXThatIsRelativeToTheWindowUrl(url)
-				dbgload && console.log('url='+url)
+				if(oldUrl != url) {
+					dbgload && console.log('full url='+url)
+				}
 				try{if(await checkAndRecordUrl(url)){return}}catch(e){throw e}
 				try{return await fn(url,integrity,crossOrigin,resourceType)}
 					catch(e){throw e}
@@ -269,19 +274,28 @@ async function ()
 	)
 }
 
-///This is really import
-///Here the text at the url is just supposed to be some <template> nodes
+///This is really HTML import
+///Here the text at the url is just supposed to be some <template> nodes, plus
+///some script(s) associated with the <template> nodes.
 ///Each template node should have some unique class so that the loadWidget
-///function can then do its magic. We want to avoid ids instead of classes as
-///a kind of best practice.
+///function can reference. As a best practice, we want to avoid ids and use classes instead.
 async function loadHtml2(url)
 {
+	let dbg = false
+	dbg && console.log('loadHtml2(): url=\''+url+'\'')
 	let txt
 	try{txt = await getTextAtUrl(url)}catch(e){throw e}
+	dbg && console.log(uniqueMsg('loadHtml2(): The text got from url \''+
+		url+'\' is:\n'+txt))
 	appendHtmlTxtToBody(txt,url)
 }
 
-window.loadHtml = addCommonLogicForResourceLoadingFn(loadHtml2)
+window.loadHtml = async function(url) {
+	let dbg = false
+	dbg && console.log('loadHtml is being called!!! url=\''+url+'\'')
+	let fn = addCommonLogicForResourceLoadingFn(loadHtml2)
+	await fn(url)
+}
 window.loadHTML = loadHtml
 
 /**
@@ -301,11 +315,25 @@ window.loadHTML = loadHtml
 window.loadWidgetContent = async function (
 	childOfWidget, widgetOnloadFn, templateClass, widgetContentUrl)
 {
-	if(widgetContentUrl){await loadHTML(widgetContentUrl)}
+	let dbg = false
+	if(widgetContentUrl){
+		await loadHTML(widgetContentUrl)
+		let s= document.documentElement.outerHTML 
+		dbg && bigLog(new Error(),"document.documentElement.outerHTML:\n"+s)
+		let i = s.indexOf('<template ')
+		dbg && console.log('document.documentElement.outerHTML.indexOf'+
+			'(\'<template \')='+i)
+		let template = document.querySelector("template")
+		if(template==null) {
+			alert('oops');throw new Error();
+		}
+	}
+	
 	//console.log('childOfWidget='+childOfWidget.outerHTML)
 	let widget = childOfWidget.parentNode
 	widget.innerHTML = ''
 	widget.onload = widgetOnloadFn
+	console.log('Set onload property for '+widget.outerHTML)
 	await loadWidgetContent_inner(templateClass, widget)
 }
 
@@ -323,11 +351,13 @@ window.raiseWidgetOnload = function (args)
 	let widgetChildToRemove = args.widgetChildToRemove
 	checkThat({condition:(widget == null) != (widgetChildToRemove == null),
 	errMsgFn:()=>"one of 'widgetChildToRemove' or 'widget' must be null, and the other must be non-null"})
-	if(!widget){widget = widgetChildToRemove.parentNode}
+	if(!widget){widget = widgetChildToRemove.parentElement}
 	if(widgetChildToRemove){widget.removeChild(widgetChildToRemove)}
 	if(widget.onload){
 		dbg && console.log('Calling onload function of widget. widget=\''+widget.outerHTML+'\', onload=\''+widget.onload+'\'')
 		widget.onload(widget)
+	} else {
+		throw new Error("No onload function defined for:\n"+widget.outerHTML)
 	}
 }
 
@@ -372,25 +402,30 @@ function loadWidgetContent_inner(templateClass, container)
 window.getTextAtUrl =
 async function (url)
 {
+	let dbg = false
+	dbg && console.log('url=\''+url+'\'')
 	return new Promise
 	(
 		function(resolve,reject)
 		{
-			if(url==null || url==''){reject(new Error('url must not be blank!!!'));return}			
-			$.get(url)
-			.done
+			if(url==null || url==''){reject(new Error('url must not be blank!!!'));return}
+			dbg && console.log('Before fetch(), url=\''+url+'\'')	
+			fetch(url)
+			.then
 			(
-				function(data)
+				function(resp)
 				{
-					//alert('pass, url=\''+url+'\'\n data=\''+data+'\'')
+					let data = resp.text()
+					dbg && 
+						console.log('pass, url=\''+url+'\'\n data=\''+data+'\'')
 					resolve(data)
 				}
 			)
-			.fail
+			.catch
 			(
 				function(reason)
 				{
-					//alert('dot fail')
+					dbg && console.log('error from fetch: '+reason)
 					reject(reason)
 				}
 			)			
@@ -436,10 +471,10 @@ async function (txt, scriptType)
 	script.id = 'script'+inlineScriptId
 	txt+= 	[
 			";\n(function () {",//leading semicolon seems to fix a js parser bug
-			"console.log('This is from script"+inlineScriptId+"')",
+			"//console.log('This is from script"+inlineScriptId+"')",
 			"let script = document.getElementById('script"+inlineScriptId+"')",
 			"if (typeof exports!='undefined'){script.exports = exports}",
-            "let event = new UIEvent('load')",
+			"let event = new UIEvent('load')",
 			"script.dispatchEvent(event)",
 			"}())"
 			].join('\n');
