@@ -24,10 +24,7 @@
 	<button type="button" class="buttonToRunUnitTests" onclick="onClickOfButtonToRunUnitTests(this)">Run unit tests</button>
 	<br>
 	<textarea style="width:99%;height:50px;background:#eeeeee" class="logWindow" readonly></textarea>
-	<script>
-		//Initialization function to be called from here.
-		//Later on use observer. 
-	</script>
+	<img src onerror="raiseWidgetOnload({widgetChildToRemove:this,widget:null})">
 </template>
 <script nomodule>
 	document.querySelector('.UnitTestRunnerWidget').innerText = 
@@ -40,7 +37,7 @@
 	function getPathOfUtilDotJs(){return './util.js'}
 </script>
 <script type="module">
-	import * as u from './util.js'
+	import * as u from /*begin relpath*/'./util.js'/*end relpath*/
 	
 	window.onClickOfButtonToRunUnitTests =
 	function(btn)
@@ -94,7 +91,8 @@
 		)
 		button.evtListener = function(){runUnitTests(params)}
 	}
-	
+	//console.log('defined \'connectTestRunnerWidgetToUnitTests\' globally...')
+
 	function runUnitTest(testId,unitTest,testRunnerWidget)
 	{
 		let oldalert = alert
