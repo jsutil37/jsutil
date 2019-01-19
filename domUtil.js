@@ -194,48 +194,43 @@ function (el,nodesMadeVisible)
 ///url: url from which the html was imported. The html will be changed so that 
 ///relative links are made absolute w.r.t. this url.
 window.appendHtmlTxtToBody =
-function(html,url,doc)
+function(html, url, doc)
 {
 	let dbg = false
-	dbg && console.log('Before parsing html...')
+	dbg && console.log('appendHtmlTxtToBody: Entry. url=\''+url+'\'')
 
 	if(doc == null){doc = document}
 
-	/*3rd param is 'keepScripts' and is recommended to be 'false' for future 
-	compatibility. But we are keeping this as true because this is needed for 
-	loading bootstrap deferred, as well as for import HTML.
-	*/
-	//let eles = $.parseHTML(html,document,true)//doesn't run <script src=""...
-	
 	//See https://howchoo.com/g/mmu0nguznjg/learn-the-slow-and-fast-way-to-append-elements-to-the-dom
 	let docFragment = doc.createRange().createContextualFragment(html)
 	dbg && console.log('After parsing html...')
 	
 	//let dbghtml=''
 	let dbghtml='\''+html+'\''
-	dbg && console.log('Before appending parsed HTML '+dbghtml+
-		' to the body...')
+	dbg && console.log('parsed HTML but without urls made absolute='+dbghtml)
 	
 	dbg && console.log('Created a docFragment with children.length='+
 		docFragment.children.length)
 	
-	dbg && console.log('Before setInnerHTML(),docFragment.html:\n'+
-		docFragment.innerHTML)
+	dbg && console.log(uniqueMsg('Before setInnerHTML(),docFragment.html:\n'+
+		docFragment.innerHTML))
 	setInnerHTML(docFragment, html, url)
-	dbg && console.log('After setInnerHTML(),docFragment.html:\n'+
-		docFragment.innerHTML)
+	dbg && console.log('After setInnerHTML(),docFragment.html with urls ' +
+		'made absolute:\n'+docFragment.innerHTML)
 	dbg && console.log('After setInnerHTML(),docFragment.children.length='+
 		docFragment.children.length)
-	dbg && console.log("Before appending doc fragment, "+
-		"doc.body.children.length=" + doc.body.children.length)
-	dbg && console.log("Before append, indexOf <span id=\"appdescdesc\""+
-		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
+	dbg && console.log(uniqueMsg("Before appending doc fragment, "+
+		"doc.body.children.length=" + doc.body.children.length))
+	dbg && bigLog(new Error(), "Before appending doc fragment from url '"+
+		url+"', doc.body.innerHTML:\n"+doc.body.innerHTML)
 	doc.body.appendChild(docFragment)
-	dbg && console.log("After appending doc fragment, "+
-		"doc.body.children.length=" + doc.body.children.length)
-	dbg && console.log("doc.body.innerHTML:\n"+doc.body.innerHTML)
+	dbg && console.log(uniqueMsg("After appending doc fragment from url '"+url+
+		"', doc.body.children.length=" + doc.body.children.length))
+	dbg && bigLog(new Error(), "After appending doc fragment, doc.body.innerHTML:\n"+doc.body.innerHTML)
+	/*
 	dbg && console.log("indexOf <span id=\"appdescdesc\""+
 		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
+	*/
 }
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
@@ -243,14 +238,16 @@ function(html,url,doc)
 function setInnerHTML(elm, html,url) 
 {
 	let dbg=false
-	dbg && console.log('html:\n'+html)
+	dbg && console.log('setInnerHTML(): html:\n'+html)
 	elm.innerHTML = html;
-	dbg && console.log('elm.innerHTML:\n'+elm.innerHTML)
+	dbg && console.log(uniqueMsg(
+		'setInnerHTML(): url=\''+url+'\', elm.innerHTML:\n'+elm.innerHTML))
 	if(url!='allUrlsAreAbsolute')
 	{
 		transformUrlsOfElesToBeAbsolute([elm],url)
 	}
-	dbg && console.log('248: elm.innerHTML:\n'+elm.innerHTML)
+	dbg && console.log(uniqueMsg(
+		'setInnerHTML(): After making urls absolute w.r.t \''+url+'\', elm.innerHTML:\n'+elm.innerHTML))
 	Array.from(elm.querySelectorAll("script")).forEach(function(el) {
 	  let newEl = document.createElement("script");
 	  Array.from(el.attributes).forEach(function(el) { 
@@ -259,7 +256,7 @@ function setInnerHTML(elm, html,url)
 	  newEl.appendChild(document.createTextNode(el.innerHTML));
 	  el.parentNode.replaceChild(newEl, el);
 	})
-	dbg && console.log('At exit: elm.innerHTML:\n'+elm.innerHTML)
+	dbg && console.log('setInnerHTML(): At exit: elm.innerHTML:\n'+elm.innerHTML)
   }
 
 function transformUrlsOfElesToBeAbsolute(eles,url)
@@ -272,42 +269,45 @@ function transformUrlsOfElesToBeAbsolute(eles,url)
 	}
 	Array.from(eles).forEach
 	(
-		function(ele)
-		{
-			//3=text node, 8=comment node
-			if(ele.nodeType == 3 || ele.nodeType == 8)
-			{
-				return;
-			}
-			dbg && console.log('typeof ele = ' + typeof ele)
-			dbg && console.log("ele='"+ele.outerHTML+"'...")
-			if(ele.src!=null && ele.src != "")
-			{
-				let urlToChange = ele.src
-				dbg && console.log('urlToChange=\''+urlToChange+'\'')
-				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
-					urlToChange, url)
-				dbg && console.log('changedUrl=\''+changedUrl+'\'') 
-				ele.src = changedUrl
-			}
-			if(ele.href!=null)
-			{
-				let urlToChange = ele.href
-				dbg && console.log('urlToChange=\''+urlToChange+'\'')
-				let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
-					urlToChange, url)
-				dbg && console.log('changedUrl=\''+changedUrl+'\'') 
-				ele.href = changedUrl
-			}
-			if(ele.tagName=='SCRIPT')
-			{
-				transformUrlOfScriptToBeAbsolute(ele,url)
-			}
-			dbg && console.log('ele.children==null = '+(ele.children==null))
-			//debugger
-			transformUrlsOfElesToBeAbsolute(ele.children,url)
+		function(ele) {
+			transformUrlsOfEleToBeAbsolute(ele,url,dbg)
 		}
 	)
+}
+
+function transformUrlsOfEleToBeAbsolute (ele,url,dbg) {
+	//3=text node, 8=comment node
+	if(ele.nodeType == 3 || ele.nodeType == 8)
+	{
+		return;
+	}
+	dbg && console.log('typeof ele = ' + typeof ele)
+	dbg && console.log("ele='"+ele.outerHTML+"'...")
+	if(ele.src!=null && ele.src != "")
+	{
+		let urlToChange = ele.src
+		dbg && console.log('urlToChange=\''+urlToChange+'\'')
+		let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
+			urlToChange, url)
+		dbg && console.log('changedUrl=\''+changedUrl+'\'') 
+		ele.src = changedUrl
+	}
+	if(ele.href!=null)
+	{
+		let urlToChange = ele.href
+		dbg && console.log('urlToChange=\''+urlToChange+'\'')
+		let changedUrl = getFullUrlOfUrlXThatIsRelativeToUrlY(
+			urlToChange, url)
+		dbg && console.log('changedUrl=\''+changedUrl+'\'') 
+		ele.href = changedUrl
+	}
+	if(ele.tagName=='SCRIPT')
+	{
+		transformUrlOfScriptToBeAbsolute(ele,url)
+	}
+	dbg && console.log('ele.children==null = '+(ele.children==null))
+	//debugger
+	transformUrlsOfElesToBeAbsolute(ele.children,url)
 }
 
 function transformUrlOfScriptToBeAbsolute(ele,url)
