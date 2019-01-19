@@ -62,3 +62,29 @@ function (fn,symName,sleeptime,timeout)
 	)
 }
 window.waitForSymbol=window.waitUntilSymbolAppearsAndThenRun
+window.waitForSymbolAndThenRun=window.waitUntilSymbolAppearsAndThenRun
+
+window.waitForSymbolsAndThenRun = 
+function (fn,symNames,sleeptime,timeout)
+{
+	waitForSymbolAndThenRun
+	(
+		function()
+		{
+			if(symNames.length > 1) {
+				symNames.shift()	
+				waitForSymbolsAndThenRun(fn,symNames,sleeptime,timeout)
+				return
+			}
+			fn()
+		},
+		symNames[0],sleeptime,timeout
+	)
+}
+
+window.waitForFnAndThenRunIt = function(s,args,timeoutInMilliSec) {				
+	waitForSymbol(async function()
+	{
+		try{await window[s](args)}catch(e){throw e}
+	},s,200,timeoutInMilliSec)
+}
