@@ -50,7 +50,8 @@ function(args)
 {
 	checkArgs(args, ['btn', 'fn','exceptionMsgPrefix'])
 	args.btn.disabled = true
-	showCaughtError(args)
+	let args2 = {fn:args.fn,exceptionMsgPrefix:args.exceptionMsgPrefix}
+	showCaughtError(args2)
 	args.btn.disabled = false
 }
 
