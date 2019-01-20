@@ -278,8 +278,9 @@ async function ()
 ///This is really HTML import
 ///Here the text at the url is just supposed to be some <template> nodes, plus
 ///some script(s) associated with the <template> nodes.
-///Each template node should have some unique class so that the loadWidget
-///function can reference. As a best practice, we want to avoid ids and use classes instead.
+///Each template node should have some unique class so that the 
+///loadWidgetContent and loadWidgetContentIntoContainer function can reference
+//it. As a best practice, we want to avoid ids and use classes instead.
 async function loadHtml2(url)
 {
 	let dbg = false
