@@ -28,7 +28,8 @@
 				//await loadHTML("https://jsutil37.github.io/jsutil/UnitTestRunnerWidget.html")
 				try{await loadHTML("../UnitTestRunnerWidget.html")}
 				catch(e){throw e}		
-				loadWidget("UnitTestRunnerWidget", el("container"))
+				loadWidgetContentIntoContainer(
+					"UnitTestRunnerWidget", el("container"))
 			},
 			"Loading unit test runner widget..."
 		)
