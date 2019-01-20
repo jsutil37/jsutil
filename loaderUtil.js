@@ -314,7 +314,28 @@ window.loadHTML = loadHtml
  * 						side-effects
  */
 window.loadWidgetContent = async function (
-	childOfWidget, widgetOnloadFn, templateClass, widgetContentUrl)
+	childOfWidget, widgetOnloadFn, templateClass, widgetContentUrl) 
+{
+	try{await loadWidgetContentIntoContainer(
+		childOfWidget.parentElement,  widgetOnloadFn, templateClass, widgetContentUrl
+	)}catch(e){throw e}
+}
+
+/**
+ * Loads widget content into the specified widget container. 
+ * params: 
+ * widgetContainer: 	A reference to the widget container
+ * widgetOnloadFn: 		Give a name of a function that accepts one parameter
+ *						The function will be called on load of the widget,
+						with that widget as the function param.
+ * templateClass: 	The widget template class
+ * widgetContentUrl: 	The url of the html file that contains the widget
+ *	 					template. Optional if html import from this url is
+ *						done before, but specifying it will not have 
+ * 						side-effects
+ */
+window.loadWidgetContentIntoContainer = async function (
+	widgetContainer, widgetOnloadFn, templateClass, widgetContentUrl)
 {
 	let dbg = false
 	if(widgetContentUrl){
@@ -330,12 +351,10 @@ window.loadWidgetContent = async function (
 		}
 	}
 	
-	//console.log('childOfWidget='+childOfWidget.outerHTML)
-	let widget = childOfWidget.parentNode
-	widget.innerHTML = ''
-	widget.onload = widgetOnloadFn
-	console.log('Set onload property for '+widget.outerHTML)
-	await loadWidgetContent_inner(templateClass, widget)
+	widgetContainer.innerHTML = ''
+	widgetContainer.onload = widgetOnloadFn
+	console.log('Set onload property for '+widgetContainer.outerHTML)
+	await loadWidgetContent_inner(templateClass, widgetContainer)
 }
 
 /**
