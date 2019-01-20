@@ -66,10 +66,8 @@
 			let container = el("divIntoWhichToLoadTheWidget")
 			container.onload = function(){alert('onload() of the widget(container) called successfully.')}
 			container.innerHTML = '<div></div>'
-			//loadWidget(templateId,container)
 			let childOfWidget = container.children[0]
 			try{await loadWidgetContent(childOfWidget, null, templateClass, url)}catch(e){throw e}
-
 
 			setTimeout
 			(
