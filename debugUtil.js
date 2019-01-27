@@ -152,7 +152,9 @@ function(message, url, line, col, error)
 	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+
 		message + '\nurl:' + url+
 		'\nline: '+line+', col: '+col+
-		'\nerror.stack:\n'+error?error.stack:'(error is null)'
+		'\nerror.stack:\n'+ (error?
+		(error.stack ? error.stack : '(error.stack is null)')
+		:'(error is null)')
 	this.console.log(s)
 	alert("(This has also been logged to the debug console)\n\n"+ s)
 }

@@ -389,4 +389,11 @@ function transformUrlOfScriptToBeAbsolute(ele,url)
 	ele.innerHTML = s
 }
 
+//reference: https://stackoverflow.com/questions/1219860/html-encoding-lost-when-attribute-read-from-input-field
+window.htmlEncode = function (value) {
+// Create a in-memory div, set its inner text (which jQuery automatically encodes)
+  // Then grab the encoded contents back out. The div never exists on the page.
+  return $('<div/>').text(value).html();
+}
+
 dbgload && console.log('reached end')

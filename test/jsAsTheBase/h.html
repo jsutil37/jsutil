@@ -5,9 +5,11 @@
 
 <body>
 	<div id="mainDiv"></div>
+	<div id="pageNavButtonsDiv"></div>
 	<script type="module">
 		import * as j from './j.js'
-		document.getElementById('mainDiv').innerHTML = j.s
+		j.showPage('page1')
+		j.showPageNavButtons()
 	</script>
 </body>
 
