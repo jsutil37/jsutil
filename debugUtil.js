@@ -149,7 +149,7 @@ function checkThat (params)
 window.onerror = 
 function(message, url, line, col, error)
 {
-	let s = 'ERROR CAUGHT BY GLOBAL ERROR HANDLER\n'+
+	let s = 'ERROR\n'+
 		message + '\nurl:' + url+
 		'\nline: '+line+', col: '+col+
 		'\nerror.stack:\n'+ (error?
@@ -157,6 +157,7 @@ function(message, url, line, col, error)
 		:'(error is null)')
 	this.console.log(s)
 	alert("(This has also been logged to the debug console)\n\n"+ s)
+	debugger
 }
 
 window.uniqueMsgCtr = (window.uniqueMsgCtr == null) ? 0 : window.uniqueMsgCtr
