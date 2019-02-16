@@ -1,5 +1,8 @@
 import * as u from '../../util.js'
-
+/*
+design points:
+each control on own row
+*/
 let pageConfigs = {}
 let idsOfPreviousPages = []
 let page = null
@@ -69,16 +72,9 @@ pageConfigs['page3'] = {
 }
 
 const btnHtml =/*html*/`
-<table style="width:100%">
-<tr>
-<td align="center" style="width:50%">
 <button disabled id="backButton" type="button" onclick="onBackButtonClick()">Back</button>
-</td>
-<td align="center">
+<br><br>
 <button disabled id="nextButton" type="button" onclick="onNextButtonClick()">Next</button>
-</td>
-</tr>
-</table>
 `
 
 window.onNextButtonClick = () => {
