@@ -65,6 +65,12 @@ function (s)
 	alert(s)
 }
 
+window.p =
+function (s)
+{
+	console.log(s)
+}
+
 window.checkParams = 
 function(params, arrayOfKeys)
 {
