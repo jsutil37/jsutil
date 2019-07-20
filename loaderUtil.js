@@ -29,6 +29,7 @@ loadScriptFromText - asynchronously load the specified text as a script of the
 					
 					 ...and in addition to using 'export <something>' syntax,
 					 also do 'exports.something = something'. The exports object is returned by loadScriptFromText()
+fetchJson - async function(url,fetchOptions) - debug using window.dbgFetchJson
 */
 dbgload && console.log('before util import')
 import './util.js'
@@ -544,5 +545,29 @@ function (fn)
 		fn()
 	}
 }
+
+window.fetchJson = async function(url,options) {
+	//p=a
+	let dbgFetchJson = window.dbgFetchJson
+	try{
+		dbgFetchJson && p("Calling fetch, url:\n"+url+"\noptions:\n"+JSON.stringify(options,null,2))
+		//reference: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+		//The fetch() method can optionally accept a second parameter, an init object that allows you to control a number of different settings
+		let res = await fetch(url, options);
+		if (!res.ok) {
+			dbgFetchJson && p('fetch response is not ok. Error: '+res.statusText)
+			throw Error(res.statusText);
+		}
+		let responseText = await res.text()
+		dbgFetchJson && p('responseText='+responseText)
+		let responseJson = JSON.parse(responseText)
+		dbgFetchJson && p('responseJson:\n'+JSON.stringify(responseJson,null,2));//additional params 'null' and '2' make it pretty-print
+		return responseJson;
+	} catch(e){
+	    dbgFetchJson && p('oops:'+e)
+        throw e;
+	}
+}
+
 
 dbgload && console.log('reached end')
