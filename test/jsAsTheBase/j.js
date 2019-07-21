@@ -1,6 +1,6 @@
 import * as u from '../../util.js'
 /*
-To see the output, go to https://jsutil37.github.io/usutil/test/jsAsTheBase/h.html
+To see the output, go to https://jsutil37.github.io/jsutil/test/jsAsTheBase/h.html
 
 design points:
 each control on own row
