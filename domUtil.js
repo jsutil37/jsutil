@@ -147,6 +147,33 @@ function (params)
 	return retval
 }
 
+window.getNearestSingleDescendantWhoseClassNameIs =
+function (params)
+{
+	checkParams(params, ['el', 'className'])
+	let el = params.el
+	let className = params.className
+	let children = Array.from(el.children)
+	let retval = null
+	children.forEach
+	(
+	function(el)
+	{
+		if(el.classList.contains(className))
+		{
+			assert(retval==null)
+			retval = el
+			return true
+		}
+		let oldEl = params.el
+		params.el = el
+		retval = getNearestDescendantWhoseClassNameIs(params)
+		params.el = oldEl
+	}
+	)
+	return retval
+}
+
 window.tabEleForTabPaneThatContains = 
 function (el)
 {
