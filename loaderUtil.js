@@ -30,6 +30,12 @@ loadScriptFromText - asynchronously load the specified text as a script of the
 					 ...and in addition to using 'export <something>' syntax,
 					 also do 'exports.something = something'. The exports object is returned by loadScriptFromText()
 fetchJson - async function(url,fetchOptions) - debug using window.dbgFetchJson
+sendAndReceiveJson - async function(params) - wrapper around fetchJson
+			params: 
+				method - HTTP method names ('post', 'put', 'get', 'delete' etc.)
+				objForBody - js object that is to be serialized as the json-format body
+				commonPartOfApiUrl - common part of the api url including the common ending '/'
+				uniquePartOfApiUrl - remaining part of the api url
 */
 dbgload && console.log('before util import')
 import './util.js'
@@ -569,5 +575,30 @@ window.fetchJson = async function(url,options) {
 	}
 }
 
+window.sendAndReceive = async function (params) {
+    try{
+        checkParams(params, ['method', 'objForBody','commonPartOfApiUrl',
+            'uniquePartOfApiUrl'])
+        let fetchOptions = {
+            credentials: "include",
+            headers: {
+                accept: "application/json, text/javascript, */*; q=0.01",
+                "accept-language": "en",
+                "content-type": "application/json",
+                "x-ms-effective-locale": "en.en-us"
+            },
+            referrerPolicy: "no-referrer-when-downgrade",
+            body: str(params.objForBody),
+            method: params.method,
+            mode: "cors"
+        }
+        return await fetchJson(
+            params.commonPartOfApiUrl+params.uniquePartOfApiUrl,
+            fetchOptions
+        )
+    } catch(e) {
+        throw e
+    }
+}
 
 dbgload && console.log('reached end')
