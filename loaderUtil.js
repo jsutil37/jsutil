@@ -575,7 +575,7 @@ window.fetchJson = async function(url,options) {
 	}
 }
 
-window.sendAndReceive = async function (params) {
+window.sendAndReceiveJson = async function (params) {
     try{
         checkParams(params, ['method', 'objForBody','commonPartOfApiUrl',
             'uniquePartOfApiUrl'])
