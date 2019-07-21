@@ -1,7 +1,17 @@
 import * as u from '../../util.js'
 /*
+To see the output, go to https://jsutil37.github.io/usutil/test/jsAsTheBase/h.html
+
 design points:
 each control on own row
+TODO: write out:
+<style>
+* {
+	width: 100%; 
+  }
+</style>
+
+...in a reusable way
 */
 let pageConfigs = {}
 let idsOfPreviousPages = []
