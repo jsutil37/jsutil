@@ -167,10 +167,15 @@ function (params)
 		}
 		let oldEl = params.el
 		params.el = el
-		retval = getNearestDescendantWhoseClassNameIs(params)
+		let retval2 = getNearestDescendantWhoseClassNameIs(params)
+		if(retval2 != null) {
+			assert(retval==null)
+			retval = retval2
+		}
 		params.el = oldEl
 	}
 	)
+	assert(retval!=null)
 	return retval
 }
 
