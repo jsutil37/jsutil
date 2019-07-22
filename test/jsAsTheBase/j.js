@@ -7,7 +7,7 @@ each control on own row
 TODO: write out:
 <style>
 * {
-	width: 100%; 
+	width: 99%; 
   }
 </style>
 
