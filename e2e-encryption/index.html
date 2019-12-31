@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<style>
+			* {width: 99%;}
+		</style>
+	</head>
+	<body>
+		<script src="https://jsutil37.github.io/jsutil/basicSyncUtil.js"></script>
+		<script src="crypto-aes-gcm-wrapper.js"></script>
+		<script type="module">
+		import * as u from 'https://jsutil37.github.io/jsutil/util.js'
+		loadScriptFromTextAtUrl("https://gist.githubusercontent.com/chrisveness/43bcda93af9f646d083fad678071b90a/raw/e40cd0f5237aedcfc4641ad728f119b48f4b5082/crypto-aes-gcm.js")
+		</script>
+		Text to encrypt<br>
+		<textarea id="txtToEncrypt" rows="10" cols="80"></textarea>
+		<br>
+		<button type="button" onclick="encrypt()">Encrypt</button>
+		<br>
+		<br>
+		Password to encrypt/decrypt with<br>
+		<input type=text id="passwd">
+		<br>
+		<br>
+		Text to Decrypt<br>
+		<textarea id="txtToDecrypt"  rows="10" cols="80"></textarea><br>
+		<button type="button" onclick="decrypt()">Decrypt</button><br>
+		<br>
+        <br>
+        Decrypted Text<br>
+		<textarea id="decryptedTxt"  rows="10" cols="80" readonly></textarea>
+		<script>
+
+		function encrypt2()
+		{
+		alert('encrypt2 works!')
+		}
+
+		async function encrypt()
+		{
+			var txtToEncrypt = document.getElementById("txtToEncrypt").value
+			var passwd = document.getElementById("passwd").value
+			var ciphertext;			
+			try
+			{
+				ciphertext = await aesGcmEncrypt(txtToEncrypt, passwd);
+			}
+			catch(ex)
+			{
+				alert(ex)
+				return
+			}
+			document.getElementById('txtToDecrypt').value = ciphertext
+			alert('encryption complete');
+		}
+
+		async function decrypt()
+		{
+			var txtToDecrypt = document.getElementById("txtToDecrypt").value
+			var passwd = document.getElementById("passwd").value			
+			var decyrptedText;
+			try
+			{
+			decyrptedText = await aesGcmDecrypt(txtToDecrypt, passwd);
+			}
+			catch(ex)
+			{
+				alert(ex)
+				return
+			}
+			document.getElementById('decryptedTxt').value = decyrptedText
+			alert('decryption complete');
+		}
+		</script>
+	</body>
+</html>
