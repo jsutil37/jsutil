@@ -440,4 +440,17 @@ window.htmlToElement = function(html) {
     return template.content.firstChild;
 }
 
+window.redrawHtml = function(html) {
+	var noSpaceHtml = html.replaceAll(" ","");
+	var id = html.rightOf('id="').leftOf('"');
+	var ele = document.getElementById(id);
+	if(ele == null) {
+		document.body.appendChild(htmltoElement(html));
+	} else {
+		var parent = ele.parentElement;
+		ele.remove();
+		parent.appendChild(htmltoElement(html));
+	}
+}
+
 dbgload && console.log('reached end')
