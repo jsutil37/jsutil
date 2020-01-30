@@ -7,6 +7,13 @@ function(s,delim)
 }
 window.leftof = leftOf
 
+String.prototype.leftOf = String.prototype.leftOf ||
+function(delim)
+{
+    var target = this
+    return leftOf(target,delim)
+}
+	
 //shortcut for JSON.stringify
 window.str = function(s){return JSON.stringify(s)}
 
@@ -18,6 +25,13 @@ function (s,delim)
 	return s.substring(i+delim.length)
 }
 window.rightof = rightOf
+
+String.prototype.rightOf = String.prototype.rightOf ||
+function(delim)
+{
+    var target = this
+    return rightOf(target,delim)
+}
 
  window.partBetween =
  function (s,leftDelim,rightDelim)
