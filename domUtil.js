@@ -445,7 +445,7 @@ window.redrawHtml = function(html) {
 	var id = html.rightOf('id="').leftOf('"');
 	var ele = document.getElementById(id);
 	if(ele == null) {
-		document.body.appendChild(htmltoElement(html));
+		document.body.appendChild(htmlToElement(html));
 	} else {
 		var parent = ele.parentElement;
 		ele.remove();
