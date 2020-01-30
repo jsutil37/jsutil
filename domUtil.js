@@ -449,7 +449,7 @@ window.redrawHtml = function(html) {
 	} else {
 		var parent = ele.parentElement;
 		ele.remove();
-		parent.appendChild(htmltoElement(html));
+		parent.appendChild(htmlToElement(html));
 	}
 }
 
