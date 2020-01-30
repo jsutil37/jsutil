@@ -428,4 +428,16 @@ window.htmlEncode = function (value) {
   return $('<div/>').text(value).html();
 }
 
+/**
+ * @param {String} HTML representing a single element
+ * @return {Element}
+ * reference: https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro/35385518#35385518
+ */
+window.htmlToElement = function(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
 dbgload && console.log('reached end')
