@@ -1,9 +1,10 @@
 # About This Repository
 Reusable js utility functions. 
-These are not mean to be standard ways of doing things or even the best ways, and may reinvent the wheel.
-However they just might get someone up and running quickly.
+These are not meant to be standard ways of doing things or even the best ways, and may reinvent the wheel.
+However they just might get someone up and running quickly as soon as possible.
 
-To get in touch, please open an issue
+The code is MIT-licensed, also if anything is found helpful, please link to the appropriate url of this repository and star this repository.
+To get in touch, please open an issue with your contact details and we will contact you.
 
 https://jsutil37.github.io/jsutil
 
