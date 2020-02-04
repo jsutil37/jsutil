@@ -1,5 +1,9 @@
-# jsutil
-js utility functions
+# About This Repository
+Reusable js utility functions. 
+These are not mean to be standard ways of doing things or even the best ways, and may reinvent the wheel.
+However they just might get someone up and running quickly.
+
+To get in touch, please open an issue
 
 https://jsutil37.github.io/jsutil
 
