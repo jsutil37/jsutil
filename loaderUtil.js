@@ -580,7 +580,7 @@ window.sendAndReceiveJson = async function (params) {
         checkParams(params, ['method', 'objForBody','commonPartOfApiUrl',
             'uniquePartOfApiUrl'])
         let fetchOptions = {
-            credentials: "include",
+            credentials: "omit",
             headers: {
                 accept: "application/json, text/javascript, */*; q=0.01",
                 "accept-language": "en",
