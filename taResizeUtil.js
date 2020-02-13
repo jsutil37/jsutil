@@ -15,7 +15,11 @@ onDocumentReady
 
 function makeTextareasResizable()
 {
-	//a('not making textareas resizable for now');	return
+	if(!(window.shouldMakeTextAreasResizeable))
+	{
+		//a('not making textareas resizable for now');
+		return
+	}
 	blockAndUnblockUI
 	(
 	function()
