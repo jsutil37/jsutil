@@ -5,7 +5,7 @@ exported functions:
 onDocumentReady()
 appendHtmlTxtToBodyAfterDocumentIsReady()
 waitToRun(fn,conditionfn,sleeptime,timeout,timeoutsofar)
-waitUntilSymbolAppearsAndThenRun((fn,symName,sleeptime,timeout)
+waitUntilSymbolAppearsAndThenRun((fn,symName,sleeptime,timeout) --defined in basicSyncUtil.js
 */
 
 let dbgload = window.dbgload
