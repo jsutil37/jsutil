@@ -588,10 +588,14 @@ window.sendAndReceiveJson = async function (params) {
                 "x-ms-effective-locale": "en.en-us"
             },
             referrerPolicy: "no-referrer-when-downgrade",
-            body: str(params.objForBody),
             method: params.method,
             mode: "cors"
         }
+		if(params.method.toUpperCase()!='GET') {
+			fetchOptions.body = str(params.objForBody);
+		} else {
+			assert(params.objForBody == null);
+		}
         return await fetchJson(
             params.commonPartOfApiUrl+params.uniquePartOfApiUrl,
             fetchOptions
