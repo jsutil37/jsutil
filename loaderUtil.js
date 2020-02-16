@@ -570,7 +570,7 @@ window.fetchJson = async function(url,options) {
 		dbgFetchJson && p('responseJson:\n'+JSON.stringify(responseJson,null,2));//additional params 'null' and '2' make it pretty-print
 		return responseJson;
 	} catch(e){
-	    dbgFetchJson && p('oops:'+e)
+	    dbgFetchJson && p('Encountered error:'+e.message+'\n'+e.stack);
         throw e;
 	}
 }
