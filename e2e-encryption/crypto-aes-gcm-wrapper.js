@@ -1,3 +1,4 @@
+//this file just adds alert wrappers for debugging.
 const debugencdec = false;
 
 "use strict"
