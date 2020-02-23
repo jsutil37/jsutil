@@ -190,4 +190,11 @@ function(err, s) {
 	console.log("bigLog(): END "+errPart)
 }
 
+window.todo = function()
+{
+	debugger;
+	alert('TODO (open debugger to see the applicable line)');
+	throw new Error('TODO');
+}
+
 dbgload && console.log('reached end')
