@@ -20,11 +20,8 @@
 		<button type="button" onclick="encrypt()">Encrypt</button>
 		<br>
 		<br>
-		<button type="button" onclick="eval(document.getElementById('txtToEncrypt').value);">Eval</button>
-		<br>
-		<br>
 		Password to encrypt/decrypt with<br>
-		<input type=text id="passwd">
+		<input type=password id="passwd">
 		<br>
 		<br>
 		Text to Decrypt<br>
@@ -34,6 +31,8 @@
         <br>
         Decrypted Text<br>
 		<textarea id="decryptedTxt"  rows="10" cols="80" readonly></textarea>
+		<br>
+		<button type="button" onclick="eval(document.getElementById('txtToEncrypt').value);">Eval</button>
 		<script>
 
 		function encrypt2()
