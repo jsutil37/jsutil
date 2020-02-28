@@ -1,0 +1,20 @@
+<script>
+//deployed to https://jsutil37.github.io/jsutil/test/basic/testJsGenerators.html
+//reference:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+
+function* idMaker() {
+  var index = 0;
+  while (true) {
+    yield index;
+    index++;
+  }
+}
+
+var gen = idMaker();
+
+console.log(gen.next().value); // 0
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+console.log(gen.next().value); // 3
+
+</script>
