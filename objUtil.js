@@ -62,6 +62,6 @@ function(m1,m2)
 	return true
 }
 
-window.isInt = function(o){return Number.IsInteger(o);}
+window.isInt = function(o){return Number.isInteger(o);}
 
 dbgload && console.log('reached end')
