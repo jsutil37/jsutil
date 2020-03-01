@@ -197,15 +197,20 @@ window.todo = function()
 	throw new Error('TODO');
 }
 
-window.strWithoutQuotes = function(arr) 
+//to print out an array of strings for debugging purposes
+window.strWithoutQuotes = function(arr, useEnter) 
 {
-	var rv='';
+	let rv='[';
+	let wasFirstEleEncountered = false;
 	arr.forEach(ele=>{
-		if(rv!=''){rv+=',';}
+		if(wasFirstEleEncountered){rv+=',';}
+		if(useEnter){rv+='\n';}
 		assert(isString(ele));
-		rv+=ele
+		rv+=ele;
+		wasFirstEleEncountered = true;
 	});
-	return rv;
+	if(useEnter){rv+='\n';}
+	return rv+']';
 }
 
 dbgload && console.log('reached end')
