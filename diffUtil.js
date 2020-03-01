@@ -23,3 +23,8 @@ window.llcs = function (s1, s2) {
 	}
 	return c[m][n];
 }
+
+window.llcsError = function(s1, s2) {
+	let commonLen = llcs(s1,s2);
+	return s1.length + s2.length - 2 * commonLen;
+}
