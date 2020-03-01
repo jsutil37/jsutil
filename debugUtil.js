@@ -197,4 +197,15 @@ window.todo = function()
 	throw new Error('TODO');
 }
 
+window.strWithoutQuotes = function(arr) 
+{
+	var rv='';
+	arr.forEach(ele=>{
+		if(rv!=''){rv+=',';}
+		assert(isString(ele));
+		rv+=ele
+	});
+	return rv;
+}
+
 dbgload && console.log('reached end')
