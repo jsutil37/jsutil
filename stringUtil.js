@@ -65,6 +65,11 @@ function(s,delim)
 	return arr.concat(mysplit(s,delim))
 }
 
+window.isString = 
+function (value) {
+	return typeof value === 'string' || value instanceof String;
+}
+
 window.upto100chars = 
 function(s)
 {
