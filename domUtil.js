@@ -453,4 +453,13 @@ window.redrawHtml = function(html) {
 	}
 }
 
+window.drawHtmlIfNotAlready = function(html) {
+	var noSpaceHtml = html.replaceAll(" ","");
+	var id = html.rightOf('id="').leftOf('"');
+	var ele = document.getElementById(id);
+	if(ele == null) {
+		document.body.appendChild(htmlToElement(html));
+	}
+}
+
 dbgload && console.log('reached end')
