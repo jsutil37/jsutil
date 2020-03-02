@@ -437,8 +437,16 @@ async function (url)
 		function(resolve,reject)
 		{
 			if(url==null || url==''){reject(new Error('url must not be blank!!!'));return}
-			dbg && console.log('Before fetch(), url=\''+url+'\'')	
-			fetch(url)
+			dbg && console.log('Before fetch(), url=\''+url+'\'');
+			var myHeaders = new Headers();
+			myHeaders.append('pragma', 'no-cache');
+			myHeaders.append('cache-control', 'no-cache');
+
+			var myInit = {
+			  method: 'GET',
+			  headers: myHeaders,
+			};
+			fetch(url, myInit)
 			.then
 			(
 				function(resp)
