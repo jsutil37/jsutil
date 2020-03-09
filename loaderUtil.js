@@ -430,9 +430,9 @@ function loadWidgetContent_inner(templateClass, container)
 window.getTextAtUrl =
 async function (url)
 {
-	alert('getTextAtUrl(): Entry. window.dbgGetTextAtUrl='+dbgGetTextAtUrl);
+	//alert('getTextAtUrl(): Entry. window.dbgGetTextAtUrl='+dbgGetTextAtUrl);
 	let dbg = false || window.dbgGetTextAtUrl;
-	alert('dbg='+dbg);
+	//alert('dbg='+dbg);
 	dbg && console.log('url=\''+url+'\'')
 	return new Promise
 	(
@@ -447,7 +447,7 @@ async function (url)
 			  method: 'GET',
 			  headers: myHeaders,
 			};
-			dbg && console.log('Before fetch(), url=\''+url+'\', myInit: ',myInit);
+			dbg && console.log('Before fetch(), url=\''+url+'\', myHeaders: ',myHeaders);
 			fetch(url, myInit)
 			.then
 			(
