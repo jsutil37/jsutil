@@ -430,7 +430,9 @@ function loadWidgetContent_inner(templateClass, container)
 window.getTextAtUrl =
 async function (url)
 {
+	alert('getTextAtUrl(): Entry. window.dbgGetTextAtUrl='+dbgGetTextAtUrl);
 	let dbg = false || window.dbgGetTextAtUrl;
+	alert('dbg='+dbg);
 	dbg && console.log('url=\''+url+'\'')
 	return new Promise
 	(
