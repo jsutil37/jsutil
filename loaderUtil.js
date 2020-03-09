@@ -430,7 +430,7 @@ function loadWidgetContent_inner(templateClass, container)
 window.getTextAtUrl =
 async function (url)
 {
-	let dbg = false
+	let dbg = false || window.dbgGetTextAtUrl;
 	dbg && console.log('url=\''+url+'\'')
 	return new Promise
 	(
