@@ -5,7 +5,7 @@
 // - right margin after 80 character columns. Do not exceed the right margin
 let dbgload = window.dbgload
 dbgload && console.log('start')
-console.log('Loaded github version of loaderUtil.js...')
+console.log('Loaded '+document.currentScript.src)
 /*
 Functions made globally available (attached to the global 'window' object):
 
