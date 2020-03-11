@@ -7,7 +7,7 @@ let dbgload = window.dbgload
 dbgload && console.log('start')
 let scripts = document.getElementsByTagName("script"),
 let src = scripts[scripts.length-1].src;
-console.log('Loaded '+document.currentScript.src)
+console.log('Loaded '+src)
 /*
 Functions made globally available (attached to the global 'window' object):
 
