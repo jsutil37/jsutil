@@ -448,7 +448,12 @@ async function (url)
 			  headers: myHeaders,
 			};
 			dbg && console.log('Before fetch(), url=\''+url+'\', myHeaders: ',myHeaders);
-			fetch(url, myInit)
+			
+			//passing in myInit makes it a non-simple request that in turn causes a 
+			//pre-flight OPTIONS request, that in turn causes resources like github
+			//gists to return 'Forbidden' HTTP error.
+			
+			fetch(url)//, myInit)
 			.then
 			(
 				function(resp)
