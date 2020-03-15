@@ -213,4 +213,20 @@ window.strWithoutQuotes = function(arr, useEnter)
 	return rv+']';
 }
 
+window.scriptPath = function scriptPath() {
+	try {
+		//Throw an error to generate a stack trace
+		throw new Error();
+	}
+	catch(e) {
+		//Split the stack trace into each line
+		var stackLines = e.stack.split('\n');
+		//Now walk though each line until we find a path reference
+		for(let i in stackLines){
+			if(stackLines[i].match(/http[s]?:\/\//) || 
+			stackLines[i].match(/file?:\/\//)) {return stackLines[i];}
+		}
+	}
+}
+
 dbgload && console.log('reached end')
