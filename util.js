@@ -11,7 +11,7 @@
 //module, "use strict" is not necessary
 let dbgload = window.dbgload
 dbgload && console.log('util.js: loading started. This log message is expected to come only once per page load...')		
-console.log('loaded github version of util.js...')
+console.log('loaded '+scriptPath());
 
 //Put basic functions and shortcuts at the top, and those that depend on them, 
 //further below:
