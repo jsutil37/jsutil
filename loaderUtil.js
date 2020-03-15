@@ -3,11 +3,10 @@
 //Set your editor to:
 // - view 1 tab as 4 spaces
 // - right margin after 80 character columns. Do not exceed the right margin
+
 let dbgload = window.dbgload
 dbgload && console.log('start')
-let scripts = document.getElementsByTagName("script");
-let src = scripts[scripts.length-1].src;
-console.log('Loaded '+src)
+console.log('Loaded '+scriptPath())
 /*
 Functions made globally available (attached to the global 'window' object):
 
