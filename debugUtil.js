@@ -224,7 +224,7 @@ window.scriptPath = function scriptPath() {
 		//Now walk though each line until we find a path reference
 		for(let i in stackLines){
 			let s = stackLines[i];
-			console.log('s',s);
+			//console.log('s',s);
 			if(s.indexOf('scriptPath')!=-1){continue;}
 			if(s.match(/http[s]?:\/\//)){
 				return s.substr(s.indexOf('http'));
