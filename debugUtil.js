@@ -223,8 +223,15 @@ window.scriptPath = function scriptPath() {
 		var stackLines = e.stack.split('\n');
 		//Now walk though each line until we find a path reference
 		for(let i in stackLines){
-			if(stackLines[i].match(/http[s]?:\/\//) || 
-			stackLines[i].match(/file?:\/\//)) {return stackLines[i];}
+			let s = stackLines[i];
+			console.log('s',s);
+			if(s.indexOf('scriptPath')!=-1){continue;}
+			if(s.match(/http[s]?:\/\//)){
+				return s.substr(s.indexOf('http'));
+			}
+			if(s.match(/file?:\/\//)) {
+				return s.substr(s.indexOf('file://'));
+			}
 		}
 	}
 }
