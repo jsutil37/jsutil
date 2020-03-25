@@ -453,13 +453,27 @@ window.redrawHtml = function(html) {
 	}
 }
 
-window.drawHtmlIfNotAlready = function(html) {
+//the html string must for an element having a unique id
+window.drawHtmlIfNeeded = function(html) {
 	var noSpaceHtml = html.replaceAll(" ","");
 	var id = html.rightOf('id="').leftOf('"');
 	var ele = document.getElementById(id);
 	if(ele == null) {
 		document.body.appendChild(htmlToElement(html));
 	}
+}
+window.drawHtmlIfNotAlreadyDrawn = drawHtmlIfNeeded
+window.drawHtmlIfNotAlready = drawHtmlIfNeeded
+
+window.insertAsFirstChild =
+function insertAsFirstChild(parent, eleToIns)
+{
+if(parent.childNodes.length==0){
+parent.appendChild(eleToIns);
+return;
+}
+                        
+parent.insertBefore(eleToIns, parent.childNodes[0]);  
 }
 
 dbgload && console.log('reached end')
