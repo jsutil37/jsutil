@@ -102,4 +102,13 @@ function(str)
 	}
 }
 
+window.useTitleAsPageHeading =
+function useTitleAsPageHeading()
+  {
+let d=document
+let h1= d.createElement('h1')
+h1.innerText=d.title
+insertAsFirstChild(d.body, h1)
+  }
+
 dbgload && console.log('util.js loaded!!!')
