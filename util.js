@@ -119,7 +119,7 @@ function showGoToParentPageLink()
 	let a= d.createElement('a')
 	a.innerText='Go to parent page'
 	a.href='..'
-	a.class = 'btn btn-secondary btn-sm'
+	a.setAttribute('class', 'btn btn-secondary btn-sm');
 	insertAsFirstChild(d.body, a)
 }
 
