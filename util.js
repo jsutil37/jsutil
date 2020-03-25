@@ -103,12 +103,23 @@ function(str)
 }
 
 window.useTitleAsPageHeading =
-function useTitleAsPageHeading()
-  {
-let d=document
-let h1= d.createElement('h1')
-h1.innerText=d.title
-insertAsFirstChild(d.body, h1)
-  }
+function useTitleAsPageHeading(dontShowGoToParentPageLink)
+{
+	let d=document
+	let h1= d.createElement('h1')
+	h1.innerText=d.title
+	insertAsFirstChild(d.body, h1)
+	if(!dontShowGoToParentPageLink){showGoToParentPageLink()}
+}
+
+window.showGoToParentPageLink = 
+function showGoToParentPageLink()
+{
+	let d=document
+	let a= d.createElement('a')
+	a.innerText='Go to parent page'
+	a.href='..'	
+	insertAsFirstChild(d.body, a)
+}
 
 dbgload && console.log('util.js loaded!!!')
