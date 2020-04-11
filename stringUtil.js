@@ -77,3 +77,9 @@ function(s)
 	if(s.length<=100){return s}
 	return s.substr(0,100)
 }
+
+window.withoutLastChar = 
+function withoutLastChar(s)
+{
+	return s.substring(0,s.length - 1)
+}
