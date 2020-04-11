@@ -10,6 +10,6 @@ Paste your source code file's url here:
 function showDeploymentUrl()
 {
 	var url = el("sourceCodeFileUrlTextbox").value;
-	el("deploymentUrlDiv").innerHtml = '<a href="'+url+'" target="_blank">+htmlEncode(url)+'</a>';
+	el("deploymentUrlDiv").innerHtml = '<a href="'+url+'" target="_blank">'+htmlEncode(url)+'</a>';
 }
 </script>
