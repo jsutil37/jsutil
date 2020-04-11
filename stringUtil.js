@@ -97,3 +97,12 @@ function decryptCamelCase(s)
 	}
 	return s2.trim()
 }
+
+window.leftOfLast = 
+function leftOfLast(s, delim)
+{
+	if(delim==''){throw new Error('delim cannot be a blank string!')}
+	let i = s.lastIndexOf(delim)
+	if(i == -1){throw new Error('string "'+s+'" does not contains "'+delim+'"!!!')}
+	return s.substring(0, i)
+}
