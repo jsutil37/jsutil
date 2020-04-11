@@ -1,7 +1,7 @@
 <script type="module" src="../util.js"></script>
 <style>* {width: 98%; margin-left:1%;} </style>
 <pre>
-Paste your source code file's url here:
+Paste your source code file's url here (for example, https://github.com/jsutil37/jsutil/blob/master/devtools/githubDeploymentLocation.html):
 <input type="text" id="sourceCodeFileUrlTextbox">
 
 <button type="button" onclick="showDeploymentUrl()">Show Deployment Url</button>
@@ -12,6 +12,12 @@ function showDeploymentUrl()
 {
 	let url = el("sourceCodeFileUrlTextbox").value;
 	url = url.replaceAll('a','d');
+	let urlParts = url.split(utl,'/')
+	let userName = urlParts[3]
+	alert('userName='+userName)
+	let url = urlParts.slice(4).join('/');
+	alert('now url="'+url+'"')
+	
 	let innerHtml = '<a href="'+url+'" target="_blank">'+htmlEncode(url)+'</a>';
 	//alert('innerHtml="'+innerHtml+'"')
 	el("deploymentUrlDiv").innerHTML = innerHtml;
