@@ -12,6 +12,6 @@ function showDeploymentUrl()
 	let url = el("sourceCodeFileUrlTextbox").value;
 	let innerHtml = '<a href="'+url+'" target="_blank">'+htmlEncode(url)+'</a>';
 	alert('innerHtml="'+innerHtml+'"')
-	el("deploymentUrlDiv").innerHtml = innerHtml;
+	el("deploymentUrlDiv").innerHTML = innerHtml;
 }
 </script>
