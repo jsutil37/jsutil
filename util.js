@@ -23,10 +23,19 @@ import 'https://unpkg.com/jquery/dist/jquery.min.js'
 import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
+//====== BOOTSTRAP INCLUDES START=======
 //bootstrap says: 'load me last after all the html is loaded', but that seems less beneficial; it may actually
 //cause a flicker on the page!
-import "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"//required by bootstrap
+
+//Required by bootstrap. We do not bow to the version specificity unless we see a problem.
+//Same is the case with jquery. We will just use the latest version and see if we face problems.
+import "https://cdn.jsdelivr.net/npm/popper.js/dist/umd/popper.min.js"
+
+//https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js points to OLD version :(
 import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+
+//The bootstrap is included via util.css
+//====== BOOTSTRAP INCLUDES END=======
 
 assert($!=null)
 assert(window.$!=null)
