@@ -47,12 +47,14 @@ function(search, replacement)
     return mysplit(target,search).join(replacement)
 }
 
-window.capitalizeFirstLetter = 
+window.capitalized 
 function(string)
 {
 	if(string == ''){return ''}
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
+window.capitalizeFirstLetter =  capitalized
+window.capitalise =  capitalized
 
 ///no regex confusion for delim!
 window.mysplit = 
@@ -82,4 +84,16 @@ window.withoutLastChar =
 function withoutLastChar(s)
 {
 	return s.substring(0,s.length - 1)
+}
+
+window.decryptCamelCase =
+function decryptCamelCase(s)
+{
+	let s = capitalized(s);
+	let s2 = ''
+	for (let i = 0; i < s.length; i++){
+		if(s[i] = s[i].toUpperCase()){s2+=' '}
+		s2+=s[i]
+	}
+	return s2.trim()
 }
