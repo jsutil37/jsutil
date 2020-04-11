@@ -148,8 +148,10 @@ function autoTitlePageFromUrl()
 	document.title = urlParts.join(' - ')
 }
 
+window.dontAutoTitlePage = window.dontAutoTitlePage || false 
 if(!dontAutoTitlePage){autoTitlePageFromUrl()}
 
+window.dontUseTitleAsPageHeading = window.dontUseTitleAsPageHeading || false
 if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
 dbgload && console.log('util.js loaded!!!')
