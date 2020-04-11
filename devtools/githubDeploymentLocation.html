@@ -15,7 +15,7 @@ function showDeploymentUrl()
 	let urlParts = url.split(utl,'/')
 	let userName = urlParts[3]
 	alert('userName='+userName)
-	let url = urlParts.slice(4).join('/');
+	url = urlParts.slice(4).join('/');
 	alert('now url="'+url+'"')
 	
 	let innerHtml = '<a href="'+url+'" target="_blank">'+htmlEncode(url)+'</a>';
