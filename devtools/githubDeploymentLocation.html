@@ -11,7 +11,7 @@ Paste your source code file's url here (for example, https://github.com/jsutil37
 function showDeploymentUrl()
 {
 	let url = el("sourceCodeFileUrlTextbox").value;
-	let urlParts = url.split(url,'/')
+	let urlParts = url.split('/')
 	let userName = urlParts[3]
 	alert('userName='+userName)
 	url = urlParts.slice(4).join('/');
