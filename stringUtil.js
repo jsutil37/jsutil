@@ -48,7 +48,7 @@ function(search, replacement)
 }
 
 window.capitalized =
-function(string)
+function capitalized(string)
 {
 	if(string == ''){return ''}
 	return string.charAt(0).toUpperCase() + string.slice(1);
