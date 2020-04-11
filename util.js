@@ -132,4 +132,23 @@ function showGoToParentPageLink()
 	insertAsFirstChild(d.body, a)
 }
 
+window.autoTitlePageFromUrl = 
+function autoTitlePageFromUrl()
+{
+	if(document.title != ''){return}
+	let url = window.location
+	let urlParts = url.split('/')
+	urlParts = urlParts.slice(2)
+	if(window.urlPartsToTitleParts){
+		urlParts.forEach((urlPart,idx)=>{
+			urlParts[idx] = urlPartsToTitleParts[urlPart] ? urlPart
+		})
+	}
+	document.title = urlParts.join(' - ')
+}
+
+if(!dontAutoTitlePage){autoTitlePageFromUrl()}
+
+if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
+
 dbgload && console.log('util.js loaded!!!')
