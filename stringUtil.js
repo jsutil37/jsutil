@@ -47,7 +47,7 @@ function(search, replacement)
     return mysplit(target,search).join(replacement)
 }
 
-window.capitalized 
+window.capitalized =
 function(string)
 {
 	if(string == ''){return ''}
