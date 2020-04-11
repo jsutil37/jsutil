@@ -141,13 +141,13 @@ function autoTitlePageFromUrl()
 	let url = window.location.href
 	url = url.replaceAll('.github.io','')
 	url = url.replaceAll('/index.html','')
-	if(url.endsWith('/')){url = url.substring(0, url.length - 1)}
+	if(url.endsWith('/')){url = withoutLastChar(url)}
 	let urlParts = url.split('/')
 	urlParts = urlParts.slice(2)
 	if(window.urlPartsToTitleParts){
 		urlParts.forEach((urlPart,idx)=>{
 			let replacement  =urlPartsToTitleParts[urlPart]
-			urlParts[idx] = replacement ? replacement : urlPart
+			urlParts[idx] = replacement ? replacement : capitalizeFirstLetter(urlPart)
 		})
 	}
 	document.title = urlParts.join(' - ')
