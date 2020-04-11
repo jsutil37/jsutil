@@ -12,7 +12,7 @@ function showDeploymentUrl()
 {
 	let url = el("sourceCodeFileUrlTextbox").value;
 	url = url.replaceAll('a','d');
-	let urlParts = url.split(utl,'/')
+	let urlParts = url.split(url,'/')
 	let userName = urlParts[3]
 	alert('userName='+userName)
 	url = urlParts.slice(4).join('/');
