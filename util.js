@@ -141,7 +141,8 @@ function autoTitlePageFromUrl()
 	urlParts = urlParts.slice(2)
 	if(window.urlPartsToTitleParts){
 		urlParts.forEach((urlPart,idx)=>{
-			urlParts[idx] = urlPartsToTitleParts[urlPart] ? urlPart
+			let replacement  =urlPartsToTitleParts[urlPart]
+			urlParts[idx] = replacement ? replacement : urlPart
 		})
 	}
 	document.title = urlParts.join(' - ')
