@@ -11,7 +11,12 @@ like IE that don't support this gripper
   transform: translateY(-100%);
 }
 
+/*
+We are interested to use pre to avoid <BR> and &nbsp; etc. 
+As far as the remaining things are concerned, they should be same...
+*/
 pre {
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 	white-space: pre-wrap;       /* Since CSS 2.1 */
 	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
 	white-space: -pre-wrap;      /* Opera 4-6 */
