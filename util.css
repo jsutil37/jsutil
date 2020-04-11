@@ -1,7 +1,8 @@
 /*Somehow it seems that if bootstrap comes before jquery-us CSS, then on FireFox the textarea resize gripper is displayed at incorrect location!*/
 @import url('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/theme.css');
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 
+/*Unfortunately https://stackpath.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css points to an older version!!!*/
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
 
 /*Using JQuery UI resizable plugin, show resizing gripper for all textareas even for the browsers
 like IE that don't support this gripper
