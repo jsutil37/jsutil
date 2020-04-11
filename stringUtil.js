@@ -92,7 +92,7 @@ function decryptCamelCase(s)
 	s = capitalized(s);
 	let s2 = ''
 	for (let i = 0; i < s.length; i++){
-		if(s[i] = s[i].toUpperCase()){s2+=' '}
+		if(s[i] == s[i].toUpperCase()){s2+=' '}
 		s2+=s[i]
 	}
 	return s2.trim()
