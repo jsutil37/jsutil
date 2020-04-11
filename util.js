@@ -136,7 +136,7 @@ window.autoTitlePageFromUrl =
 function autoTitlePageFromUrl()
 {
 	if(document.title != ''){return}
-	let url = window.location
+	let url = window.location.href
 	let urlParts = url.split('/')
 	urlParts = urlParts.slice(2)
 	if(window.urlPartsToTitleParts){
