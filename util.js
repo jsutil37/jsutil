@@ -19,7 +19,10 @@ import './stringUtil.js'
 import './debugUtil.js'
 
 //Below imports are done synchronously and this keeps things simple...
+
+//Always use the latest version of jquery and hope for the best
 import 'https://unpkg.com/jquery/dist/jquery.min.js'
+
 import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
@@ -27,9 +30,8 @@ import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery
 //bootstrap says: 'load me last after all the html is loaded', but that seems less beneficial; it may actually
 //cause a flicker on the page!
 
-//Required by bootstrap. We do not bow to the version specificity unless we see a problem.
-//Same is the case with jquery. We will just use the latest version and see if we face problems.
-import "https://cdn.jsdelivr.net/npm/popper.js/dist/umd/popper.min.js"
+//Required by bootstrap. Latest version gives runtime error 'Popper is not defined' so falling back to the recommended version:
+import "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 
 //https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js points to OLD version :(
 import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
