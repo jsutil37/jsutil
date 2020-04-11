@@ -20,7 +20,7 @@ import './stringUtil.js'
 import './debugUtil.js'
 
 //Below imports are done synchronously and this keeps things simple...
-import 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'
+import 'https://unpkg.com/jquery/dist/jquery.min.js'
 
 assert($!=null)
 assert(window.$!=null)
