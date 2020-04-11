@@ -30,13 +30,15 @@ import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery
 //bootstrap says: 'load me last after all the html is loaded', but that seems less beneficial; it may actually
 //cause a flicker on the page!
 
-//Required by bootstrap. Latest version gives runtime error 'Popper is not defined' so falling back to the recommended version:
-import "https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-
-//https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js points to OLD version :(
-import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-
-//The bootstrap is included via util.css
+//Below gives some strange runtime error about 'Popper not found'
+//import "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js";
+//import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js";
+	
+//Below bundle includes Popper, but not jquery, and solves the issue of the runtime error of 'Popper not found':
+//Also note that https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.bundle.min.js points to an old version :(
+import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js";
+		
+//The bootstrap css is included via util.css
 //====== BOOTSTRAP INCLUDES END=======
 
 assert($!=null)
