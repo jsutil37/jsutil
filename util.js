@@ -111,8 +111,10 @@ function(str)
 	}
 }
 
+window.dontShowGoToParentPageLink = window.dontShowGoToParentPageLink || false
+
 window.useTitleAsPageHeading =
-function useTitleAsPageHeading(dontShowGoToParentPageLink)
+function useTitleAsPageHeading()
 {
 	let d=document
 	let h1= d.createElement('h1')
