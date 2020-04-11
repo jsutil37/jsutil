@@ -89,7 +89,7 @@ function withoutLastChar(s)
 window.decryptCamelCase =
 function decryptCamelCase(s)
 {
-	let s = capitalized(s);
+	s = capitalized(s);
 	let s2 = ''
 	for (let i = 0; i < s.length; i++){
 		if(s[i] = s[i].toUpperCase()){s2+=' '}
