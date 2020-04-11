@@ -139,6 +139,8 @@ function autoTitlePageFromUrl()
 {
 	if(document.title != ''){return}
 	let url = window.location.href
+	url = url.replaceAll('github.io','')
+	url = url.replaceAll('/index.html','')
 	let urlParts = url.split('/')
 	urlParts = urlParts.slice(2)
 	if(window.urlPartsToTitleParts){
