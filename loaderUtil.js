@@ -147,7 +147,7 @@ async function loadScript2(url,integrity,crossOrigin,scriptType)
 		//console.log('url \''+url+'\' not loaded before....')
 		var head = document.getElementsByTagName('head')[0]
 		var script = document.createElement('script')
-		if(scriptType = null){scriptType = 'text/javascript'}
+		if(scriptType == null){scriptType = 'text/javascript'}
 		script.type = scriptType
 		script.src = url
 		if(integrity != null)
@@ -252,7 +252,7 @@ window.loadcss = loadCss
 ///expects the following global array variables to be predefined and pre-populated:
 ///cssFilesToLoad, jsFilesToLoad
 window.loadAllTypesOfFiles = 
-async function ()
+async function loadAllTypesOfFiles()
 {	
 	//console.log('Loading all CSS and head JS files...')
 	let typesOfFilesToLoad = 
