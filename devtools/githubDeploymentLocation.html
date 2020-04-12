@@ -16,7 +16,8 @@ function showDeploymentUrl()
 	let userName = urlParts[3];
 	url = urlParts.slice(4).join('/');
 	url = 'https://'+userName+'.github.io/'+url;
-	let innerHtml = '<a href="'+url+'" target="_blank">'+htmlEncode(url)+'</a>';
+	let innerHtml = '<a href="'+url+'" target="_blank">'+htmlEncode(url)+
+	    '</a> <span class="glyphicon glyphicon-new-window"></span>';
 	el("deploymentUrlDiv").innerHTML = innerHtml;
 }
 </script>
