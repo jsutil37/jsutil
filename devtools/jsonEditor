@@ -1,0 +1,19 @@
+<script type="module" src="../util.js"></script>
+<script type="module">
+window.jsonLoadedChanged =
+function jsonLoadedChanged()
+{
+   let ta = el('jsonLoadTextArea')
+   ta.style.display='none'
+   let loadButton = el('loadJsonButton')
+   loadButton.style.display='default'
+   alert('TODO')
+}
+</script>
+<pre>
+<button style="display: none;" id="loadJsonButton">Load JSON</button>
+Paste JSON here:
+<textarea id="jsonLoadingTextArea" onchange="jsonLoadedChanged()" onkeypress="jsonLoadedChanged()" onpaste="jsonLoadedChanged()"><textarea>
+
+
+</pre>
