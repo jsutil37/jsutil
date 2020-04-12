@@ -39,6 +39,11 @@ import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery
 import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js";
 		
 //The bootstrap css is included via util.css
+
+//For icons, the latest bootstrap says 'use font awesome or something else'.
+//Following url is taken from w3schools tutorial on font awesome 5:
+import "https://kit.fontawesome.com/a076d05399.js"
+
 //====== BOOTSTRAP INCLUDES END=======
 
 assert($!=null)
