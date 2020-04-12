@@ -117,9 +117,10 @@ window.useTitleAsPageHeading =
 function useTitleAsPageHeading()
 {
 	let d=document
-	let heading = d.createElement('b')
+	let heading = d.createElement('p')
 	heading.innerText = d.title
 	heading.style.fontSize = 'large'
+	heading.style.fontWeight = 'bold'
 	insertAsFirstChild(d.body, heading)
 	if(!dontShowGoToParentPageLink){showGoToParentPageLink()}
 }
