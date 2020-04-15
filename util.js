@@ -14,7 +14,7 @@ console.log('loaded '+scriptPath());
 
 //Put basic functions and shortcuts at the top, and those that depend on them, 
 //further below:
-
+import './arrayUtil.js'
 import './stringUtil.js'
 import './debugUtil.js'
 
@@ -162,6 +162,9 @@ function autoTitlePageFromUrl()
 		let replacement  = window.urlPartsToTitleParts ? urlPartsToTitleParts[urlPart] : null
 		urlParts[idx] = replacement ? replacement : decryptCamelCase(urlPart)
 	})
+	if(urlParts.length > 0 && urlParts[0]==''){
+		urlParts.removeFirstEle()
+	}
 	document.title = urlParts.join(' - ')
 }
 
