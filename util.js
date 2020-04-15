@@ -158,12 +158,10 @@ function autoTitlePageFromUrl()
 	if(url.endsWith('.html')){url = url.substring(0,url.length-5)}
 	let urlParts = url.split('/')
 	urlParts = urlParts.slice(2)
-	if(window.urlPartsToTitleParts){
-		urlParts.forEach((urlPart,idx)=>{
-			let replacement  =urlPartsToTitleParts[urlPart]
-			urlParts[idx] = replacement ? replacement : decryptCamelCase(urlPart)
-		})
-	}
+	urlParts.forEach((urlPart,idx)=>{
+		let replacement  = window.urlPartsToTitleParts ? null : urlPartsToTitleParts[urlPart]
+		urlParts[idx] = replacement ? replacement : decryptCamelCase(urlPart)
+	})
 	document.title = urlParts.join(' - ')
 }
 
