@@ -159,6 +159,7 @@ function autoTitlePageFromUrl()
 	let urlParts = url.split('/')
 	urlParts = urlParts.slice(2)
 	urlParts.forEach((urlPart,idx)=>{
+		urlPart = decodeURIComponent(urlPart)
 		let replacement  = window.urlPartsToTitleParts ? urlPartsToTitleParts[urlPart] : null
 		urlParts[idx] = replacement ? replacement : decryptCamelCase(urlPart)
 	})
