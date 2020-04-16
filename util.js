@@ -127,6 +127,7 @@ function useTitleAsPageHeading()
 	heading.style.fontWeight = 'bold'
 	insertAsFirstChild(d.body, heading)
 	if(!dontShowGoToParentPageLink){showGoToParentPageLink()}
+	scrollToTop()
 }
 
 window.showGoToParentPageLink = 
@@ -155,7 +156,6 @@ function showGoToParentPageLink()
 	}
 	a.setAttribute('class', 'btn btn-secondary btn-sm');
 	insertAsFirstChild(d.body, a)
-	scrollToTop()
 }
 
 window.dontShowPathInTitle = window.dontShowPathInTitle || false
@@ -195,9 +195,10 @@ if(!dontAutoTitlePage){autoTitlePageFromUrl()}
 window.dontUseTitleAsPageHeading = window.dontUseTitleAsPageHeading || false
 if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
-dbgload && console.log('util.js loaded!!!')
 
-function scrollToTop() 
+window.scrollToTop = function scrollToTop()
 { 
     window.scrollTo(0, 0); 
 }
+
+dbgload && console.log('util.js loaded!!!')
