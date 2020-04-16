@@ -1,0 +1,47 @@
+<!--
+Repository location: https://github.com/jsutil37/jsutil/blob/master/test/basic/bootstrapTest.html
+To find deployment location, use https://jsutil37.github.io/jsutil/devtools/githubDeploymentLocation.html
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<!-- -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<!-- -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!--
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	-->
+
+	<script type="module">
+		//What if we want to include via some reusable script?
+	
+	/*
+	CSS importing is not supported by ES6 modules
+	import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css";
+	*/
+
+	import "https://unpkg.com/jquery/dist/jquery.min.js";
+
+	//Below gives some strange runtime error about 'Popper not found'
+	//import "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js";
+	//import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js";
+	
+	//Below bundle includes Popper, but not jquery, and solves the issue of
+	//the runtime error of 'Popper not found':
+	import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js";
+		
+	</script>
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+  </body>
+</html>
