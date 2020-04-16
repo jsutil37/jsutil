@@ -157,6 +157,8 @@ function showGoToParentPageLink()
 	insertAsFirstChild(d.body, a)
 }
 
+window.dontShowPathInTitle = window.dontShowPathInTitle || false
+
 window.autoTitlePageFromUrl = 
 function autoTitlePageFromUrl()
 {
@@ -176,7 +178,14 @@ function autoTitlePageFromUrl()
 	if(urlParts.length > 0 && urlParts[0]==''){
 		urlParts.removeFirstEle()
 	}
-	document.title = urlParts.join(' - ')
+	if(dontShowPathInTitle)
+	{
+		document.title = urlParts.lastEle()
+	}
+	else
+	{
+		document.title = urlParts.join(' - ')
+	}
 }
 
 window.dontAutoTitlePage = window.dontAutoTitlePage || false 
