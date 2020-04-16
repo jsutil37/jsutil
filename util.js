@@ -189,16 +189,15 @@ function autoTitlePageFromUrl()
 	}
 }
 
+window.scrollToTop = function scrollToTop()
+{ 
+    window.scrollTo(0, 0); 
+}
+
 window.dontAutoTitlePage = window.dontAutoTitlePage || false 
 if(!dontAutoTitlePage){autoTitlePageFromUrl()}
 
 window.dontUseTitleAsPageHeading = window.dontUseTitleAsPageHeading || false
 if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
-
-
-window.scrollToTop = function scrollToTop()
-{ 
-    window.scrollTo(0, 0); 
-}
 
 dbgload && console.log('util.js loaded!!!')
