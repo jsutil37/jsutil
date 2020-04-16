@@ -155,6 +155,7 @@ function showGoToParentPageLink()
 	}
 	a.setAttribute('class', 'btn btn-secondary btn-sm');
 	insertAsFirstChild(d.body, a)
+	scrollToTop()
 }
 
 window.dontShowPathInTitle = window.dontShowPathInTitle || false
@@ -195,3 +196,8 @@ window.dontUseTitleAsPageHeading = window.dontUseTitleAsPageHeading || false
 if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
 dbgload && console.log('util.js loaded!!!')
+
+function scrollToTop() 
+{ 
+    window.scrollTo(0, 0); 
+}
