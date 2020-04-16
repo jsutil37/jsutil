@@ -132,10 +132,20 @@ function useTitleAsPageHeading()
 window.showGoToParentPageLink = 
 function showGoToParentPageLink()
 {
+	let url = window.location.href
+	if(url.endsWith('index.html')) 
+	{
+		url = leftOfLast(url, 'index.html')
+	}
+	let urlParts = url.split('/')
+	if(urlParts.length <= 4)
+	{
+	   	return;
+	}
 	let d=document
 	let a= d.createElement('a')
 	a.innerText='Go to parent page'
-	if(window.location.href.endsWith('index.html') || (!window.location.href.endsWith('.html')))
+	if(!window.location.href.endsWith('.html'))
 	{
 		a.href='..' 
 	}
