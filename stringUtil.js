@@ -86,14 +86,29 @@ function withoutLastChar(s)
 	return s.substring(0,s.length - 1)
 }
 
+window.isAlphabetic =
+function isAlphabetic(ch)
+{
+	return /^[A-Z]$/i.test(ch)
+}
+window.isAlpha = isAlphabetic
+
+window.isUpperCase = 
+function isUpperCase(s)
+{
+	return s == s.toUpperCase()
+}
+
 window.decryptCamelCase =
 function decryptCamelCase(s)
 {
 	s = capitalized(s);
 	let s2 = ''
-	for (let i = 0; i < s.length; i++){
-		if(s[i] == s[i].toUpperCase()){s2+=' '}
-		s2+=s[i]
+	for (let i = 0; i < s.length; i++)
+	{
+		let chr = s[i]
+		if(isAlphabetic(chr) && isUpperCase(chr)){s2+=' '}
+		s2+=chr
 	}
 	return s2.trim()
 }
