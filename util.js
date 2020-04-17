@@ -203,4 +203,6 @@ if(!dontAutoTitlePage){autoTitlePageFromUrl()}
 window.dontUseTitleAsPageHeading = window.dontUseTitleAsPageHeading || false
 if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
+window.growl = function growl(msg){$.growl.notice({ message: "decryption complete" })}
+
 dbgload && console.log('util.js loaded!!!')
