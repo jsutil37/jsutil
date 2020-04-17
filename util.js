@@ -43,7 +43,7 @@ import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.m
 //For icons, the latest bootstrap says 'use font awesome or something else'.
 //Following url is taken from w3schools tutorial on font awesome 5:
 //import "https://kit.fontawesome.com/a076d05399.js"
-//But this gives a runtime error. So let's try to load it using  jsFileToLoad
+//But this gives a runtime error. So let's try to load it using  jsFilesToLoad
 
 //====== BOOTSTRAP INCLUDES END=======
 
@@ -84,7 +84,8 @@ window.u = u
 window.cssFilesToLoad = ['./util.css']
 
 //The js files to import (load asynchronously in <head> tag)
-window.jsFilesToLoad = ["https://kit.fontawesome.com/a076d05399.js"]
+window.jsFilesToLoad = window.jsFilesToLoad || []
+jsFilesToLoad.push("https://kit.fontawesome.com/a076d05399.js")
 
 loadAllTypesOfFiles()
 
