@@ -18,13 +18,14 @@ END Please preserve this notice
 		<!-- <script src="crypto-aes-gcm-wrapper.js"></script> -->
 		<script type="module">
 		import * as u from 'https://jsutil37.github.io/jsutil/util.js'
+		import 'https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.7/jquery.jgrowl.min.js'
 		window.dbgGetTextAtUrl = true;
 		loadScriptFromTextAtUrl("https://gist.githubusercontent.com/chrisveness/43bcda93af9f646d083fad678071b90a/raw/e40cd0f5237aedcfc4641ad728f119b48f4b5082/crypto-aes-gcm.js")
 		//loadScriptFromTextAtUrl("https://gist.github.com/chrisveness/43bcda93af9f646d083fad678071b90a.js");
 		</script>
 		<pre>
 Text to encrypt
-<textarea id="txtToEncrypt" rows="10"></textarea>
+<textarea id="txtToEncrypt" rows="3"></textarea>
 <button type="button" onclick="encrypt()">Encrypt</button>
 		
 Password to encrypt/decrypt with<br>
@@ -33,11 +34,11 @@ Password to encrypt/decrypt with<br>
 </form>
 		
 Text to Decrypt<br>
-<textarea id="txtToDecrypt"  rows="10" cols="80"></textarea><br>
+<textarea id="txtToDecrypt"  rows="3"></textarea><br>
 <button type="button" onclick="decrypt()">Decrypt</button><br>
 	
 Decrypted Text
-<textarea id="decryptedTxt"  rows="10" cols="80" readonly></textarea>
+<textarea id="decryptedTxt"  rows="3" readonly></textarea>
 <button type="button" onclick="eval(document.getElementById('txtToEncrypt').value);">Eval as JS</button>
 <button type="button" onclick="launchAsHtmlPage()">Launch as HTML Page</button>
 </pre>
@@ -86,7 +87,8 @@ Decrypted Text
 				return
 			}
 			document.getElementById('decryptedTxt').value = decyrptedText
-			alert('decryption complete');
+			//alert('decryption complete');
+			 $.growl.notice({ message: "decryption complete" });
 		}
 		</script>
 	</body>
