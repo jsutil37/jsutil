@@ -15,78 +15,84 @@ END Please preserve this notice
 		
 	</head>
 	<body>
-		<script src="https://jsutil37.github.io/jsutil/basicSyncUtil.js"></script>
-		<!-- <script src="crypto-aes-gcm-wrapper.js"></script> -->
-		<script type="module">
-		import * as u from 'https://jsutil37.github.io/jsutil/util.js'
-		window.dbgGetTextAtUrl = true;
-		loadScriptFromTextAtUrl("https://gist.githubusercontent.com/chrisveness/43bcda93af9f646d083fad678071b90a/raw/e40cd0f5237aedcfc4641ad728f119b48f4b5082/crypto-aes-gcm.js")
-		//loadScriptFromTextAtUrl("https://gist.github.com/chrisveness/43bcda93af9f646d083fad678071b90a.js");
-		</script>
 		<pre>
 Text to Encrypt
 <textarea id="txtToEncrypt" rows="3"></textarea>
-<button type="button" onclick="encrypt()">Encrypt</button>
+<button type="button" onclick="onEncryptButtonClick()">Encrypt</button>
 		
 Password to encrypt/decrypt with
 <form><!-- to silence an html validation warning --><input type="password" id="passwd"></form>
 Text to Decrypt
 <textarea id="txtToDecrypt"  rows="3"></textarea>
-<button type="button" onclick="decrypt()">Decrypt</button>
+<button type="button" onclick="onDecryptButtonClick()">Decrypt</button>
 	
 Decrypted Text
 <textarea id="decryptedTxt"  rows="3" readonly></textarea>
-<button type="button" onclick="eval(document.getElementById('txtToEncrypt').value);">Eval as JS</button>
+<button type="button" onclick="eval(elVal('txtToEncrypt'));">Eval as JS</button>
 <button type="button" onclick="launchAsHtmlPage()">Launch as HTML Page</button>
 </pre>
-		<script>
+<script src="https://jsutil37.github.io/jsutil/basicSyncUtil.js"></script>
+<!-- <script src="crypto-aes-gcm-wrapper.js"></script> -->
+<script type="module">
+import * as u from 'https://jsutil37.github.io/jsutil/util.js'
+window.dbgGetTextAtUrl = true;
+loadScriptFromTextAtUrl("https://gist.githubusercontent.com/chrisveness/43bcda93af9f646d083fad678071b90a/raw/e40cd0f5237aedcfc4641ad728f119b48f4b5082/crypto-aes-gcm.js")
+//loadScriptFromTextAtUrl("https://gist.github.com/chrisveness/43bcda93af9f646d083fad678071b90a.js");
 
-		function encrypt2()
-		{
-		alert('encrypt2 works!')
-		}
+function encrypt2()
+{
+	alert('encrypt2 works!')
+}
 
-		async function encrypt()
-		{
-			var txtToEncrypt = document.getElementById("txtToEncrypt").value
-			var passwd = document.getElementById("passwd").value
-			if(passwd.trim()=='')
-			{
-				alert('Error: password is blank');
-				return;
-			}
-			var ciphertext;			
-			try
-			{
-				ciphertext = await aesGcmEncrypt(txtToEncrypt, passwd);
-			}
-			catch(ex)
-			{
-				alert(ex)
-				return
-			}
-			document.getElementById('txtToDecrypt').value = ciphertext
-			alert('encryption complete');
-		}
+window.onEncryptButtonClick =
+async function onEncryptButtonClick()
+{
+	var txtToEncrypt = elVal("txtToEncrypt")
+	var passwd = elVal("passwd")
+	if(passwd.trim()=='')
+	{
+		alert('Error: password is blank');
+		return;
+	}
+	var ciphertext;			
+	try
+	{
+		ciphertext = await aesGcmEncrypt(txtToEncrypt, passwd);
+	}
+	catch(ex)
+	{
+		alert(ex)
+		return
+	}
+	setElVal('txtToDecrypt',ciphertext)
+	growl('encryption complete')
+}
 
-		async function decrypt()
-		{
-			var txtToDecrypt = document.getElementById("txtToDecrypt").value
-			var passwd = document.getElementById("passwd").value			
-			var decyrptedText;
-			try
-			{
-			decyrptedText = await aesGcmDecrypt(txtToDecrypt, passwd);
-			}
-			catch(ex)
-			{
-				alert(ex)
-				return
-			}
-			document.getElementById('decryptedTxt').value = decyrptedText
-			//alert('decryption complete');
-			 $.growl.notice({ message: "decryption complete" });
-		}
-		</script>
+window.onDecryptButtonClick =
+async function onDecryptButtonClick()
+{
+	var txtToDecrypt = elVal('txtToDecrypt')
+	var passwd = elVal('passwd')
+	var decryptedText;
+	try
+	{
+	decryptedText = await aesGcmDecrypt(txtToDecrypt, passwd);
+	}
+	catch(ex)
+	{
+		alert(ex)
+		return
+	}
+	setElVal('decryptedTxt', decryptedText)
+	growl('decryption complete')
+}
+
+window.launchAsHtmlPage = async function launchAsHtmlPage()
+{
+	const blob = new Blob([elVal('decryptedTxt')], {type : 'text/html'});
+	let url = URL.createObjectURL(blob);
+	let w = window.open(url)
+}
+</script>
 	</body>
 </html>
