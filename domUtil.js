@@ -7,7 +7,7 @@ import './parseUtil.js'
 
 //shortcut for document.getElementById
 window.el =
-function(id)
+function el(id)
 {
 	let rv = document.getElementById(id)
 	checkThat
@@ -22,6 +22,7 @@ function(id)
 window.getel = el
 window.getEl = el
 
+window.elVal = function elVal(id){return el(id).value}
 
 window.getNearestAncestorWhoseIdContains =
 function (params)
