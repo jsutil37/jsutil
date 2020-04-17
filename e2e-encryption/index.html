@@ -1,4 +1,6 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<!-- Copyright jsutil37 Github user(s), 2018-20. MIT License. Please preserve this notice. -->
+<!-- repos location: https://github.com/jsutil37/jsutil/edit/master/e2e-encryption/index.html  -->
 <!-- deployed at https://jsutil37.github.io/jsutil/e2e-encryption -->
 <html> 
 	<head> 
@@ -16,27 +18,25 @@
 		loadScriptFromTextAtUrl("https://gist.githubusercontent.com/chrisveness/43bcda93af9f646d083fad678071b90a/raw/e40cd0f5237aedcfc4641ad728f119b48f4b5082/crypto-aes-gcm.js")
 		//loadScriptFromTextAtUrl("https://gist.github.com/chrisveness/43bcda93af9f646d083fad678071b90a.js");
 		</script>
-		Text to encrypt<br>
-		<textarea id="txtToEncrypt" rows="10" cols="80"></textarea>
-		<br>
-		<button type="button" onclick="encrypt()">Encrypt</button>
-		<br>
-		<br>
-		Password to encrypt/decrypt with<br>
-		<form><!-- to silence an html validation warning -->
-		<input type=password id="passwd">
-		</form>
-		<br>
-		<br>
-		Text to Decrypt<br>
-		<textarea id="txtToDecrypt"  rows="10" cols="80"></textarea><br>
-		<button type="button" onclick="decrypt()">Decrypt</button><br>
-		<br>
-        <br>
-        Decrypted Text<br>
-		<textarea id="decryptedTxt"  rows="10" cols="80" readonly></textarea>
-		<br>
-		<button type="button" onclick="eval(document.getElementById('txtToEncrypt').value);">Eval</button>
+		<pre>
+Text to encrypt
+<textarea id="txtToEncrypt" rows="10"></textarea>
+<button type="button" onclick="encrypt()">Encrypt</button>
+		
+Password to encrypt/decrypt with<br>
+<form><!-- to silence an html validation warning -->
+<input type=password id="passwd">
+</form>
+		
+Text to Decrypt<br>
+<textarea id="txtToDecrypt"  rows="10" cols="80"></textarea><br>
+<button type="button" onclick="decrypt()">Decrypt</button><br>
+	
+Decrypted Text
+<textarea id="decryptedTxt"  rows="10" cols="80" readonly></textarea>
+<button type="button" onclick="eval(document.getElementById('txtToEncrypt').value);">Eval as JS</button>
+<button type="button" onclick="launchAsHtmlPage()">Launch as HTML Page</button>
+</pre>
 		<script>
 
 		function encrypt2()
