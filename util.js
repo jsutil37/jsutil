@@ -81,7 +81,8 @@ window.u = u
 
 //CSS is always loaded in the <head> tag
 //AFAIK there is no way to restrict css scope (or need to)
-window.cssFilesToLoad = ['./util.css']
+window.cssFilesToLoad = window.cssFilesToLoad || [] 
+window.cssFilesToLoad.push('./util.css')
 
 //The js files to import (load asynchronously in <head> tag)
 window.jsFilesToLoad = window.jsFilesToLoad || []
