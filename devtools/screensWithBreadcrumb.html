@@ -1,0 +1,91 @@
+<style>
+	h1 {
+		font-size: x-large !important;
+		font-weight: bold;
+		vertical-align: top;
+	}
+
+</style>
+<pre><span id="containerForDivsHtml"></span>
+<button type="button" onclick="growl('TODO')">Find all Parent Paths</button>
+</pre>
+<script>
+	window.dontAutoTitlePage = true
+</script>
+<script type="module">
+	import 'https://jsutil37.github.io/jsutil/util.js'
+	window.onerror=null
+	let divsForPrevPath = []
+	let divParents = {}
+	let idOfDivShown = null
+
+	function main() {
+		let divsHtml =`<input type="text" style="width:98%" placeholder="Search">
+<h1 id="prevPath" style="color:#d3d3d3"></h1
+><div id="div1"><h1>Div 1 Heading</h1>Div 1 Content.
+<a onclick="showDiv('div2')" href="#">Link to Div 2</a>
+</div><div id="div2" style="display:block;"
+><h1>Div 2 Heading</h1>Div 2 Content.
+<a onclick="showDiv('div1')" href="#">Link to Div 1</a>
+<a onclick="showDiv('div3')" href="#">Link to Div 3</a>
+</div><div id="div3"><h1>Div 3 Heading</h1
+>Div 3 Content (leaf node)
+</div>`
+		el('containerForDivsHtml').innerHTML =  divsHtml
+		for(const div of el('containerForDivsHtml').querySelectorAll('div')) {
+			hideEl(div.id)
+		}
+		showDiv('div2')
+	}
+
+	function showDiv(idOfNewDiv, forBackLinkClick) {
+		let idOfOldDiv = idOfDivShown
+		if (idOfOldDiv != null) {
+			if(!forBackLinkClick) {
+				let oldHeading = heading(idOfOldDiv)
+				divsForPrevPath.push({id:idOfOldDiv, heading:oldHeading})
+			}
+			hideEl(idOfOldDiv)
+		}
+		showBlockEl(idOfNewDiv)
+		idOfDivShown = idOfNewDiv
+		updatePrevPath()
+		return false
+	}
+	exportToWindow(showDiv)
+
+	function updatePrevPath() {
+		let prevPathHtml = ''
+		let oldHeading = ''
+		divsForPrevPath.forEach((divInfo, idx)=>{
+			if(idx == divsForPrevPath.length - 1) {
+				oldHeading = divInfo.heading
+				return
+			}
+			if(prevPathHtml!=''){prevPathHtml+=' - '}
+			prevPathHtml+=divInfo.heading
+		})
+		if(prevPathHtml!=''){prevPathHtml+=' - '}
+		prevPathHtml = htmlEncode(prevPathHtml)
+		prevPathHtml +=
+			'<a href="#" style="color:#ceddf5" onclick="goBackToPrevDiv()">'
+		prevPathHtml += htmlEncode(oldHeading) + '</a>'
+		el('prevPath').innerHTML = prevPathHtml
+	}
+
+	function goBackToPrevDiv() {
+		let idOfDivToGoBackTo = divsForPrevPath.removeLastEle().id
+		showDiv(idOfDivToGoBackTo, true)
+	}
+	exportToWindow(goBackToPrevDiv)
+
+	function hideEl(id) { el(id).style.display = 'none' }
+
+	function showBlockEl(id) { el(id).style.display = 'block' }
+
+	function showInlineEl(id) { el(id).style.display = 'inline' }
+
+	function heading(id) { return el(id).querySelectorAll('h1')[0].innerText }
+
+	main()
+</script>
