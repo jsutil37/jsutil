@@ -118,6 +118,7 @@ function leftOfLast(s, delim)
 {
 	if(delim==''){throw new Error('delim cannot be a blank string!')}
 	let i = s.lastIndexOf(delim)
-	if(i == -1){throw new Error('string "'+s+'" does not contains "'+delim+'"!!!')}
+	if(i == -1){throw new Error('string "'+s+'" does not contain "'+delim+'"!!!')}
 	return s.substring(0, i)
 }
+String.prototype.leftOfLast = function leftOfLast(delim){return window.leftOfLast(this, delim)}
