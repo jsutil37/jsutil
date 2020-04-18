@@ -54,7 +54,8 @@ function(x,errMsg)
 {
 	if(x){return}
 	let s =(errMsg == null)?'assert failed':"Assert Failed\n"+errMsg
-	a(s)	
+	debugger
+	a(s)
 	throw new Error(s)
 }
 
@@ -139,16 +140,19 @@ function checkThat (params)
 {
 	if(!('condition' in params))
 	{
+		debugger
 		throw new Error('checkThat(): param \'condition\' is missing!')
 	}
 	if(!('errMsgFn' in params))
 	{
+		debugger
 		throw new Error('checkThat(): param \'errMsgFn\' is missing!')
 	}
 	if(params.condition){return}
 	let msg = callingFnName() + "(): "+params.errMsgFn()
 	//window.alert(msg)//we have an error message shown by the global error
 	//handler
+	debugger
 	throw new Error(msg)
 }
 
