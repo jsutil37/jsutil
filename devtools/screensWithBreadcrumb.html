@@ -1,3 +1,11 @@
+<!--
+BEGIN Do not remove this notice
+Copyright 2018-20 jsutil37 Github user(s)
+License location: https://github.com/jsutil37/jsutil/blob/master/LICENSE
+File location: TODO
+Deployment location: TODO (use https://jsutil37.github.io/jsutil/devtools/githubDeploymentLocation.html)
+END Do not remove this notice
+-->
 <style>
 	h1 {
 		font-size: x-large !important;
@@ -6,7 +14,11 @@
 	}
 
 </style>
-<pre><span id="containerForDivsHtml"></span>
+<pre><textarea id="divsHtmlTa" rows="1" onkeyup="loadDivsHtml()" onpaste="loadDivsHtml()" placeholder="Paste divs html here"></textarea>
+<h1 id="prevPath" style="color:#d3d3d3"></h1
+><input type="text" style="width:98%" placeholder="Search"><button 
+type="button"><i class="fas fa-search"></i></button>
+<span id="containerForDivsHtml"></span>
 <button type="button" onclick="growl('TODO')">Find all Parent Paths</button>
 </pre>
 <script>
@@ -20,9 +32,8 @@
 	let idOfDivShown = null
 
 	function main() {
-		let divsHtml =`<input type="text" style="width:98%" placeholder="Search">
-<h1 id="prevPath" style="color:#d3d3d3"></h1
-><div id="div1"><h1>Div 1 Heading</h1>Div 1 Content.
+		let divsHtml =
+`<div id="div1"><h1>Div 1 Heading</h1>Div 1 Content.
 <a onclick="showDiv('div2')" href="#">Link to Div 2</a>
 </div><div id="div2" style="display:block;"
 ><h1>Div 2 Heading</h1>Div 2 Content.
