@@ -16,7 +16,17 @@ END Do not remove this notice
 
 </style>
 <pre>Paste divs html here
-<textarea id="divsHtmlTa" rows="1" onkeyup="loadDivsHtml()" onpaste="setTimeout(loadDivsHtml,100)"></textarea>
+<textarea id="divsHtmlTa" rows="1" onkeyup="loadDivsHtml()" onpaste="setTimeout(loadDivsHtml,100)"
+><div id="div1"><h1>Div 1 Heading</h1>Div 1 Content.
+<a onclick="showDiv('div2')" href="#">Link to Div 2</a>
+</div><div id="div2" style="display:block;"
+><h1>Div 2 Heading</h1>Div 2 Content.
+<a onclick="showDiv('div1')" href="#">Link to Div 1</a>
+<a onclick="showDiv('div3')" href="#">Link to Div 3</a>
+</div><div id="div3"><h1>Div 3 Heading</h1
+>Div 3 Content (leaf node)
+</div></textarea>
+
 Search
 <input type="text"><button 
 type="button"><i class="fas fa-search"></i></button>
@@ -35,16 +45,7 @@ type="button"><i class="fas fa-search"></i></button>
 	let idOfDivShown = null
 
 	function main() {
-		let divsHtml =
-`<div id="div1"><h1>Div 1 Heading</h1>Div 1 Content.
-<a onclick="showDiv('div2')" href="#">Link to Div 2</a>
-</div><div id="div2" style="display:block;"
-><h1>Div 2 Heading</h1>Div 2 Content.
-<a onclick="showDiv('div1')" href="#">Link to Div 1</a>
-<a onclick="showDiv('div3')" href="#">Link to Div 3</a>
-</div><div id="div3"><h1>Div 3 Heading</h1
->Div 3 Content (leaf node)
-</div>`
+		let divsHtml = elVal('divsHtmlTa')
 		el('containerForDivsHtml').innerHTML =  divsHtml
 		for(const div of el('containerForDivsHtml').querySelectorAll('div')) {
 			hideEl(div.id)
