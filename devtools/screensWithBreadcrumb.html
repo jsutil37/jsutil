@@ -15,10 +15,12 @@ END Do not remove this notice
 	}
 
 </style>
-<pre><textarea id="divsHtmlTa" rows="1" onkeyup="loadDivsHtml()" onpaste="loadDivsHtml()" placeholder="Paste divs html here"></textarea>
-<h1 id="prevPath" style="color:#d3d3d3"></h1
-><input type="text" style="width:98%" placeholder="Search"><button 
+<pre>Paste divs html here
+<textarea id="divsHtmlTa" rows="1" onkeyup="loadDivsHtml()" onpaste="setTimeout(loadDivsHtml,100)"></textarea>
+Search
+<input type="text"><button 
 type="button"><i class="fas fa-search"></i></button>
+<h1 id="prevPath" style="color:#d3d3d3"></h1>
 <span id="containerForDivsHtml"></span>
 <button type="button" onclick="growl('TODO')">Find all Parent Paths</button>
 </pre>
