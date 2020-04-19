@@ -55,7 +55,7 @@ type="button"><i class="fas fa-search"></i></button>
 		for(const div of el('containerForDivsHtml').querySelectorAll('div')) {
 			if(!isFirstEleEncountered){
 		 		isFirstEleEncountered = true
-		 		showBlockEl(div.id)
+		 		showDiv(div.id)
 			}else{
 				hideEl(div.id)
 			}		
@@ -71,12 +71,16 @@ type="button"><i class="fas fa-search"></i></button>
 			}
 			hideEl(idOfOldDiv)
 		}
-		showBlockEl(idOfNewDiv)
-		idOfDivShown = idOfNewDiv
+		showDiv(idOfNewDiv)
 		updatePrevPath()
 		return false
 	}
 	exportToWindow(showDiv)
+
+	function showDiv(id) {
+		showBlockEl(idOfNewDiv)
+		idOfDivShown = idOfNewDiv
+	}
 
 	function updatePrevPath() {
 		let prevPathHtml = ''
