@@ -123,7 +123,9 @@ function leftOfLast(s, delim)
 }
 String.prototype.leftOfLast = function leftOfLast(delim){return window.leftOfLast(this, delim)}
 
-window.dos2unix =
-function dos2unix(s) {
+window.dosToUnix =
+function dosToUnix(s) {
     return s.replaceAll('\r\n','\n')
 }
+window.dos2Unix = dosToUnix
+window.dos2unix = dosToUnix
