@@ -122,3 +122,8 @@ function leftOfLast(s, delim)
 	return s.substring(0, i)
 }
 String.prototype.leftOfLast = function leftOfLast(delim){return window.leftOfLast(this, delim)}
+
+window.dos2unix =
+function dos2unix(s) {
+    return s.replaceAll('\r\n','\n')
+}
