@@ -93,6 +93,13 @@ function isAlphabetic(ch)
 }
 window.isAlpha = isAlphabetic
 
+window.isNumericChr =
+function isNumericChr(chr)
+{
+	let code = chr.charCodeAt(0)
+	return (code > 47 && code < 58)
+}
+
 window.isUpperCase = 
 function isUpperCase(s)
 {
