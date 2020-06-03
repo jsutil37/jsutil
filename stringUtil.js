@@ -147,4 +147,4 @@ function dosToUnix(s) {
 window.dos2Unix = dosToUnix
 window.dos2unix = dosToUnix
 
-window.indented = function indented(s){return s.split('\n').map(s2=>'....'+s2).join('\n')}
+window.indented = function indented(s,chr){return s.split('\n').map(s2=>(chr?chr.repeat(4):'\t')+s2).join('\n')}
