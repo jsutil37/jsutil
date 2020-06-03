@@ -1,5 +1,5 @@
 window.leftOf = 
-function(s,delim)
+function leftOf(s,delim)
 {
 	var i = s.indexOf(delim)
 	if(i==-1){throw "delim '"+delim+"' not in '"+s+"'!!!"}
@@ -8,17 +8,17 @@ function(s,delim)
 window.leftof = leftOf
 
 String.prototype.leftOf = String.prototype.leftOf ||
-function(delim)
+function _leftOf(delim)
 {
     var target = this
     return leftOf(target,delim)
 }
 	
 //shortcut for JSON.stringify
-window.str = function(s){return JSON.stringify(s)}
+window.str = function str(s){return JSON.stringify(s)}
 
 window.rightOf =
-function (s,delim)
+function rightOf(s, delim)
 {
 	var i = s.indexOf(delim)
 	if(i==-1){throw "delim '"+delim+"' not in '"+s+"'!!!"}
@@ -27,7 +27,7 @@ function (s,delim)
 window.rightof = rightOf
 
 String.prototype.rightOf = String.prototype.rightOf ||
-function(delim)
+function _rightOf(delim)
 {
     var target = this
     return rightOf(target,delim)
@@ -129,6 +129,16 @@ function leftOfLast(s, delim)
 	return s.substring(0, i)
 }
 String.prototype.leftOfLast = function leftOfLast(delim){return window.leftOfLast(this, delim)}
+
+window.rightOfLast = 
+function rightOfLast(s, delim)
+{
+	if(delim==''){throw new Error('delim cannot be a blank string!')}
+	let i = s.lastIndexOf(delim)
+	if(i == -1){throw new Error('string "'+s+'" does not contain "'+delim+'"!!!')}
+	return s.substr(i+delim.length)
+}
+String.prototype.rightOfLast = function rightOfLast(delim){return window.rightOfLast(this, delim)}
 
 window.dosToUnix =
 function dosToUnix(s) {
