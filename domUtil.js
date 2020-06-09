@@ -443,40 +443,42 @@ window.htmlToElement = function(html) {
     return template.content.firstChild;
 }
 
-window.redrawHtml = function(html) {
+window.redrawHtml = function(html, parentEle) {
 	var noSpaceHtml = html.replaceAll(" ","");
-	var id = html.rightOf('id="').leftOf('"');
+	var id = noSpaceHtml.rightOf('id="').leftOf('"');
 	var ele = document.getElementById(id);
 	if(ele == null) {
-		document.body.appendChild(htmlToElement(html));
+		if(parentEle == null){parentEle = document.body}
 	} else {
 		var parent = ele.parentElement;
 		ele.remove();
-		parent.appendChild(htmlToElement(html));
+		if(parentEle == null){parentEle = parent}
 	}
+	parentEle.appendChild(htmlToElement(html));
 }
 
 //the html string must for an element having a unique id
-window.drawHtmlIfNeeded = function(html) {
+window.drawHtmlIfNeeded = function(html, parentEle) {
 	var noSpaceHtml = html.replaceAll(" ","");
-	var id = html.rightOf('id="').leftOf('"');
+	var id = noSpaceHtml.rightOf('id="').leftOf('"');
 	var ele = document.getElementById(id);
 	if(ele == null) {
-		document.body.appendChild(htmlToElement(html));
+		if(parentEle == null){parentEle = document.body}
+		parentEle.appendChild(htmlToElement(html));
 	}
 }
 window.drawHtmlIfNotAlreadyDrawn = drawHtmlIfNeeded
 window.drawHtmlIfNotAlready = drawHtmlIfNeeded
+window.drawHtml = drawHtmlIfNeeded
 
 window.insertAsFirstChild =
-function insertAsFirstChild(parent, eleToIns)
-{
-if(parent.childNodes.length==0){
-parent.appendChild(eleToIns);
-return;
-}
-                        
-parent.insertBefore(eleToIns, parent.childNodes[0]);  
+function insertAsFirstChild(parent, eleToIns) {
+	if(parent.childNodes.length==0){
+		parent.appendChild(eleToIns);
+		return;
+	}
+
+	parent.insertBefore(eleToIns, parent.childNodes[0]);  
 }
 
 dbgload && console.log('reached end')
