@@ -1,4 +1,14 @@
-///DOM (document object model) utils
+/*
+DOM (document object model) utils
+
+ 
+BEGIN Do not remove this notice
+Copyright 2018-20 jsutil37 Github user(s)
+License location: https://github.com/jsutil37/jsutil/blob/master/LICENSE
+File location: https://github.com/jsutil37/jsutil/blob/master/domUtil.js
+Deployment location: https://jsutil37.github.io/jsutil/domUtil.js
+END Do not remove this notice
+*/
 let dbgload = window.dbgload
 dbgload && console.log('start')
 import './util.js'
