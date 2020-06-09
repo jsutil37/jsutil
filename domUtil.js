@@ -491,4 +491,6 @@ function insertAsFirstChild(parent, eleToIns) {
 	parent.insertBefore(eleToIns, parent.childNodes[0]);  
 }
 
+window.getElsByClsNm = document.getElementsByClassName
+
 dbgload && console.log('reached end')
