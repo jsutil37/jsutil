@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Test Collapsible Div</title>
+	<script type="module">
+		import 'https://jsutil37.github.io/jsutil/util.js'
+		window.createCollapsibleDiv =
+			function createCollapsibleDiv(id, caption, parent) {
+				drawHtml(/*html*/`
+					<div id="${id}" style="border:1px solid black;overflow:auto;resize:both">
+						<div style="width:100%;background:#F0F0F0;text-align:center;overflow:auto;position:sticky;top:0">
+							<b>${htmlEncode(caption)}</b>
+							<span style="float:right">
+								<button class="minBtn" style="border:none"
+									onclick="minimizeOrRestoreDiv('${id}')">_
+								</button>
+								<button class="maxBtn" style="border:none"
+									onclick="restoreOrMaximizeDiv('${id}')">□
+								</button>
+							</span>
+						</div>
+					</div>
+				`)
+			}
+
+		function onLoadHdlr() {
+			createCollapsibleDiv('id1', 'Some Title')
+			drawHtml(/*html*/`
+			<div id="id2">
+				<pre>Do I really need ID???
+				let
+				us
+				see
+				whether
+				it
+				is
+				really
+				needed
+				</pre>
+			</div>`,
+				el('id1'))
+		}
+
+		function minimizeOrRestoreDiv(divId) {
+			let div = el(divId), style = div.style
+			if (minimizeBtnIsApplicable(div)) {
+				div.restoredHt = div.offsetHeight
+				style.height = div.children[0].offsetHeight + 'px'
+				style.overflow = 'hidden'
+				div.minMaxRestoreState = 'min'
+				div.getElementsByClassName('minBtn')[0].innerText = '▭'
+			} else {
+				style.overflow = 'auto'
+				style.height = (div.restoredHt ?? '100') + 'px'
+				div.minMaxRestoreState = null
+				div.getElementsByClassName('minBtn')[0].innerText = '_'
+			}
+			updateCollapsibleDivsUi()
+		}
+
+		exportToWnd(minimizeOrRestoreDiv)
+
+		function minimizeBtnIsApplicable(div) {
+			return (div.minMaxRestoreState != 'min')
+		}
+
+		function restoreOrMaximizeDiv(divId) {
+			let div = el(divId), style = div.style
+			if (maximizeBtnIsApplicable(div)) {
+				div.restoredHt = div.offsetHeight
+				style.removeProperty('height')
+				style.overflow = 'visible'
+				div.minMaxRestoreState = 'max'
+			} else {
+				style.overflow = 'auto'
+				style.height = (div.restoredHt ?? '100') + 'px'
+				div.minMaxRestoreState = null
+			}
+			updateCollapsibleDivsUi()
+		}
+
+		expToWnd(restoreOrMaximizeDiv)
+
+		function updateCollapsibleDivsUi() {
+			let maxBtns = getElsByClsNm('maxBtn')
+			maxBtns = [...maxBtns]
+			maxBtns.forEach(maxBtn => {
+				maxBtn.blur()
+				let div = maxBtn.parentElement.parentElement.parentElement
+				if (div.minMaxRestoreState == null && div.restoredHt == null) {
+					div.style.height = '100px'
+				}
+				maxBtn.innerText = maximizeBtnIsApplicable(div) ? '□' : '▭'
+			})
+			setTimeout(updateCollapsibleDivsUi, 2000)
+		}
+
+		function maximizeBtnIsApplicable(div) {
+			return (div.scrollWidth > div.clientWidth) ||
+				(div.scrollHeight > div.clientHeight)
+		}
+
+		window.addEventListener('load', onLoadHdlr)
+		setTimeout(updateCollapsibleDivsUi, 2000)
+
+	</script>
+</head>
+
+<body></body>
+
+</html>
