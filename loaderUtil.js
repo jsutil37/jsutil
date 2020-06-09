@@ -45,6 +45,7 @@ dbgload && console.log('after util import')
 function exportToWindow(fn){window[fn.name]=fn}
 exportToWindow(exportToWindow)
 window.exportToWnd = exportToWindow
+window.expToWnd = exportToWnd
 
 window.getFullUrlOfUrlXThatIsRelativeToUrlY =
 function(x,y){return new URL(x,y).href}
