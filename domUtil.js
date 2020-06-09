@@ -15,6 +15,8 @@ import './util.js'
 dbgload && console.log('after importing util.js...')
 import './parseUtil.js'
 
+window.elExists = function elExists(id){return (document.getElementById(id)!=null)}
+
 //shortcut for document.getElementById
 window.el =
 function el(id)
