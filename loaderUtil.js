@@ -245,7 +245,10 @@ async function loadCss2(url,integrity,crossOrigin)
 		//console.log('before firing load css')
 		head.appendChild(link)
 		//console.log('after firing load css')
-		if(url.indexOf('util.css') != 0){window.isUtilCssLoaded=true}
+		if(url.indexOf('util.css') != 0){
+			window.isUtilCssLoaded=true
+			dbgload && console.log('window.isUtilCssLoaded=true')
+		}
 	}
 	)
 	//console.log('loadcss: returning a new Promise object...')
