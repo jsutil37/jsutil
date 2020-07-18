@@ -49,6 +49,8 @@ function (fn,conditionfn,sleeptime,timeout,timeoutsofar)
 window.waitUntilSymbolAppearsAndThenRun =
 function (fn,symName,sleeptime,timeout)
 {
+	assert(typeof fn == 'function')
+	assert(typeof symName == 'string')
 	waitToRun
 	(
 	fn,
