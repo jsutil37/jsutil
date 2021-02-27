@@ -86,7 +86,10 @@ window.cssFilesToLoad.push('./util.css')
 
 //The js files to import (load asynchronously in <head> tag)
 window.jsFilesToLoad = window.jsFilesToLoad || []
-jsFilesToLoad.push("https://kit.fontawesome.com/a076d05399.js")
+
+//Below is no longer found, so commenting out:
+//jsFilesToLoad.push("https://kit.fontawesome.com/a076d05399.js")
+
 jsFilesToLoad.push("https://cdn.jsdelivr.net/npm/jquery.growl/javascripts/jquery.growl.min.js")
 
 loadAllTypesOfFiles()
