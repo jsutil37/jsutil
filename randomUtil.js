@@ -1,5 +1,7 @@
 export {randEl,randInt}
 
+import {flr,rand} from './abbreviations.js'
+
 window.randomAlphaNumericChar = function() {
     let num = Math.round (Math.random() * 35)
     if(num >= 26) {
