@@ -1,3 +1,5 @@
+export {randEl,randInt}
+
 window.randomAlphaNumericChar = function() {
     let num = Math.round (Math.random() * 35)
     if(num >= 26) {
@@ -13,4 +15,15 @@ window.randomAlphanumericString = function(len) {
         rv += randomAlphaNumericChar()
     }
     return rv
+}
+
+/** @param {any[]} arr */
+export function randEl(arr) { return arr[randInt(0, arr.length - 1)] }
+
+/**
+ * @param {number} lLim
+ * @param {number} uLim
+ */
+export function randInt(lLim, uLim) {
+	return lLim + flr(rand() * (uLim - lLim + 1))
 }
