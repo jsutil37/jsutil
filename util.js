@@ -73,10 +73,9 @@ assert($("textarea").resizable!=null)
 //they are imported:
 //TODO: can't remember how exactly this will help to avoid duplicate imports given that we are using 'import'
 // This might be reinventing the wheel; import might be taking care of this already?
-ldr.checkAndRecordUrl('https://unpkg.com/jquery/dist/jquery.min.js')
+//checkAndRecordUrl('https://unpkg.com/jquery/dist/jquery.min.js')
 
-ldr.checkAndRecordUrl
-("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
+//checkAndRecordUrl("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
 
 //It has been experimentally validated that relative paths are relative to this file's folder:
 dbgload && console.log('here')
