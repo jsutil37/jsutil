@@ -6,6 +6,9 @@
 //Import this file as an ES6 module.
 //Once this file is run, it exposes itself via window.u
 
+export * from './abbreviations.js'
+export * from './uiUtil.js'
+
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
 let dbgload = window.dbgload
