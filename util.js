@@ -10,21 +10,26 @@
 //Put basic functions and shortcuts at the top, and those that depend on them,  further below:
 //Below exports are done synchronously and this keeps things simple...
 export * from './abbreviations.js'
-export * from './uiUtil.js'
 export * from './arrayUtil.js'
-export * from './stringUtil.js'
+export * from './basicSyncUtil.js'
+export * from './blockUiUtil.js'
 export * from './debugUtil.js'
+export * from './diffUtil.js'
+export * from './domUtil.js'
+export * from './loaderUtil.js'
+export * from './mathUtil.js'
+export * from './objUtil.js'
+export * from './parseUtil.js'
+export * from './randomUtil.js'
+export * from './stringUtil.js'
+export * from './syncUtil.js'
+export * from './taResizeUtil.js'
+export * from './uiUtil.js'
 
 //Always use the latest version of jquery and hope for the best
 export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
 export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
-export * from './objUtil.js'
-export * from './loaderUtil.js'
-export * from './domUtil.js'
-export * from './syncUtil.js'
-export * from './blockUiUtil.js'
-export * from './taResizeUtil.js'
 
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
