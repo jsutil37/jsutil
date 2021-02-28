@@ -4,30 +4,33 @@
 //Github repository: https://github.com/jsutil37/jsutil
 
 //Import this file as an ES6 module.
-//Once this file is run, it exposes itself via window.u
+//Once this file is run, it also exposes itself as window.u
 
+
+//Put basic functions and shortcuts at the top, and those that depend on them,  further below:
+//Below exports are done synchronously and this keeps things simple...
 export * from './abbreviations.js'
 export * from './uiUtil.js'
+export * from './arrayUtil.js'
+export * from './stringUtil.js'
+export * from './debugUtil.js'
+
+//Always use the latest version of jquery and hope for the best
+export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
+export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
+export * from './objUtil.js'
+export * from './loaderUtil.js'
+export * from './domUtil.js'
+export * from './syncUtil.js'
+export * from './blockUiUtil.js'
+export * from './taResizeUtil.js'
 
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
 let dbgload = window.dbgload
 dbgload && console.log('util.js: loading started. This log message is expected to come only once per page load...')		
 console.log('loaded '+scriptPath());
-
-//Put basic functions and shortcuts at the top, and those that depend on them, 
-//further below:
-import './arrayUtil.js'
-import './stringUtil.js'
-import './debugUtil.js'
-
-//Below imports are done synchronously and this keeps things simple...
-
-//Always use the latest version of jquery and hope for the best
-import 'https://unpkg.com/jquery/dist/jquery.min.js'
-
-import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
-import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
 //====== BOOTSTRAP INCLUDES START=======
 //bootstrap says: 'load me last after all the html is loaded', but that seems less beneficial; it may actually
@@ -39,7 +42,7 @@ import "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery
 	
 //Below bundle includes Popper, but not jquery, and solves the issue of the runtime error of 'Popper not found':
 //Also note that https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.bundle.min.js points to an old version :(
-import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js";
+export * from "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js";
 		
 //The bootstrap css is included via util.css
 
@@ -60,12 +63,7 @@ $('head').prepend('<meta http-equiv="X-UA-Compatible" content="ie=edge">'+
 assert($("textarea").resizable!=null)
 //Note: this is also needed by the jquery plugin blockUI
 
-import './objUtil.js'
-import * as ldr from './loaderUtil.js'
-import './domUtil.js'
-import './syncUtil.js'
-import './blockUiUtil.js'
-import './taResizeUtil.js'
+
 
 //Guard against duplicate inclusion of the jquery imports by recording that 
 //they are imported:
