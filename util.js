@@ -6,6 +6,10 @@
 //Import this file as an ES6 module.
 //Once this file is run, it also exposes itself as window.u
 
+//Always use the latest version of jquery and hope for the best
+export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
+export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
 //Put basic functions and shortcuts at the top, and those that depend on them,  further below:
 //Below exports are done synchronously and this keeps things simple...
@@ -25,11 +29,6 @@ export * from './stringUtil.js'
 export * from './syncUtil.js'
 export * from './taResizeUtil.js'
 export * from './uiUtil.js'
-
-//Always use the latest version of jquery and hope for the best
-export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
-export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
-export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
