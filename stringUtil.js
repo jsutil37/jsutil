@@ -86,6 +86,13 @@ function withoutLastChar(s)
 	return s.substring(0,s.length - 1)
 }
 
+
+window.withoutFirstChar = 
+function withoutFirstChar(s)
+{
+	return s.substr(1)
+}
+
 window.isAlphabetic =
 function isAlphabetic(ch)
 {
