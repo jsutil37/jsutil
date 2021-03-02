@@ -20,7 +20,7 @@ function initCollapsibleDivs() {
 
     function initCollapsibleDiv(collapsibleDiv) {
       let id = collapsibleDiv.id
-      if(id==null || id==''){id = collapsibleDiv.id = nxtId()}
+      if(id==null || id==''){id = collapsibleDiv.id = 'id'+nxtId()}
       const outerDiv = htmlToElement(/*html*/`
 <div style="border:1px solid black; padding:5px"><button 
 id="${id}btn" class="btn btn-primary" data-toggle="collapse" data-target="#${id}"
