@@ -1,3 +1,5 @@
+export {nxtId}
+
 let dbgload = window.dbgload
 dbgload && console.log('start')
 //object utils
@@ -66,5 +68,9 @@ window.isInt = function(o){return Number.isInteger(o);}
 
 //tail(arr): returns a shallow clone of the specified array, with the first element removed
 window.tail = function(arr){return arr.slice(1);}
+
+
+let idCtr = 0
+function nxtId() { idCtr++; return idCtr }
 
 dbgload && console.log('reached end')
