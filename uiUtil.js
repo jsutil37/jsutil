@@ -1,6 +1,6 @@
 export {randLightColor}
 
-import {randEl} from './util.js'
+import {randEl,nxtId} from './util.js'
 
 function randLightColor() {
 	let letters = 'BCDEF'.split(''), color = '#'
@@ -19,8 +19,8 @@ function initCollapsibleDivs() {
 }
 
     function initCollapsibleDiv(collapsibleDiv) {
-      const id = collapsibleDiv.id
-      assert(id!=null)
+      let id = collapsibleDiv.id
+      if(id==null || id==''){id = collapsibleDiv.id = nxtId()}
       const outerDiv = htmlToElement(/*html*/`
 <div style="border:1px solid black; padding:5px"><button 
 id="${id}btn" class="btn btn-primary" data-toggle="collapse" data-target="#${id}"
