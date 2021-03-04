@@ -30,3 +30,7 @@ pre {
 body {
 	padding: 4px;	/*A waste of real estate perhaps, but certainly to counteract hardware errors hiding the edge pixels of the screen. */	
 }
+
+code {
+	background: silver;
+}
