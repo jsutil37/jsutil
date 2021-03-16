@@ -87,3 +87,12 @@ function (quoteChr,scriptText,idxOfOpeningQuote)
 	assert(scriptText.substr(searchEndIdx,1)==quoteChr)
 	return searchEndIdx
 }
+
+window.withCommentsRemoved = function withCommentsRemoved(s) {
+	const arr = scriptCommentAndNonCommentAreas(s)
+	let rv = ''
+	for(const ele of arr) {
+		if(ele.type!='comment'){rv+=ele.text}
+	}
+	return rv
+}
