@@ -17,7 +17,6 @@ function (scriptText)
     let rv = []
     while(true) {
 	if(scriptText==''){return rv}
-	let ix = scriptText.indexOf("'")
 	const idx1 = tokenIxOrFullLenIfAbsent(scriptText, "'")
 	const idx2 = tokenIxOrFullLenIfAbsent(scriptText, '"')
 	const idx3 = tokenIxOrFullLenIfAbsent(scriptText, "//")
