@@ -68,7 +68,7 @@ function (quoteChr,scriptText,idxOfOpeningQuote)
 	let idx1= idxOfOpeningQuote
 	let strToSearchIn = scriptText.substr(idx1+1)
 	let strToSearchInParts = mysplit(strToSearchIn,'\\'+quoteChr)
-	searchEndIdx=idx1+1
+	let searchEndIdx=idx1+1
 	let closingQuotesFound = false
 	strToSearchInParts.some
 	(
