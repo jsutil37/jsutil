@@ -13,9 +13,10 @@ function tokenIxOrFullLenIfAbsent(scriptText,token) {
 window.scriptCommentAndNonCommentAreas =
 function (scriptText)
 {
-    let dbg = false
+    let dbg = true
     let rv = []
     while(true) {
+	if(dbg)console.log('scriptText='+scriptText) 
 	if(scriptText==''){return rv}
 	const idx1 = tokenIxOrFullLenIfAbsent(scriptText, "'")
 	const idx2 = tokenIxOrFullLenIfAbsent(scriptText, '"')
