@@ -1,5 +1,10 @@
 import './util.js'
 
+function tokenIxOrFullLenIfAbsent(scriptText,token) {
+	const ix = scriptText.indexOf(token) 
+	return (ix!=-1) ? ix:scriptText.length 
+}
+
 /**
  * Given text that is JS code, returns an array of elements. Each element is an
  * object having 2 members: 'type' and 'text'. 'text' is the text of the parsed
@@ -12,14 +17,14 @@ function (scriptText)
     let rv = []
     while(true) {
 	if(scriptText==''){return rv}
-	let outOfRangeIdx = scriptText.length
-	let idx1 = scriptText.indexOf("'");if(idx1==-1)idx1=outOfRangeIdx
-	let idx2 = scriptText.indexOf("\"");if(idx2==-1)idx2=outOfRangeIdx
-	let idx3 = scriptText.indexOf("//");if(idx3==-1)idx3=outOfRangeIdx
-	let idx4 = scriptText.indexOf("/*");if(idx4==-1)idx4=outOfRangeIdx
-	const idx5 = scriptText.indexOf("`");if(idx5==-1)idx5=outOfRangeIdx
+	let ix = scriptText.indexOf("'")
+	const idx1 = tokenIxOrFullLenIfAbsent(scriptText, "'")
+	const idx2 = tokenIxOrFullLenIfAbsent(scriptText, '"')
+	const idx3 = tokenIxOrFullLenIfAbsent(scriptText, "//")
+	const idx4 = tokenIxOrFullLenIfAbsent(scriptText, "/*")
+	const idx5 = tokenIxOrFullLenIfAbsent(scriptText, "`")
 	let leastVal = Math.min(idx1,idx2,idx3,idx4,idx5)
-	if(leastVal==outOfRangeIdx)
+	if(leastVal == scriptText.length)
 	{
 		rv.push({type:'code',text:scriptText});return rv
 	}
