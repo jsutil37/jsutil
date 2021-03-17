@@ -9,23 +9,25 @@ window.scriptCommentAndNonCommentAreas =
 function (scriptText)
 {
     let dbg = false
-	if(scriptText==''){return []}
+    let rv = []
+    while(true) {
+	if(scriptText==''){return rv}
 	let outOfRangeIdx = scriptText.length
 	let idx1 = scriptText.indexOf("'");if(idx1==-1)idx1=outOfRangeIdx
 	let idx2 = scriptText.indexOf("\"");if(idx2==-1)idx2=outOfRangeIdx
 	let idx3 = scriptText.indexOf("//");if(idx3==-1)idx3=outOfRangeIdx
 	let idx4 = scriptText.indexOf("/*");if(idx4==-1)idx4=outOfRangeIdx
 	const idx5 = scriptText.indexOf("`");if(idx5==-1)idx5=outOfRangeIdx
-let leastVal = Math.min(idx1,idx2,idx3,idx4,idx5)
+	let leastVal = Math.min(idx1,idx2,idx3,idx4,idx5)
 	if(leastVal==outOfRangeIdx)
 	{
-		return [{type:'code',text:scriptText}]
+		rv.push({type:'code',text:scriptText});return rv
 	}
 	if(leastVal != 0)
 	{
-		return [{type:'code',text:scriptText.substring(0,leastVal)}]
-			.concat(scriptCommentAndNonCommentAreas(
-				scriptText.substr(leastVal)))
+		rv.push({type:'code',text:scriptText.substring(0,leastVal)})
+		scriptText = scriptText.substr(leastVal)
+		continue
 	}
 	let searchEndIdx,areaType
 	if([idx1,idx2,idx5].includes(leastVal))
@@ -50,15 +52,15 @@ let leastVal = Math.min(idx1,idx2,idx3,idx4,idx5)
 		searchEndIdx++//because this is the only ending thing that has two chars
 	}
 	let areaText = scriptText.substring(leastVal,searchEndIdx+1)
-	let retval = [{type:areaType, text:areaText}]
-	dbg && console.log('Parsed area \''+ str(retval) +'\'...')
+	rv.push({type:areaType, text:areaText})
+	dbg && console.log('Parsed partial text \''+ str(areaText) +'\'...')
 	let remainingText = ""
-	if(searchEndIdx<scriptText.length-1)
+	if(searchEndIdx < scriptText.length-1)
 	{
 		remainingText = scriptText.substring(searchEndIdx+1)
 	}
-	let remainingAreas = scriptCommentAndNonCommentAreas(remainingText)
-	return retval.concat(remainingAreas)
+	scriptText = remainingText
+    }
 }
 
 window.idxOfClosingQuoteOfTextInCode =
