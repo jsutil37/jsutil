@@ -32,7 +32,7 @@ let leastVal = Math.min(idx1,idx2,idx3,idx4,idx5)
 	{
 		areaType = 'textInCode'
 		let quoteChr = (leastVal==idx1)?"'":
-                    ((leastVal==idx2)?'"')
+                    ((leastVal==idx2)?'"':"`")
 		searchEndIdx = idxOfClosingQuoteOfTextInCode(quoteChr,scriptText,leastVal)
 	}
 	else if(leastVal==idx3)
