@@ -66,7 +66,7 @@ function (quoteChr,scriptText,idxOfOpeningQuote)
 {
 	assert(["'",'"',"`"].includes(quoteChr))
 	let idx1= idxOfOpeningQuote
-	let searchEndIdx = scriptText.indexOf('\n',idx1+1)
+	let searchEndIdx = scriptText.indexOf(quoteChr,idx1+1)
 	if(searchEndIdx==-1){searchEndIdx=scriptText.length}
 	let strToSearchIn = scriptText.substring(idx1+1,searchEndIdx)
 	let strToSearchInParts = mysplit(strToSearchIn,'\\'+quoteChr)
