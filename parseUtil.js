@@ -15,7 +15,8 @@ function (scriptText)
 	let idx2 = scriptText.indexOf("\"");if(idx2==-1)idx2=outOfRangeIdx
 	let idx3 = scriptText.indexOf("//");if(idx3==-1)idx3=outOfRangeIdx
 	let idx4 = scriptText.indexOf("/*");if(idx4==-1)idx4=outOfRangeIdx
-	let leastVal = Math.min(idx1,idx2,idx3,idx4)
+	const idx5 = scriptText.indexOf("`");if(idx5==-1)idx5=outOfRangeIdx
+let leastVal = Math.min(idx1,idx2,idx3,idx4,idx5)
 	if(leastVal==outOfRangeIdx)
 	{
 		return [{type:'code',text:scriptText}]
@@ -27,10 +28,11 @@ function (scriptText)
 				scriptText.substr(leastVal)))
 	}
 	let searchEndIdx,areaType
-	if(leastVal==idx1 || leastVal == idx2)
+	if([idx1,idx2,idx5].includes(leastVal))
 	{
 		areaType = 'textInCode'
-		let quoteChr = (leastVal==idx1)?"'":'"'
+		let quoteChr = (leastVal==idx1)?"'":
+                    ((leastVal==idx2)?'"')
 		searchEndIdx = idxOfClosingQuoteOfTextInCode(quoteChr,scriptText,leastVal)
 	}
 	else if(leastVal==idx3)
@@ -62,7 +64,7 @@ function (scriptText)
 window.idxOfClosingQuoteOfTextInCode =
 function (quoteChr,scriptText,idxOfOpeningQuote)
 {
-	assert(quoteChr=='\''||quoteChr=='"')
+	assert(["'",'"',"`"].includes(quoteChr))
 	let idx1= idxOfOpeningQuote
 	let searchEndIdx = scriptText.indexOf('\n',idx1+1)
 	if(searchEndIdx==-1){searchEndIdx=scriptText.length}
