@@ -37,7 +37,7 @@ window.scriptCommentAndNonCommentAreas =
 			}
 			//case of token found at start
 			let searchEndIdx, areaType
-			//searchEndIx will be set to the end of the areaType that scriptText starts with
+			//searchEndIdx will be set to the end of the areaType that scriptText starts with
 			if ([idx1, idx2, idx5].includes(0)) {
 				//case of (opening) quote found at start
 				areaType = 'textInCode'
@@ -89,7 +89,7 @@ window.idxOfClosingQuoteOfTextInCode =
 				}
 			)
 		assert(closingQuotesFound)
-		searchEndIx++ //strToSearchIn was 1 char after scriptText
+		searchEndIdx++ //strToSearchIn was 1 char after scriptText
 		assert(scriptText.substr(searchEndIdx, 1) == quoteChr)
 		return searchEndIdx
 	}
