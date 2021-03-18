@@ -27,11 +27,15 @@ window.scriptCommentAndNonCommentAreas =
 			const idx5 = tokenIxOrFullLenIfAbsent(scriptText, "`")
 			let leastVal = Math.min(idx1, idx2, idx3, idx4, idx5)
 			if (leastVal == scriptText.length) {       //case of no tokens found
-				rv.push({ type: 'code', text: scriptText }); return rv
+				rv.push({ type: 'code', text: scriptText });
+				dbg && console.log('type: code, text: >>>' + scriptText + '<<<')
+				return rv
 			}
 			if (leastVal != 0) {
 				//case of tokens found, but not at start
-				rv.push({ type: 'code', text: scriptText.substring(0, leastVal) })
+				let text = scriptText.substring(0, leastVal)
+				rv.push({ type: 'code', text  })
+				dbg && console.log('type: code, text: >>>' + text + '<<<')
 				scriptText = scriptText.substr(leastVal)
 				continue
 			}
@@ -43,13 +47,11 @@ window.scriptCommentAndNonCommentAreas =
 				areaType = 'textInCode'
 				let quoteChr = (0 == idx1) ? "'" : ((0 == idx2) ? '"' : "`")
 				searchEndIdx = idxOfClosingQuoteOfTextInCode(quoteChr, scriptText)
-			}
-			else if (0 == idx3) {
+			} else if (0 == idx3) {
 				areaType = 'comment'
 				searchEndIdx = scriptText.indexOf("\n", idx3)
 				if (searchEndIdx == -1) { searchEndIdx = scriptText.length - 1 }
-			}
-			else {
+			} else {
 				assert(idx4 == 0)
 				areaType = 'comment'
 				searchEndIdx = scriptText.indexOf("*/")
@@ -58,7 +60,7 @@ window.scriptCommentAndNonCommentAreas =
 			}
 			let areaText = scriptText.substring(0, searchEndIdx + 1)
 			rv.push({ type: areaType, text: areaText })
-			dbg && console.log('Parsed partial text \'' + str(areaText) + '\'...')
+			dbg && console.log('type:' + areaType + ', text: >>>' + areaText + '<<<')
 			let remainingText = ""
 			if (searchEndIdx < scriptText.length - 1) {
 				scriptText = scriptText.substring(searchEndIdx + 1)
