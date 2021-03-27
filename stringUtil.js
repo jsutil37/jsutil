@@ -2,7 +2,7 @@ window.leftOf =
 function leftOf(s,delim)
 {
 	var i = s.indexOf(delim)
-	if(i==-1){throw "delim '"+delim+"' not in '"+s+"'!!!"}
+	if(i==-1){throw new Error("delim '"+delim+"' not in '"+s+"'!!!")}
 	return s.substring(0,i)
 }
 window.leftof = leftOf
@@ -21,7 +21,7 @@ window.rightOf =
 function rightOf(s, delim)
 {
 	var i = s.indexOf(delim)
-	if(i==-1){throw "delim '"+delim+"' not in '"+s+"'!!!"}
+	if(i==-1){throw new Error("delim '"+delim+"' not in '"+s+"'!!!")}
 	return s.substring(i+delim.length)
 }
 window.rightof = rightOf
