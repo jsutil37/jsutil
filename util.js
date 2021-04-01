@@ -8,6 +8,9 @@
 
 //Always use the latest version of jquery and hope for the best
 export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
+const $ = globalThis.$
+export {$}
+
 export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
