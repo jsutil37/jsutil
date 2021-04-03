@@ -9,6 +9,8 @@ File location: https://github.com/jsutil37/jsutil/blob/master/domUtil.js
 Deployment location: https://jsutil37.github.io/jsutil/domUtil.js
 END Do not remove this notice
 */
+export {htmlEncode}
+
 let dbgload = window.dbgload
 dbgload && console.log('start')
 import './util.js'
@@ -437,11 +439,12 @@ function transformUrlOfScriptToBeAbsolute(ele,url)
 }
 
 //reference: https://stackoverflow.com/questions/1219860/html-encoding-lost-when-attribute-read-from-input-field
-window.htmlEncode = function (value) {
+function htmlEncode (value) {
 // Create a in-memory div, set its inner text (which jQuery automatically encodes)
   // Then grab the encoded contents back out. The div never exists on the page.
   return $('<div/>').text(value).html();
 }
+window.htmlEncode = htmlEncode
 
 /**
  * @param {String} HTML representing a single element
