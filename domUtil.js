@@ -20,7 +20,6 @@ import './parseUtil.js'
 window.elExists = function elExists(id){return (document.getElementById(id)!=null)}
 
 //shortcut for document.getElementById
-window.el =
 function el(id)
 {
 	let rv = document.getElementById(id)
@@ -33,6 +32,7 @@ function el(id)
 	)
 	return rv
 }
+window.el = el
 window.getel = el
 window.getEl = el
 
