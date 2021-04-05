@@ -9,7 +9,7 @@ File location: https://github.com/jsutil37/jsutil/blob/master/domUtil.js
 Deployment location: https://jsutil37.github.io/jsutil/domUtil.js
 END Do not remove this notice
 */
-export {htmlEncode}
+export {htmlEncode,el}
 
 let dbgload = window.dbgload
 dbgload && console.log('start')
