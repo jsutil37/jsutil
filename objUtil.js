@@ -1,4 +1,4 @@
-export {nxtId}
+export {nxtId,bindAllFns}
 
 let dbgload = window.dbgload
 dbgload && console.log('start')
@@ -72,5 +72,11 @@ window.tail = function(arr){return arr.slice(1);}
 
 let idCtr = 0
 function nxtId() { idCtr++; return idCtr }
+
+function bindAllFns(thisObj,fnList) {
+	for(const fnName of fnList) {
+	    thisObj[fnName] = thisObj[fnName].bind(thisObj) 
+	}
+}
 
 dbgload && console.log('reached end')
