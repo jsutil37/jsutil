@@ -7,6 +7,8 @@
 let dbgload = window.dbgload
 dbgload && console.log('start')
 console.log('Loaded '+scriptPath())
+
+export {sendAndReceiveJson, sendJsonRequest}
 /*
 Functions made globally available (attached to the global 'window' object):
 
@@ -600,7 +602,7 @@ window.fetchJson = async function(url,options) {
 	}
 }
 
-window.sendAndReceiveJson = async function (params) {
+async function sendAndReceiveJson (params) {
     try{
         checkParams(params, ['method', 'objForBody','commonPartOfApiUrl',
             'uniquePartOfApiUrl'])
@@ -629,5 +631,8 @@ window.sendAndReceiveJson = async function (params) {
         throw e
     }
 }
+window.sendAndReceiveJson = sendAndReceiveJson
+const sendJsonRequest = sendAndReceiveJson
+window.sendJsonRequest = window.sendJsonRequest || sendJsonRequest 
 
 dbgload && console.log('reached end')
