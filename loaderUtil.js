@@ -139,7 +139,7 @@ export async function checkAndRecordUrl(url)
 
 async function loadScript2(url,integrity,crossOrigin,scriptType)
 {
-	console.log('loadScript(): using promises...url=\''+url+'\'...')
+	dbgload && console.log('loadScript(): using promises...url=\''+url+'\'...')
 	return new Promise
 	(
 	function (callbackfn)
