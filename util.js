@@ -220,18 +220,18 @@ if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 window.growl = function growl(msg){$.growl.notice({ message: msg })}
 
 /** reduce code complexity of loops! */
-function loopFn(whileFn,stepFn){
-	while(whileFn()){
-		stepFn()
+function loopFn(whileFn, stepFn, state){
+	while(whileFn(state)){
+		stepFn(state)
 	}
 }
 
 /** reduce code complexity of IF statements! */
-function ifFn(condFn,thenFn,elseFn){
-	if(whileFn()){
-		thenFn()
+function ifFn(condFn, thenFn, state, elseFn){
+	if(condFn(state)){
+		thenFn(state)
 	} else if (elseFn != null){
-		elseFn()
+		elseFn(state)
 	}
 }
 
