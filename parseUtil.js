@@ -115,8 +115,7 @@ function parse(str, rules) {
 }
 
 function shouldParsingContinue(s) {
-	if(s.isEndReached){return false}
-	return (s.parseErr != null)
+	return !(s.isEndReached || (s.parseErr != null))
 }
 
 function doParseStep(s) {
@@ -138,29 +137,54 @@ function doParseStepStg2(s) {
 		ifFn(s, parseRuleMatches, applyParseRule)
 	}
 	if(s.someRuleMatched) {return}
-	s.parseErr = "unexpected character '"+s.chr+"' at index "+s.parseIx+" (row #TODO, col #TODO)"
+	s.parseErr = "unexpected character '" + s.chr + "' at index " + s.parseIx + " (row #TODO, col #TODO)"
 }
 
+/**
+returns true or false depending on whether the current parsing rule matches the start of the 
+remaining string
+*/
 function parseRuleMatches(s) {
 	if(!s.rule.isApplicable){return false}
-	if (s.rule.token == null){return true}
+	if (s.rule.token == null){
+		if(s.rule.isForEndReached){return s.isEndReached}
+		return true
+	}
 	return (s.rmgStr.startsWith(s.rule.token))
 }
 
 function applyParseRule(s) {
 	s.someRuleMatched = true
 	ifFn(isTokenRule, collectToken, extendToken)
+	const namesOfApplicableRules = s.rule.namesOfApplicableRules
+	//after a token match, the applicability of some rules might change:
+	for(const rule of s.rules) {
+		rule.isApplicable = namesOfApplicableRules.includes(rule.name)
+	}
 }
 
 function collectToken(s) {
-	s.parentToken.childTokens.push({ruleName:s.rule.name,parseIx:s.parseIx,token:s.rule.token})
-	s.parseIx += s.rule.token.length-1
+	assert(['opening', 'closing', 'sibling'].includes(s.rule.tokenType))
+	if(s.rule.tokenType=='closing') {
+		s.parentToken = s.parentToken.parentToken
+		if(s.parentToken == null) {
+			s.parseErr = "unexpected closing token '" + s.rule.token + "' at index " + s.parseIx + " (row #TODO, col #TODO)"
+			return
+		}
+	}
+	let token = {ruleName:s.rule.name,parseIx:s.parseIx,token:s.rule.token}
+	s.parentToken.childTokens.push(token)
+	s.token = ''
+	s.parseIx += s.rule.token.length - 1
+	if(s.rule.tokenType=='opening') {
+		s.parentToken = token 
+	}
 }
 
 function isTokenRule(s) {
-	return (s.rule.token!=null)
+	return (s.rule.token != null)
 }
 
 function extendToken(s) {
-	s.token+=s.chr
+	s.token += s.chr
 }
