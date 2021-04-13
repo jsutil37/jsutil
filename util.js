@@ -39,8 +39,7 @@ export {loopFn, ifFn}
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
 let dbgload = window.dbgload
-dbgload && console.log('util.js: loading started. This log message is expected to come only once per page load...')		
-console.log('loaded '+scriptPath());
+dbgload && console.log(scriptPath()+': loading started. This log message is expected to come only once per page load...')		
 
 //====== BOOTSTRAP INCLUDES START=======
 //bootstrap says: 'load me last after all the html is loaded', but that seems less beneficial; it may actually
