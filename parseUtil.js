@@ -107,8 +107,9 @@ window.withCommentsRemoved = function withCommentsRemoved(s) {
 	return rv
 }
 
-function parse(str,rules) {
-	let s = {parseIx:0,str,rules}
+function parse(str, rules) {
+	let parentToken = {parentToken:null,childTokens:[]}
+	let s = {parseIx:0, str, rules, token:'', result:parentToken, parentToken}
 	loopFn(s, shouldParsingContinue, doParseStep, initForNxtParseStep)
 	return s.result
 }
@@ -126,19 +127,40 @@ function doParseStep(s) {
 
 function initForNxtParseStep(s) {
 	s.parseIx++
+	s.chr = s[s.parseIx]
+	s.rmgStr = s.str.substr(s.parseIx)
 }
 
 function doParseStepStg2(s) {
+	s.someRuleMatched = false
 	for(const rule of s.rules){
 		s.rule = rule
 		ifFn(s, parseRuleMatches, applyParseRule)
 	}
+	if(s.someRuleMatched) {return}
+	s.parseErr = "unexpected character '"+s.chr+"' at index "+s.parseIx+" (row #TODO, col #TODO)"
 }
 
 function parseRuleMatches(s) {
-	todo()
+	if(!s.rule.isApplicable){return false}
+	if (s.rule.token == null){return true}
+	return (s.rmgStr.startsWith(s.rule.token))
 }
 
 function applyParseRule(s) {
-	todo()
+	s.someRuleMatched = true
+	ifFn(isTokenRule, collectToken, extendToken)
+}
+
+function collectToken(s) {
+	s.parentToken.childTokens.push({ruleName:s.rule.name,parseIx:s.parseIx,token:s.rule.token})
+	s.parseIx += s.rule.token.length-1
+}
+
+function isTokenRule(s) {
+	return (s.rule.token!=null)
+}
+
+function extendToken(s) {
+	s.token+=s.chr
 }
