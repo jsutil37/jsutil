@@ -1,5 +1,7 @@
 import './util.js'
 
+export {parse}
+
 function tokenIxOrFullLenIfAbsent(scriptText, token) {
 	const ix = scriptText.indexOf(token)
 	return (ix != -1) ? ix : scriptText.length
@@ -103,4 +105,42 @@ window.withCommentsRemoved = function withCommentsRemoved(s) {
 		if (ele.type != 'comment') { rv += ele.text }
 	}
 	return rv
+}
+
+function parse(s,rules) {
+	let state = {parseIx:0,s,rules}
+	loopFn(shouldParsingContinue, doParseStep, state)
+	return state.result
+}
+
+function shouldParsingContinue(state) {
+	if(state.isEndReached){return false}
+	return (state.parseErr != null)
+}
+
+function doParseStep(state) {
+	state.isEndReached = (state.parseIx >= state.s.length)
+	if(state.isEndReached) {assert(state.parseIx == state.s.length)}
+	doParseStepStg2(state)
+	ifNeededIncParseIx(state)
+}
+
+function ifNeededIncParseIx(state) {
+	if(state.parseErr != null){return}
+	if(!state.isEndReached){state.parseIx++}
+}
+
+function doParseStepStg2(state) {
+	for(const rule of state.rules){
+		state.rule = rule
+		ifFn(parseRuleMatches, applyParseRule, state)
+	}
+}
+
+function parseRuleMatches(state) {
+	todo()
+}
+
+function applyParseRule(state) {
+	todo()
 }
