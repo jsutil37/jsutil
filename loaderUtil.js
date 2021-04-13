@@ -5,8 +5,7 @@
 // - right margin after 80 character columns. Do not exceed the right margin
 
 let dbgload = window.dbgload
-dbgload && console.log('start')
-console.log('Loaded '+scriptPath())
+dbgload && console.log('Loaded '+scriptPath())
 
 export {sendAndReceiveJson, sendJsonRequest}
 /*
