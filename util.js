@@ -5,6 +5,7 @@
 
 //Import this file as an ES6 module.
 //Once this file is run, it also exposes itself as window.u
+//TODO: Get rid of all 'window.' stuff and be a good citizen following es6 module explicit exports and imports
 
 //Always use the latest version of jquery and hope for the best
 export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
@@ -32,6 +33,8 @@ export * from './stringUtil.js'
 export * from './syncUtil.js'
 export * from './taResizeUtil.js'
 export * from './uiUtil.js'
+
+export {loopFn}
 
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
@@ -215,5 +218,10 @@ window.dontUseTitleAsPageHeading = window.dontUseTitleAsPageHeading || false
 if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
 window.growl = function growl(msg){$.growl.notice({ message: msg })}
+
+//reduce code complexity of loops!
+function loopFn(whileFn,stepFn){
+	while(whileFn()){stepFn()}
+}
 
 dbgload && console.log('util.js loaded!!!')
