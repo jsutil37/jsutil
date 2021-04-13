@@ -219,19 +219,34 @@ if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
 window.growl = function growl(msg){$.growl.notice({ message: msg })}
 
-/** reduce code complexity of loops! */
-function loopFn(whileFn, stepFn, state){
-	while(whileFn(state)){
-		stepFn(state)
+/** 
+ reduces code complexity of loops! 
+
+@param s 		the thread state
+*/
+function loopFn(s, whileFn, stepFn, initNxtStepFn){
+	if(initNxtStepFn == null) {
+		while(whileFn(s)){stepFn(s)}
+		return
+	}
+	if(!whileFn(s)){return}
+	stepFn(s)
+	while(whileFn(s)){
+		initNxtStepFn(s)
+		stepFn(s)
 	}
 }
 
-/** reduce code complexity of IF statements! */
-function ifFn(condFn, thenFn, state, elseFn){
-	if(condFn(state)){
-		thenFn(state)
+/** 
+reduces code complexity of IF statements!
+
+@param s 	the thread state
+*/
+function ifFn(s, condFn, thenFn, elseFn){
+	if(condFn(s)){
+		thenFn(s)
 	} else if (elseFn != null){
-		elseFn(state)
+		elseFn(s)
 	}
 }
 
