@@ -107,40 +107,38 @@ window.withCommentsRemoved = function withCommentsRemoved(s) {
 	return rv
 }
 
-function parse(s,rules) {
-	let state = {parseIx:0,s,rules}
-	loopFn(shouldParsingContinue, doParseStep, state)
-	return state.result
+function parse(str,rules) {
+	let s = {parseIx:0,str,rules}
+	loopFn(s, shouldParsingContinue, doParseStep, initForNxtParseStep)
+	return s.result
 }
 
-function shouldParsingContinue(state) {
-	if(state.isEndReached){return false}
-	return (state.parseErr != null)
+function shouldParsingContinue(s) {
+	if(s.isEndReached){return false}
+	return (s.parseErr != null)
 }
 
-function doParseStep(state) {
-	state.isEndReached = (state.parseIx >= state.s.length)
-	if(state.isEndReached) {assert(state.parseIx == state.s.length)}
-	doParseStepStg2(state)
-	ifNeededIncParseIx(state)
+function doParseStep(s) {
+	s.isEndReached = (s.parseIx >= s.str.length)
+	if(s.isEndReached) {assert(s.parseIx == s.str.length)}
+	doParseStepStg2(s)
 }
 
-function ifNeededIncParseIx(state) {
-	if(state.parseErr != null){return}
-	if(!state.isEndReached){state.parseIx++}
+function initForNxtParseStep(s) {
+	s.parseIx++
 }
 
-function doParseStepStg2(state) {
-	for(const rule of state.rules){
-		state.rule = rule
-		ifFn(parseRuleMatches, applyParseRule, state)
+function doParseStepStg2(s) {
+	for(const rule of s.rules){
+		s.rule = rule
+		ifFn(s, parseRuleMatches, applyParseRule)
 	}
 }
 
-function parseRuleMatches(state) {
+function parseRuleMatches(s) {
 	todo()
 }
 
-function applyParseRule(state) {
+function applyParseRule(s) {
 	todo()
 }
