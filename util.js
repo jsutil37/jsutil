@@ -34,7 +34,7 @@ export * from './syncUtil.js'
 export * from './taResizeUtil.js'
 export * from './uiUtil.js'
 
-export {loopFn}
+export {loopFn, ifFn}
 
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
@@ -219,9 +219,22 @@ if(!dontUseTitleAsPageHeading){useTitleAsPageHeading()}
 
 window.growl = function growl(msg){$.growl.notice({ message: msg })}
 
-//reduce code complexity of loops!
+/** reduce code complexity of loops! */
 function loopFn(whileFn,stepFn){
-	while(whileFn()){stepFn()}
+	while(whileFn()){
+		stepFn()
+	}
 }
+
+/** reduce code complexity of IF statements! */
+function ifFn(condFn,thenFn,elseFn){
+	if(whileFn()){
+		thenFn()
+	} else if (elseFn != null){
+		elseFn()
+	}
+}
+
+
 
 dbgload && console.log('util.js loaded!!!')
