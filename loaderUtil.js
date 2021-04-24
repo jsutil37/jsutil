@@ -581,6 +581,7 @@ function (fn)
 window.fetchJson = async function(url,options) {
 	//p=a
 	let dbgFetchJson = window.dbgFetchJson
+	let responseText
 	try{
 		dbgFetchJson && p("Calling fetch, url:\n"+url+"\noptions:\n"+JSON.stringify(options,null,2))
 		//reference: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -590,13 +591,15 @@ window.fetchJson = async function(url,options) {
 			dbgFetchJson && p('fetch response is not ok. Error: '+res.statusText)
 			throw Error(res.statusText);
 		}
-		let responseText = await res.text()
+		responseText = await res.text()
 		dbgFetchJson && p('responseText='+responseText)
 		let responseJson = JSON.parse(responseText)
 		dbgFetchJson && p('responseJson:\n'+JSON.stringify(responseJson,null,2));//additional params 'null' and '2' make it pretty-print
 		return responseJson;
 	} catch(e){
-	    dbgFetchJson && p('Encountered error:'+e.message+'\n'+e.stack);
+	    e.responseText
+	    e.message += ' - see also responseText property of this exception'
+	    dbgFetchJson && p('Encountered error:'+e.message+', responseText=\''+e.responseText+'\'\n'+e.stack);
         throw e;
 	}
 }
