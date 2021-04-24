@@ -1,4 +1,4 @@
-export {nxtId,bindAllFns}
+export {nxtId,bindAllFns,keys}
 
 let dbgload = window.dbgload
 dbgload && console.log('start')
@@ -78,5 +78,7 @@ function bindAllFns(thisObj,fnList) {
 	    thisObj[fnName] = thisObj[fnName].bind(thisObj) 
 	}
 }
+
+function keys(o){return Object.keys(o)}
 
 dbgload && console.log('reached end')
