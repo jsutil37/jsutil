@@ -217,7 +217,8 @@ function parsePattern(pattern) {
 			const c2 = pattern[j]
 			if('0123456789'.includes(c2)) {
 				numOfDigits++
-				numAccum+=c2;continue
+				numAccum+=c2;
+				if(j<lenMinus1){continue}
 			} 
 			assert(numAccum.length>0)
 			varNum = parseInt(numAccum)
