@@ -1,3 +1,5 @@
+export {isStr, matches}
+
 window.leftOf = 
 function leftOf(s,delim)
 {
@@ -155,3 +157,78 @@ window.dos2Unix = dosToUnix
 window.dos2unix = dosToUnix
 
 window.indented = function indented(s,chr){return s.split('\n').map(s2=>((chr?chr.repeat(4):'\t')+s2)).join('\n')}
+
+/** @param {any} o */
+function isStr(o) { return (typeof o == 'string') }
+
+/** 
+	my own weird pattern template. pattern contains *1, *2 etc. 
+	returns the variables instantiatations if s matches pattern, else returns null/undefined
+*/
+function matches(s, pattern) {
+	let instantiations = {}
+	if didMatch = matchesStg2(s, parsePattern(pattern), instantiations)
+	if(didMatch){return instantiations}
+}
+
+function matchesStg2(s, pattern, instantiations)
+	if(pattern.length == 0) {return(s=='') }
+	let part = pattern[0]
+	pattern = [...pattern]//shallow clone
+	pattern.shift()
+	if(!isStr(part)) {
+		if(isStr(instantiations[part])) {
+			part = instantiations[part]
+		}
+	}
+	if(isStr(part)) {
+		if(!s.startsWith(part)){return false}
+		s = rightOf(s, part)
+		return matchesStg2(s, pattern, instantiations)
+	}
+	const len = s.length
+	for(let i=0;i<=s.length) {
+		let instantiationsTry = {...instantiations}
+		instantiationsTry[(part+'').trim()] = s.substr(0,i)
+		let sRemaining = s.substr(i)
+		if(matchesStg2(sRemaining, pattern,instantiationsTry)){return true}
+	}
+	return false
+}
+
+function parsePattern(pattern) {
+	let len = pattern.length, lenMinus1 = len - 1
+	let accum = '', numAccum = ''
+	let rv = []
+	for(let i = 0; i < len; i++) {
+		const c = pattern[i]
+		if(c!='*'){
+			accum+=c;
+			if(i!=lenMinus1)continue
+		}
+		if(accum!='') {
+			rv.push(accum)
+			accum = ''
+		}
+		if(i==lenMinus1){break}
+		let varNum = null, numOfDigits = 0
+		assert(numAccum == '')
+		for(let j = i+1;j<len;j++) {
+			const c2 = pattern[j]
+			if('0123456789'.includes(c2)) {
+				numOfDigits++
+				numAccum+=c2;continue
+			} 
+			assert(numAccum.length>0)
+			varNum = parseInt(numAccum)
+			break
+		}
+		assert(varNum != null)
+		rv.push(varNum)
+		numAccum = ''
+		i+=numOfDigits
+	}
+	assert(numAccum == '')
+	assert(accum == '')
+	return rv
+}
