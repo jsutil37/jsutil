@@ -2,6 +2,7 @@
 <script>window.dbgload = true</script>
 <script type="module">
   import {matches} from '../util.js'
+  window.dbgload && console.log('here')
   assert(matches('',''))
   assert(!matches('','a'))
   assert(!matches('a',''))
