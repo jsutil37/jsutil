@@ -171,7 +171,7 @@ function matches(s, pattern) {
 	if(didMatch){return instantiations}
 }
 
-function matchesStg2(s, pattern, instantiations)
+function matchesStg2(s, pattern, instantiations) {
 	if(pattern.length == 0) {return(s=='') }
 	let part = pattern[0]
 	pattern = [...pattern]//shallow clone
