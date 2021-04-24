@@ -191,7 +191,10 @@ function matchesStg2(s, pattern, instantiations) {
 		let instantiationsTry = {...instantiations}
 		instantiationsTry[(part+'').trim()] = s.substr(0,i)
 		let sRemaining = s.substr(i)
-		if(matchesStg2(sRemaining, pattern,instantiationsTry)){return true}
+		if(matchesStg2(sRemaining, pattern,instantiationsTry)){
+			Object.assign(instantiations,instantiationsTry)
+			return true
+		}
 	}
 	return false
 }
