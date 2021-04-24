@@ -597,9 +597,9 @@ window.fetchJson = async function(url,options) {
 		dbgFetchJson && p('responseJson:\n'+JSON.stringify(responseJson,null,2));//additional params 'null' and '2' make it pretty-print
 		return responseJson;
 	} catch(e){
-	    e.responseText
-	    e.message += ' - see also responseText property of this exception'
-	    dbgFetchJson && p('Encountered error:'+e.message+', responseText=\''+e.responseText+'\'\n'+e.stack);
+	    e.rspTxtBefJsonSrlzn = responseText
+	    e.message += ' - see also rspTxtBefJsonSrlzn property of this exception'
+	    dbgFetchJson && p('Encountered error:'+e.message+', rspTxtBefJsonSrlzn=\''+e.rspTxtBefJsonSrlzn+'\'\n'+e.stack);
         throw e;
 	}
 }
