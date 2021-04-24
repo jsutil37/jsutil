@@ -167,7 +167,7 @@ function isStr(o) { return (typeof o == 'string') }
 */
 function matches(s, pattern) {
 	let instantiations = {}
-	if didMatch = matchesStg2(s, parsePattern(pattern), instantiations)
+	let didMatch = matchesStg2(s, parsePattern(pattern), instantiations)
 	if(didMatch){return instantiations}
 }
 
