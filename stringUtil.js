@@ -221,6 +221,7 @@ function parsePattern(pattern) {
 			} 
 			assert(numAccum.length>0)
 			varNum = parseInt(numAccum)
+			assert(varNum != null)
 			break
 		}
 		assert(varNum != null)
