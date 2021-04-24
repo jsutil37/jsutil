@@ -1,4 +1,4 @@
-export {randLightColor}
+export {randLightColor, doCmnFrmSubmitBtnUiUpd, enableDisableChildInputCtrls}
 
 import {randEl,nxtId} from './util.js'
 
@@ -41,3 +41,21 @@ id="${id}btn" class="btn btn-primary" data-toggle="collapse" data-target="#${id}
         }
       })
     }
+
+/**
+ * @param {HTMLButtonElement} btn
+ */
+function doCmnFrmSubmitBtnUiUpd(btn) {
+	if ((!btn.form.reportValidity())) { return false }
+	enableDisableChildInputCtrls(btn.form, false)
+	return true
+}
+
+/**
+ * @param {HTMLFormElement} ctnrEl
+ * @param {boolean} enableOrDisable
+ */
+function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
+	//The :input selector basically selects all form controls
+	$(ctnrEl).find(":input").prop("disabled", (!enableOrDisable))
+}
