@@ -1,5 +1,4 @@
 export {isStr, matches}
-import {keys} from './util.js'
 
 window.leftOf = 
 function leftOf(s,delim)
