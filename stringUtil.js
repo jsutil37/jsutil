@@ -187,7 +187,7 @@ function matchesStg2(s, pattern, instantiations) {
 		return matchesStg2(s, pattern, instantiations)
 	}
 	const len = s.length
-	for(let i=0;i<=s.length) {
+	for(let i=0;i<=s.length;i++) {
 		let instantiationsTry = {...instantiations}
 		instantiationsTry[(part+'').trim()] = s.substr(0,i)
 		let sRemaining = s.substr(i)
