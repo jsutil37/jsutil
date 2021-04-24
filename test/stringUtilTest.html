@@ -11,6 +11,12 @@
   let instantiations = matches('','*1')
   assert(keys(instantiations).length==1)
   assert(instantiations['1']=='')
+  instantiations = matches('abcdefghij','*1cd*2fg*3')
+  assert(keys(instantiations).length==3)
+  assert(instantiations[1]=='ab')
+  assert(instantiations[2]='e')
+  assert(instantiations[3]='hij')
+  assert(matches('asdasda','*1s*2*1'))
   try{
     alert('PASS')
   }catch(e){alert(e.stack)}
