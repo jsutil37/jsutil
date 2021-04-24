@@ -1,0 +1,14 @@
+<!-- deployed at https://jsutil37.github.io/jsutil/test/stringUtilTest.html -->
+<script type="module">
+  import {matches} from '../util.js'
+  assert(matches('',''))
+  assert(!matches('','a'))
+  assert(!matches('a',''))
+  assert(!matches('abc','abc'))
+  let instantiations = matches('','*1')
+  assert(keys(instantiations).length==1)
+  assert(instantiations['1']=='')
+  try{
+    alert('PASS')
+  }catch(e){alert(e.stack)}
+ </script>
