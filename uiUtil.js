@@ -1,4 +1,4 @@
-export {randLightColor, doCmnFrmSubmitBtnUiUpd, enableDisableChildInputCtrls}
+export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls}
 
 import {randEl,nxtId} from './util.js'
 
@@ -43,11 +43,16 @@ id="${id}btn" class="btn btn-primary" data-toggle="collapse" data-target="#${id}
     }
 
 /**
- * @param {HTMLButtonElement} btn
+ * validates the form's input controls using the built-in html validation
+ * function of the special input controls such as email etc. and returns
+ * true/false accordingly. IF valid, also disables the form's input controls
+ * (they can be re-enabled once the server response is received)
+ * @param {HTMLButtonElement} frmSubmitBtn
  */
-function doCmnFrmSubmitBtnUiUpd(btn) {
-	if ((!btn.form.reportValidity())) { return false }
-	enableDisableChildInputCtrls(btn.form, false)
+function areFrmInpsValid(frmSubmitBtn) {
+	const form = frmSubmitBtn.form
+	if ((!form.reportValidity())) { return false }
+	enableDisableChildInputCtrls(form, false)
 	return true
 }
 
