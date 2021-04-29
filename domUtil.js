@@ -9,7 +9,7 @@ File location: https://github.com/jsutil37/jsutil/blob/master/domUtil.js
 Deployment location: https://jsutil37.github.io/jsutil/domUtil.js
 END Do not remove this notice
 */
-export {htmlEncode,el}
+export {htmlEncode,el, getElementsIncludingSelfByTextContent}
 
 let dbgload = window.dbgload
 dbgload && console.log('start')
@@ -497,5 +497,27 @@ function insertAsFirstChild(parent, eleToIns) {
 }
 
 window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByClassName(nm)}
+
+  /**
+   * @param container
+   * @param textContent
+   */
+  function getElementsIncludingSelfByTextContent(
+    container: HTMLElement,
+    textContent: string
+  ): HTMLElement[] {
+    const allEles = [container, ...container.querySelectorAll('*')];
+    const filteredEles = allEles.filter((e) => {
+      if (!(e instanceof HTMLElement)) {
+        throw new Error('unexpected - this is not HTMLElement: ' + e.outerHTML);
+      }
+      const text = e.textContent;
+      if (text == null) {
+        throw new Error('unexpected - textContent is null: ' + e.outerHTML);
+      }
+      return text.trim() === textContent;
+    });
+    return filteredEles as HTMLElement[];
+  }
 
 dbgload && console.log('reached end')
