@@ -502,11 +502,12 @@ window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByC
    * textContent finds even hidden elements as opposed to innerText
    * @param {HTMLElement} container
    * @param {string} textContent
+   * @returns {HTMLElement[]}
    */
   function getElementsIncludingSelfByTextContent(
     container,
     textContent 
-  ): HTMLElement[] {
+  ) {
     const allEles = [container, ...container.querySelectorAll('*')];
     const filteredEles = allEles.filter((e) => {
       if (!(e instanceof HTMLElement)) {
