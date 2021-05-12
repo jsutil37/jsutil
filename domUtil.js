@@ -519,7 +519,7 @@ window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByC
       }
       return text.trim() === textContent;
     });
-    return filteredEles as HTMLElement[];
+    return filteredEles;
   }
 
 dbgload && console.log('reached end')
