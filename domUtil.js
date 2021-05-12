@@ -499,12 +499,13 @@ function insertAsFirstChild(parent, eleToIns) {
 window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByClassName(nm)}
 
   /**
-   * @param container
-   * @param textContent
+   * textContent finds even hidden elements as opposed to innerText
+   * @param {HTMLElement} container
+   * @param {string} textContent
    */
   function getElementsIncludingSelfByTextContent(
-    container: HTMLElement,
-    textContent: string
+    container,
+    textContent 
   ): HTMLElement[] {
     const allEles = [container, ...container.querySelectorAll('*')];
     const filteredEles = allEles.filter((e) => {
