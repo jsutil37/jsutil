@@ -24,3 +24,19 @@ Array.prototype.asyncForEach = async function (fn) {
       await fn(this[i], i);
     }
 }
+
+/*
+const mapWithThrow = <T,U>(arr:T[],func:(arg0:T)=>U):U[] {
+	const mapErrors:any[] = []; 
+	const ry =arr.map((t:T)=>{ 
+		try{
+			return func(t);
+		} catch(e) {
+			mapErrors.push(e);
+			return undefined as unknown as U; 
+		}
+	};
+	if(mapErrors.length!==0){throw mapErrors[0];}
+	return rv; 
+}; 
+*/
