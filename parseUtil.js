@@ -1,7 +1,11 @@
-import './util.js'
+import {loopFn,ifFn} from './util.js'
 
 export {parse}
 
+/**
+ * @param {string} scriptText
+ * @param {string} token
+ */
 function tokenIxOrFullLenIfAbsent(scriptText, token) {
 	const ix = scriptText.indexOf(token)
 	return (ix != -1) ? ix : scriptText.length
@@ -15,7 +19,7 @@ window.dbgScriptTexts = []
  * node. 'type' can be three values: 'code', 'comment' and 'textInCode'
  */
 window.scriptCommentAndNonCommentAreas =
-	function (scriptText) {
+	function (/** @type {string} */ scriptText) {
 		let dbg = true
 		dbgScriptTexts = []
 		let rv = []
@@ -74,7 +78,7 @@ window.scriptCommentAndNonCommentAreas =
 	}
 
 window.idxOfClosingQuoteOfTextInCode =
-	function (quoteChr, scriptText) {
+	function (/** @type {string} */ quoteChr, /** @type {string} */ scriptText) {
 		assert(["'", '"', "`"].includes(quoteChr))
 		assert(scriptText.startsWith(quoteChr))
 		let strToSearchIn = scriptText.substr(1)
@@ -83,7 +87,7 @@ window.idxOfClosingQuoteOfTextInCode =
 		let closingQuotesFound = false
 		strToSearchInParts.some
 			(
-				(part) => {
+				(/** @type {string } */ part) => {
 					if (part.indexOf(quoteChr) != -1) {
 						searchEndIdx += part.indexOf(quoteChr)
 						closingQuotesFound = true
@@ -98,7 +102,7 @@ window.idxOfClosingQuoteOfTextInCode =
 		return searchEndIdx
 	}
 
-window.withCommentsRemoved = function withCommentsRemoved(s) {
+window.withCommentsRemoved = function withCommentsRemoved(/** @type {string} */ s) {
 	const arr = scriptCommentAndNonCommentAreas(s)
 	let rv = ''
 	for (const ele of arr) {
@@ -107,6 +111,10 @@ window.withCommentsRemoved = function withCommentsRemoved(s) {
 	return rv
 }
 
+/**
+ * @param {string} str
+ * @param {any} rules
+ */
 function parse(str, rules) {
 	let parentToken = {parentToken:null,childTokens:[]}
 	let s = {parseIx:0, str, rules, token:'', result:parentToken, parentToken}
@@ -114,22 +122,34 @@ function parse(str, rules) {
 	return s.result
 }
 
+/**
+ * @param {{ isEndReached: boolean; parseErr: any; }} s
+ */
 function shouldParsingContinue(s) {
 	return !(s.isEndReached || (s.parseErr != null))
 }
 
+/**
+ * @param {{ isEndReached: boolean; parseIx: number; str: string | any[]; }} s
+ */
 function doParseStep(s) {
 	s.isEndReached = (s.parseIx >= s.str.length)
 	if(s.isEndReached) {assert(s.parseIx == s.str.length)}
 	doParseStepStg2(s)
 }
 
+/**
+ * @param {{ [x: string]: any; parseIx: number; chr: any; rmgStr: any; str: string; }} s
+ */
 function initForNxtParseStep(s) {
 	s.parseIx++
 	s.chr = s[s.parseIx]
 	s.rmgStr = s.str.substr(s.parseIx)
 }
 
+/**
+ * @param {{ someRuleMatched: boolean; rules: any; rule: any; parseErr: string; chr: string; parseIx: string; }} s
+ */
 function doParseStepStg2(s) {
 	s.someRuleMatched = false
 	for(const rule of s.rules){
@@ -141,9 +161,10 @@ function doParseStepStg2(s) {
 }
 
 /**
-returns true or false depending on whether the current parsing rule matches the start of the 
-remaining string
-*/
+ * returns true or false depending on whether the current parsing rule matches the start of the
+   remaining string
+   @param {{ rule: { isApplicable: any; token: null; isForEndReached: any; }; isEndReached: any; rmgStr: string; }} s
+  */
 function parseRuleMatches(s) {
 	if(!s.rule.isApplicable){return false}
 	if (s.rule.token == null){
@@ -153,6 +174,9 @@ function parseRuleMatches(s) {
 	return (s.rmgStr.startsWith(s.rule.token))
 }
 
+/**
+ * @param {{ someRuleMatched: boolean; rule: { namesOfApplicableRules: any; }; rules: any; }} s
+ */
 function applyParseRule(s) {
 	s.someRuleMatched = true
 	ifFn(isTokenRule, collectToken, extendToken)
@@ -163,6 +187,9 @@ function applyParseRule(s) {
 	}
 }
 
+/**
+ * @param {{ rule: { tokenType: string; token: string | any[]; name: any; }; parentToken: { parentToken?: any; childTokens?: any; ruleName?: any; parseIx?: any; token?: any; } | null; parseErr: string; parseIx: string | number; token: string; }} s
+ */
 function collectToken(s) {
 	assert(['opening', 'closing', 'sibling'].includes(s.rule.tokenType))
 	if(s.rule.tokenType=='closing') {
@@ -181,10 +208,16 @@ function collectToken(s) {
 	}
 }
 
+/**
+ * @param {{ rule: { token: null; }; }} s
+ */
 function isTokenRule(s) {
 	return (s.rule.token != null)
 }
 
+/**
+ * @param {{ token: any; chr: any; }} s
+ */
 function extendToken(s) {
 	s.token += s.chr
 }

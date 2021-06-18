@@ -1,0 +1,24 @@
+{
+  "aboutThisFile": "used by nodejs to allow files in this folder to be referenced via commonjs",
+  "type": "module",
+  "name": "jsutil",
+  "version": "1.0.0",
+  "description": "Reusable js utility functions. \r These are not meant to be standard ways of doing things or even the best ways, and may reinvent the wheel.\r However they just might get someone up and running quickly.",
+  "main": "abbreviations.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsutil37/jsutil.git"
+  },
+  "author": "jsutil37@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsutil37/jsutil/issues"
+  },
+  "homepage": "https://github.com/jsutil37/jsutil#readme"
+}
