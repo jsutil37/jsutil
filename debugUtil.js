@@ -1,4 +1,4 @@
-export { todo }
+export { todo, assert }
 
 let dbgload = globalThis.dbgload
 dbgload && console.log('start')
@@ -64,6 +64,8 @@ globalThis.assert =
 		a(s)
 		throw new Error(s)
 	}
+	
+const assert = globalThis.assert
 
 //shortcut for alert
 globalThis.a =

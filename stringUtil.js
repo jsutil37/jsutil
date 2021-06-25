@@ -1,12 +1,14 @@
 export { isStr, matches }
 
-window.leftOf =
+import {assert} from './debugUtil.js'
+
+globalThis.leftOf =
 	function leftOf(/** @type {string} */ s,/** @type {string} */ delim) {
 		var i = s.indexOf(delim)
 		if (i == -1) { throw new Error("delim '" + delim + "' not in '" + s + "'!!!") }
 		return s.substring(0, i)
 	}
-window.leftof = leftOf
+globalThis.leftof = leftOf
 
 String.prototype.leftOf = String.prototype.leftOf ||
 	function _leftOf(/** @type {any} */ delim) {
@@ -15,15 +17,15 @@ String.prototype.leftOf = String.prototype.leftOf ||
 	}
 
 //shortcut for JSON.stringify
-window.str = function str(/** @type {any} */ s) { return JSON.stringify(s) }
+globalThis.str = function str(/** @type {any} */ s) { return JSON.stringify(s) }
 
-window.rightOf =
+globalThis.rightOf =
 	function rightOf(/** @type {string} */ s, /** @type {string | any[]} */ delim) {
 		var i = s.indexOf(delim)
 		if (i == -1) { throw new Error("delim '" + delim + "' not in '" + s + "'!!!") }
 		return s.substring(i + delim.length)
 	}
-window.rightof = rightOf
+globalThis.rightof = rightOf
 
 String.prototype.rightOf = String.prototype.rightOf ||
 	function _rightOf(/** @type {any} */ delim) {
@@ -31,7 +33,7 @@ String.prototype.rightOf = String.prototype.rightOf ||
 		return rightOf(target, delim)
 	}
 
-window.partBetween =
+globalThis.partBetween =
 	function (/** @type {any} */ s,/** @type {any} */ leftDelim,/** @type {any} */ rightDelim) {
 		s = rightof(s, leftDelim)
 		return leftof(s, rightDelim)
@@ -43,16 +45,16 @@ String.prototype.replaceAll =
 		return mysplit(target, search).join(replacement)
 	}
 
-window.capitalized =
+globalThis.capitalized =
 	function capitalized(/** @type {string} */ string) {
 		if (string == '') { return '' }
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
-window.capitalizeFirstLetter = capitalized
-window.capitalise = capitalized
+globalThis.capitalizeFirstLetter = capitalized
+globalThis.capitalise = capitalized
 
 ///no regex confusion for delim!
-window.mysplit =
+globalThis.mysplit =
 	function (/** @type {string} */ s,/** @type {string | any[]} */ delim) {
 		let idx = s.indexOf(delim)
 		if (idx == -1) { return [s] }
@@ -61,46 +63,46 @@ window.mysplit =
 		return arr.concat(mysplit(s, delim))
 	}
 
-window.isString =
+globalThis.isString =
 	function (/** @type {any} */ value) {
 		return typeof value === 'string' || value instanceof String;
 	}
 
-window.upto100chars =
+globalThis.upto100chars =
 	function (/** @type {string | null} */ s) {
 		if (s == null) { return ">>>NULL<<<" }
 		if (s.length <= 100) { return s }
 		return s.substr(0, 100)
 	}
 
-window.withoutLastChar =
+globalThis.withoutLastChar =
 	function withoutLastChar(/** @type {string} */ s) {
 		return s.substring(0, s.length - 1)
 	}
 
-window.withoutFirstChar =
+globalThis.withoutFirstChar =
 	function withoutFirstChar(/** @type {string} */ s) {
 		return s.substr(1)
 	}
 
-window.isAlphabetic =
+globalThis.isAlphabetic =
 	function isAlphabetic(/** @type {string} */ ch) {
 		return /^[A-Z]$/i.test(ch)
 	}
-window.isAlpha = isAlphabetic
+globalThis.isAlpha = isAlphabetic
 
-window.isNumericChr =
+globalThis.isNumericChr =
 	function isNumericChr(/** @type {string} */ chr) {
 		let code = chr.charCodeAt(0)
 		return (code > 47 && code < 58)
 	}
 
-window.isUpperCase =
+globalThis.isUpperCase =
 	function isUpperCase(/** @type {string} */ s) {
 		return s == s.toUpperCase()
 	}
 
-window.decryptCamelCase =
+globalThis.decryptCamelCase =
 	function decryptCamelCase(/** @type {string | any[]} */ s) {
 		s = capitalized(s);
 		let s2 = ''
@@ -112,41 +114,46 @@ window.decryptCamelCase =
 		return s2.trim()
 	}
 
-window.leftOfLast =
+globalThis.leftOfLast =
 	function leftOfLast(/** @type {string} */ s, /** @type {string} */ delim) {
 		if (delim == '') { throw new Error('delim cannot be a blank string!') }
 		let i = s.lastIndexOf(delim)
 		if (i == -1) { throw new Error('string "' + s + '" does not contain "' + delim + '"!!!') }
 		return s.substring(0, i)
 	}
-String.prototype.leftOfLast = function leftOfLast(/** @type {any} */ delim) { return window.leftOfLast(this, delim) }
+String.prototype.leftOfLast = function leftOfLast(/** @type {any} */ delim) { return globalThis.leftOfLast(this, delim) }
 
-window.rightOfLast =
+globalThis.rightOfLast =
 	function rightOfLast(/** @type {string} */ s, /** @type {string | any[]} */ delim) {
 		if (delim == '') { throw new Error('delim cannot be a blank string!') }
 		let i = s.lastIndexOf(delim)
 		if (i == -1) { throw new Error('string "' + s + '" does not contain "' + delim + '"!!!') }
 		return s.substr(i + delim.length)
 	}
-String.prototype.rightOfLast = function rightOfLast(/** @type {any} */ delim) { return window.rightOfLast(this, delim) }
+String.prototype.rightOfLast = function rightOfLast(/** @type {any} */ delim) { return globalThis.rightOfLast(this, delim) }
 
-window.dosToUnix =
+globalThis.dosToUnix =
 	function dosToUnix(/** @type {{ replaceAll: (arg0: string, arg1: string) => any; }} */ s) {
 		return s.replaceAll('\r\n', '\n')
 	}
-window.dos2Unix = dosToUnix
-window.dos2unix = dosToUnix
+globalThis.dos2Unix = dosToUnix
+globalThis.dos2unix = dosToUnix
 
-window.indented = function indented(/** @type {string} */ s,/** @type {string} */ chr) { return s.split('\n').map((/** @type {any} */ s2) => ((chr ? chr.repeat(4) : '\t') + s2)).join('\n') }
+globalThis.indented = function indented(/** @type {string} */ s,/** @type {string} */ chr) { return s.split('\n').map((/** @type {any} */ s2) => ((chr ? chr.repeat(4) : '\t') + s2)).join('\n') }
 
 /** @param {any} o */
 function isStr(o) { return (typeof o == 'string') }
 
 /**
- * my own weird pattern template. pattern contains *1, *2 etc.
-   returns the variables instantiatations if s matches pattern, else returns null/undefined
-   @param {any} s
-   @param {any} pattern
+ *  checks whether the specified string 's' matches the specified pattern 'pattern'
+	'pattern' is a string that is in my own weird pattern template. 
+	It may contain *1, *2 etc. which matches 0 or more characters,
+	It may also contain ?1 ?2 etc. which match 1 and only 1 character. 
+   
+   @param {string} s
+   @param {string} pattern
+   
+   @returns the variables instantiatations if s matches pattern, else returns undefined
  */
 function matches(s, pattern) {
 	let instantiations = {}
@@ -165,8 +172,8 @@ function matchesStg2(s, pattern, instantiations) {
 	pattern = [...pattern]//shallow clone
 	pattern.shift()
 	if (!isStr(part)) {
-		if (isStr(instantiations[part])) {
-			part = instantiations[part]
+		if (isStr(instantiations[part[0]])) {
+			part = instantiations[part[0]]
 		}
 	}
 	if (isStr(part)) {
@@ -177,7 +184,11 @@ function matchesStg2(s, pattern, instantiations) {
 	const len = s.length
 	for (let i = 0; i <= len; i++) {
 		let instantiationsTry = { ...instantiations }
-		instantiationsTry[(part + '').trim()] = s.substr(0, i)
+		if(part[0].startsWith('?')) {
+			if(i==0)continue;
+			if(i>1)break;
+		}
+		instantiationsTry[(part[0]).trim()] = s.substr(0, i)
 		let sRemaining = s.substr(i)
 		if (matchesStg2(sRemaining, pattern, instantiationsTry)) {
 			Object.assign(instantiations, instantiationsTry)
@@ -188,7 +199,7 @@ function matchesStg2(s, pattern, instantiations) {
 }
 
 /**
- * @param {string | any[]} pattern
+ * @param {string} pattern
  */
 function parsePattern(pattern) {
 	let len = pattern.length, lenMinus1 = len - 1
@@ -196,7 +207,7 @@ function parsePattern(pattern) {
 	let rv = []
 	for (let i = 0; i < len; i++) {
 		const c = pattern[i]
-		if (c != '*') {
+		if (c != '*' && c!= '?') {
 			accum += c;
 			if (i != lenMinus1) continue
 		}
@@ -220,7 +231,7 @@ function parsePattern(pattern) {
 			break
 		}
 		assert(varNum != null)
-		rv.push(varNum)
+		rv.push([c+varNum])
 		numAccum = ''
 		i += numOfDigits
 	}
