@@ -103,7 +103,7 @@ globalThis.isUpperCase =
 	}
 
 globalThis.decryptCamelCase =
-	function decryptCamelCase(/** @type {string | any[]} */ s) {
+	function decryptCamelCase(/** @type {string} */ s) {
 		s = capitalized(s);
 		let s2 = ''
 		for (let i = 0; i < s.length; i++) {
