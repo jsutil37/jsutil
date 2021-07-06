@@ -1,6 +1,6 @@
 export { isStr, matches }
 
-import {assert} from './debugUtil.js'
+import { assert } from './debugUtil.js'
 
 globalThis.leftOf =
 	function leftOf(/** @type {string} */ s,/** @type {string} */ delim) {
@@ -151,11 +151,14 @@ function isStr(o) { return (typeof o == 'string') }
 	It may also contain ?1 ?2 etc. which match 1 and only 1 character. 
    
    @param {string} s
-   @param {string} pattern
+   @param {string|any[]} pattern
    
-   @returns the variables instantiatations if s matches pattern, else returns undefined
+   @returns {{ [x: string]: string; } | undefined } the variables'
+					instantiatations if `s` matches `pattern`, else
+					returns `undefined`
  */
 function matches(s, pattern) {
+	/** @type {{ [x: string]: string; }} */
 	let instantiations = {}
 	let didMatch = matchesStg2(s, parsePattern(pattern), instantiations)
 	if (didMatch) { return instantiations }
@@ -164,7 +167,7 @@ function matches(s, pattern) {
 /**
  * @param {string} s
  * @param {any[]} pattern
- * @param {{ [x: string]: any; }} instantiations
+ * @param {{ [x: string]: string; }} instantiations
  */
 function matchesStg2(s, pattern, instantiations) {
 	if (pattern.length == 0) { return (s == '') }
@@ -184,9 +187,9 @@ function matchesStg2(s, pattern, instantiations) {
 	const len = s.length
 	for (let i = 0; i <= len; i++) {
 		let instantiationsTry = { ...instantiations }
-		if(part[0].startsWith('?')) {
-			if(i==0)continue;
-			if(i>1)break;
+		if (part[0].startsWith('?')) {
+			if (i == 0) continue;
+			if (i > 1) break;
 		}
 		instantiationsTry[(part[0]).trim()] = s.substr(0, i)
 		let sRemaining = s.substr(i)
@@ -199,15 +202,18 @@ function matchesStg2(s, pattern, instantiations) {
 }
 
 /**
- * @param {string} pattern
+ * @param {string|any[]} pattern
  */
 function parsePattern(pattern) {
+	if (typeof (pattern) !== 'string') {
+		return pattern // we assume that the pattern is already parsed
+	}
 	let len = pattern.length, lenMinus1 = len - 1
 	let accum = '', numAccum = ''
 	let rv = []
 	for (let i = 0; i < len; i++) {
 		const c = pattern[i]
-		if (c != '*' && c!= '?') {
+		if (c != '*' && c != '?') {
 			accum += c;
 			if (i != lenMinus1) continue
 		}
@@ -231,7 +237,7 @@ function parsePattern(pattern) {
 			break
 		}
 		assert(varNum != null)
-		rv.push([c+varNum])
+		rv.push([c + varNum])
 		numAccum = ''
 		i += numOfDigits
 	}
