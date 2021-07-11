@@ -31,7 +31,7 @@ globalThis.callingFnName =
 		}
 	}
 
-globalThis.rightOf = (s, delim) => {
+globalThis.rightOf = (/** @type {string} */ s, /** @type {string } */ delim) => {
 	let i = s.indexOf(delim)
 	if (i == -1) {
 		alert('internal error, please open the debug console and then continue')
@@ -40,7 +40,7 @@ globalThis.rightOf = (s, delim) => {
 	return s.substr(i + delim.length)
 }
 
-globalThis.stringBetween = function (s, startDelim, endDelim) {
+globalThis.stringBetween = function (/** @type {string} */ s, /** @type {string } */ startDelim, /** @type {string} */ endDelim) {
 	let i = s.indexOf(startDelim)
 	if (i == -1) {
 		alert('internal error. Open the debug globalThis.')
@@ -57,29 +57,24 @@ globalThis.stringBetween = function (s, startDelim, endDelim) {
 }
 
 globalThis.assert =
-	function (x, errMsg) {
+	function (/** @type {any} */ x, /** @type {string | null} */ errMsg) {
 		if (x) { return }
 		let s = (errMsg == null) ? 'assert failed' : "Assert Failed\n" + errMsg
 		debugger
 		a(s)
 		throw new Error(s)
 	}
-	
+
 const assert = globalThis.assert
 
-//shortcut for alert
-globalThis.a =
-	function (s) {
-		alert(s)
-	}
+/** shortcut for alert*/
+globalThis.a = alert
 
-globalThis.p =
-	function (s) {
-		console.log(s)
-	}
+/** shortcut for console.log */
+globalThis.p = console.log
 
 globalThis.checkParams =
-	function (params, arrayOfKeys) {
+	function (/** @type {{}} */ params, /** @type {any[]} */ arrayOfKeys) {
 		let dbg = false
 		let cfn = callingFnName()
 		dbg && console.log('cfn=>>>' + cfn + '<<<')
@@ -101,7 +96,7 @@ globalThis.checkParams =
 
 		arrayOfKeys.forEach
 			(
-				function (key) {
+				function (/** @type {string} */ key) {
 					checkThat
 						(
 							{
@@ -120,7 +115,7 @@ globalThis.checkParams =
 globalThis.checkArgs = globalThis.checkParams
 
 globalThis.runWithAlertOnException =
-	async function (params) {
+	async function (/** @type {{ fn: any; exceptionMsgPrefix: any; }} */ params) {
 		checkParams(params, ['fn', 'exceptionMsgPrefix'])
 		let fn = params.fn
 		let exceptionMsgPrefix = params.exceptionMsgPrefix
@@ -137,7 +132,7 @@ globalThis.showCaughtError = runWithAlertOnException
 
 ///params are {condition, errMsgFn}
 globalThis.checkThat =
-	function checkThat(params) {
+	function checkThat(/** @type {{ condition: any; errMsgFn: () => string; }} */ params) {
 		if (!('condition' in params)) {
 			debugger
 			throw new Error('checkThat(): param \'condition\' is missing!')
@@ -155,7 +150,7 @@ globalThis.checkThat =
 	}
 
 globalThis.onerror =
-	function (message, url, line, col, error) {
+	function (/** @type {string} */ message, /** @type {string} */ url, /** @type {string} */ line, /** @type {string} */ col, /** @type {{ stack: any; }} */ error) {
 		let s = 'ERROR\n' +
 			message + '\nurl:' + url +
 			'\nline: ' + line + ', col: ' + col +
@@ -170,20 +165,20 @@ globalThis.onerror =
 globalThis.uniqueMsgCtr = (globalThis.uniqueMsgCtr == null) ? 0 : globalThis.uniqueMsgCtr
 
 globalThis.uniqueMsg =
-	function (s) {
+	function (/** @type {string} */ s) {
 		uniqueMsgCtr++
 		return "unique msg #" + uniqueMsgCtr + ":\n" + s + "\nEND unique msg #" +
 			uniqueMsgCtr
 	}
 
 globalThis.bigLog =
-	function (err, s) {
+	function (/** @type {{ stack: any; }} */ err, /** @type {string} */ s) {
 		let errPart = stringBetween(err.stack, ' at ', ')').trim() + ')'
 		s = uniqueMsg(s)
 		let sArr = s.split("\n")
 		//console.log("bigLog(): fileName: '"+fileName+"', lineNumber: "+lineNumber)
 		console.log("bigLog(): " + errPart)
-		sArr.forEach(function (s) {
+		sArr.forEach(function (/** @type {any} */ s) {
 			console.log(s)
 		})
 		//console.log("bigLog(): END fileName: '"+fileName+
@@ -198,10 +193,10 @@ function todo() {
 }
 
 //to print out an array of strings for debugging purposes
-globalThis.strWithoutQuotes = function (arr, useEnter) {
+globalThis.strWithoutQuotes = function (/** @type {any[]} */ arr, /** @type {any} */ useEnter) {
 	let rv = '[';
 	let wasFirstEleEncountered = false;
-	arr.forEach(ele => {
+	arr.forEach((/** @type {string} */ ele) => {
 		if (wasFirstEleEncountered) { rv += ','; }
 		if (useEnter) { rv += '\n'; }
 		assert(isString(ele));
