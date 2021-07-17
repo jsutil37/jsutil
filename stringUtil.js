@@ -1,4 +1,4 @@
-export { isStr, matches }
+export { isStr, matches, str }
 
 import { assert } from './debugUtil.js'
 
@@ -10,24 +10,31 @@ globalThis.leftOf =
 	}
 globalThis.leftof = leftOf
 
-String.prototype.leftOf = String.prototype.leftOf ||
+String.prototype['leftOf'] = String.prototype['leftOf'] ||
 	function _leftOf(/** @type {any} */ delim) {
 		var target = this
 		return leftOf(target, delim)
 	}
 
-//shortcut for JSON.stringify
-globalThis.str = function str(/** @type {any} */ s) { return JSON.stringify(s) }
+/** shortcut for JSON.stringify, nicely formatted by default */
+function str(/** @type {any} */ s) {
+	return JSON.stringify(s, null, '\t')
+}
+
+/** what legacy clients could still be using this? */
+globalThis.str = str
 
 globalThis.rightOf =
-	function rightOf(/** @type {string} */ s, /** @type {string | any[]} */ delim) {
+	function rightOf(
+		/** @type {string} */ s,
+		/** @type {string } */ delim) {
 		var i = s.indexOf(delim)
 		if (i == -1) { throw new Error("delim '" + delim + "' not in '" + s + "'!!!") }
 		return s.substring(i + delim.length)
 	}
 globalThis.rightof = rightOf
 
-String.prototype.rightOf = String.prototype.rightOf ||
+String.prototype['rightOf'] = String.prototype['rightOf'] ||
 	function _rightOf(/** @type {any} */ delim) {
 		var target = this
 		return rightOf(target, delim)
