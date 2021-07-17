@@ -12,8 +12,8 @@ https://jsutil37.github.io/jsutil
 In your html file, do the following at the start of the file:
 ```html
 <script>
+//workaround for import.meta not being supported by firefox, but may not be needed any more 
 var urlOfUtilDotJs = 'https://jsutil37.github.io/jsutil/util.js'
-//workaround for import.meta not being supported by firefox
 function getPathOfUtilDotJs(){return urlOfUtilDotJs}
 </script>
 <script type="module">
@@ -29,4 +29,5 @@ import * as u from 'https://jsutil37.github.io/jsutil/util.js'
 - All code is async and does not use document.write()
 
 # Roadmap
+- TODO: use ES6 modules and avoid using the global namespace
 - Support functions for custom Tags for custom components as allowed by the HTML spec
