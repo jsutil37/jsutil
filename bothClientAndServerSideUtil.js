@@ -3,6 +3,7 @@
  * ('isomorphic' full-stack development!)
 */
 export * from './abbreviations.js'
+export * from './codeUtil.js'
 export * from './debugUtil.js'
 export * from './arrayUtil.js'
 export * from './basicSyncUtil.js'
