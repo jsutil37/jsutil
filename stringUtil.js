@@ -61,8 +61,13 @@ globalThis.capitalizeFirstLetter = capitalized
 globalThis.capitalise = capitalized
 
 ///no regex confusion for delim!
+///TODO: no you are the one who is confused, the parameter to split() must be of
+/// a different form in order for it to be treated as a regex. So there is no
+/// need to create a separate function for avoiding regex treatment of the
+///parameter to split
+///So TODO: Remove usage of mysplit
 globalThis.mysplit =
-	function (/** @type {string} */ s,/** @type {string | any[]} */ delim) {
+	function (/** @type {string} */ s,/** @type {string} */ delim) {
 		let idx = s.indexOf(delim)
 		if (idx == -1) { return [s] }
 		let arr = [s.substring(0, idx)]

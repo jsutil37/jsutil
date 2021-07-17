@@ -1,6 +1,6 @@
-import {loopFn,ifFn} from './util.js'
+import { loopFn, ifFn } from './bothClientAndServerSideUtil.js'
 
-export {parse}
+export { parse }
 
 /**
  * @param {string} scriptText
@@ -40,7 +40,7 @@ window.scriptCommentAndNonCommentAreas =
 			if (leastVal != 0) {
 				//case of tokens found, but not at start
 				let text = scriptText.substring(0, leastVal)
-				rv.push({ type: 'code', text  })
+				rv.push({ type: 'code', text })
 				dbg && console.log('type: code, text: >>>' + text + '<<<')
 				scriptText = scriptText.substr(leastVal)
 				continue
@@ -116,8 +116,8 @@ window.withCommentsRemoved = function withCommentsRemoved(/** @type {string} */ 
  * @param {any} rules
  */
 function parse(str, rules) {
-	let parentToken = {parentToken:null,childTokens:[]}
-	let s = {parseIx:0, str, rules, token:'', result:parentToken, parentToken}
+	let parentToken = { parentToken: null, childTokens: [] }
+	let s = { parseIx: 0, str, rules, token: '', result: parentToken, parentToken }
 	loopFn(s, shouldParsingContinue, doParseStep, initForNxtParseStep)
 	return s.result
 }
@@ -134,7 +134,7 @@ function shouldParsingContinue(s) {
  */
 function doParseStep(s) {
 	s.isEndReached = (s.parseIx >= s.str.length)
-	if(s.isEndReached) {assert(s.parseIx == s.str.length)}
+	if (s.isEndReached) { assert(s.parseIx == s.str.length) }
 	doParseStepStg2(s)
 }
 
@@ -152,23 +152,23 @@ function initForNxtParseStep(s) {
  */
 function doParseStepStg2(s) {
 	s.someRuleMatched = false
-	for(const rule of s.rules){
+	for (const rule of s.rules) {
 		s.rule = rule
 		ifFn(s, parseRuleMatches, applyParseRule)
 	}
-	if(s.someRuleMatched) {return}
+	if (s.someRuleMatched) { return }
 	s.parseErr = "unexpected character '" + s.chr + "' at index " + s.parseIx + " (row #TODO, col #TODO)"
 }
 
 /**
- * returns true or false depending on whether the current parsing rule matches the start of the
-   remaining string
+ * returns true or false depending on whether the current parsing rule matches
+ *  the start of the remaining string
    @param {{ rule: { isApplicable: any; token: null; isForEndReached: any; }; isEndReached: any; rmgStr: string; }} s
-  */
+ */
 function parseRuleMatches(s) {
-	if(!s.rule.isApplicable){return false}
-	if (s.rule.token == null){
-		if(s.rule.isForEndReached){return s.isEndReached}
+	if (!s.rule.isApplicable) { return false }
+	if (s.rule.token == null) {
+		if (s.rule.isForEndReached) { return s.isEndReached }
 		return true
 	}
 	return (s.rmgStr.startsWith(s.rule.token))
@@ -182,7 +182,7 @@ function applyParseRule(s) {
 	ifFn(isTokenRule, collectToken, extendToken)
 	const namesOfApplicableRules = s.rule.namesOfApplicableRules
 	//after a token match, the applicability of some rules might change:
-	for(const rule of s.rules) {
+	for (const rule of s.rules) {
 		rule.isApplicable = namesOfApplicableRules.includes(rule.name)
 	}
 }
@@ -192,19 +192,19 @@ function applyParseRule(s) {
  */
 function collectToken(s) {
 	assert(['opening', 'closing', 'sibling'].includes(s.rule.tokenType))
-	if(s.rule.tokenType=='closing') {
+	if (s.rule.tokenType == 'closing') {
 		s.parentToken = s.parentToken.parentToken
-		if(s.parentToken == null) {
+		if (s.parentToken == null) {
 			s.parseErr = "unexpected closing token '" + s.rule.token + "' at index " + s.parseIx + " (row #TODO, col #TODO)"
 			return
 		}
 	}
-	let token = {ruleName:s.rule.name,parseIx:s.parseIx,token:s.rule.token}
+	let token = { ruleName: s.rule.name, parseIx: s.parseIx, token: s.rule.token }
 	s.parentToken.childTokens.push(token)
 	s.token = ''
 	s.parseIx += s.rule.token.length - 1
-	if(s.rule.tokenType=='opening') {
-		s.parentToken = token 
+	if (s.rule.tokenType == 'opening') {
+		s.parentToken = token
 	}
 }
 

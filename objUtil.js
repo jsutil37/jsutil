@@ -1,19 +1,19 @@
-export {nxtId,bindAllFns,keys}
+export {nxtId, bindAllFns, keys}
 
-let dbgload = window.dbgload
+let dbgload = globalThis.dbgload
 dbgload && console.log('start')
 //object utils
 import './stringUtil.js'
 import './debugUtil.js'
 
-window.deepClone = 
+globalThis.deepClone =
 function(o)
 {
 	return JSON.parse(JSON.stringify(o))
 }
 
 ///makes a 2d array 
-window.make2DArray =
+globalThis.make2DArray =
 function(d1, d2)
 {
     var arr = new Array(d1)
@@ -24,7 +24,7 @@ function(d1, d2)
     return arr;
 }
 
-window.concatMaps = 
+globalThis.concatMaps =
 function()
 {
 	let rv = {}
@@ -53,7 +53,7 @@ function()
 	return rv
 }
 
-window.areMapsEqual =
+globalThis.areMapsEqual =
 function(m1,m2)
 {
 	if(Object.keys(m1).length!=Object.keys(m2).length){return false}
@@ -64,11 +64,10 @@ function(m1,m2)
 	return true
 }
 
-window.isInt = function(o){return Number.isInteger(o);}
+globalThis.isInt = function(o){return Number.isInteger(o);}
 
 //tail(arr): returns a shallow clone of the specified array, with the first element removed
-window.tail = function(arr){return arr.slice(1);}
-
+globalThis.tail = function(arr){return arr.slice(1);}
 
 let idCtr = 0
 function nxtId() { idCtr++; return idCtr }

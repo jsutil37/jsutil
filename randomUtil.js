@@ -2,7 +2,7 @@ export {randEl,randInt}
 
 import {flr,rand} from './abbreviations.js'
 
-window.randomAlphaNumericChar = function() {
+globalThis.randomAlphaNumericChar = function() {
     let num = Math.round (Math.random() * 35)
     if(num >= 26) {
         num-= 26
@@ -11,7 +11,7 @@ window.randomAlphaNumericChar = function() {
     return String.fromCharCode('a'.charCodeAt(0) + num)
 }
 
-window.randomAlphanumericString = function(len) {
+globalThis.randomAlphanumericString = function(len) {
     let rv = ''
     for(let i=0;i<len;i++) {
         rv += randomAlphaNumericChar()

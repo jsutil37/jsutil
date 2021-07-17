@@ -1,8 +1,9 @@
-//for license and copyright see https://github.com/jsutil37/jsutil
-//our own code to display diff between 2 files etc.
+// for license and copyright see https://github.com/jsutil37/jsutil
+// our own code to display diff between 2 files etc. ;)
+export { llcs, llcsError }
 
 //reference: https://en.wikipedia.org/wiki/Longest_common_subsequence_problem#Computing_the_length_of_the_LCS
-window.llcs = function (s1, s2) {
+function llcs(s1, s2) {
 	let m = s1.length;
 	let n = s2.length;
 	let c = new Array(m + 1);
@@ -24,7 +25,11 @@ window.llcs = function (s1, s2) {
 	return c[m][n];
 }
 
-window.llcsError = function(s1, s2) {
-	let commonLen = llcs(s1,s2);
+globalThis.llcs = llcs
+
+function llcsError(s1, s2) {
+	let commonLen = llcs(s1, s2);
 	return s1.length + s2.length - 2 * commonLen;
 }
+
+globalThis.llcsError = llcsError

@@ -17,19 +17,10 @@ export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3
 
 //Put basic functions and shortcuts at the top, and those that depend on them,  further below:
 //Below exports are done synchronously and this keeps things simple...
-export * from './abbreviations.js'
-export * from './arrayUtil.js'
-export * from './basicSyncUtil.js'
+export * from './bothClientAndServerSideUtil.js'
 export * from './blockUiUtil.js'
-export * from './debugUtil.js'
-export * from './diffUtil.js'
 export * from './domUtil.js'
 export * from './loaderUtil.js'
-export * from './mathUtil.js'
-export * from './objUtil.js'
-export * from './parseUtil.js'
-export * from './randomUtil.js'
-export * from './stringUtil.js'
 export * from './syncUtil.js'
 export * from './taResizeUtil.js'
 export * from './uiUtil.js'
