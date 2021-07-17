@@ -150,10 +150,17 @@ globalThis.checkThat =
 	}
 
 globalThis.onerror =
-	function (/** @type {string} */ message, /** @type {string} */ url, /** @type {string} */ line, /** @type {string} */ col, /** @type {{ stack: any; }} */ error) {
+	function (
+		/** @type {string|event} */ message,
+		/** @type {string|undefined} */ url,
+		/** @type {number|undefined} */ line,
+		/** @type {number|undefined} */ col,
+		/** @type {Error|undefined} */ error) {
 		let s = 'ERROR\n' +
-			message + '\nurl:' + url +
-			'\nline: ' + line + ', col: ' + col +
+			message +
+			'\nurl:' + url +
+			'\nline: ' + line +
+			', col: ' + col +
 			'\nerror.stack:\n' + (error ?
 				(error.stack ? error.stack : '(error.stack is null)')
 				: '(error is null)')
@@ -162,13 +169,14 @@ globalThis.onerror =
 		debugger
 	}
 
-globalThis.uniqueMsgCtr = (globalThis.uniqueMsgCtr == null) ? 0 : globalThis.uniqueMsgCtr
+globalThis.uniqueMsgCtr = (globalThis.uniqueMsgCtr == null) ? 0 :
+	globalThis.uniqueMsgCtr
 
 globalThis.uniqueMsg =
 	function (/** @type {string} */ s) {
-		uniqueMsgCtr++
-		return "unique msg #" + uniqueMsgCtr + ":\n" + s + "\nEND unique msg #" +
-			uniqueMsgCtr
+		globalThis.uniqueMsgCtr++
+		return "unique msg #" + uniqueMsgCtr + ":\n" + s +
+			"\nEND unique msg #" + uniqueMsgCtr
 	}
 
 globalThis.bigLog =
