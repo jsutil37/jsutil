@@ -11,14 +11,14 @@ function tokenIxOrFullLenIfAbsent(scriptText, token) {
 	return (ix != -1) ? ix : scriptText.length
 }
 
-window.dbgScriptTexts = []
+globalThis.dbgScriptTexts = []
 
 /**
  * Given text that is JS code, returns an array of elements. Each element is an
  * object having 2 members: 'type' and 'text'. 'text' is the text of the parsed
  * node. 'type' can be three values: 'code', 'comment' and 'textInCode'
  */
-window.scriptCommentAndNonCommentAreas =
+globalThis.scriptCommentAndNonCommentAreas =
 	function (/** @type {string} */ scriptText) {
 		let dbg = true
 		dbgScriptTexts = []
@@ -77,7 +77,7 @@ window.scriptCommentAndNonCommentAreas =
 		}
 	}
 
-window.idxOfClosingQuoteOfTextInCode =
+globalThis.idxOfClosingQuoteOfTextInCode =
 	function (/** @type {string} */ quoteChr, /** @type {string} */ scriptText) {
 		assert(["'", '"', "`"].includes(quoteChr))
 		assert(scriptText.startsWith(quoteChr))
@@ -102,7 +102,7 @@ window.idxOfClosingQuoteOfTextInCode =
 		return searchEndIdx
 	}
 
-window.withCommentsRemoved = function withCommentsRemoved(/** @type {string} */ s) {
+globalThis.withCommentsRemoved = function withCommentsRemoved(/** @type {string} */ s) {
 	const arr = scriptCommentAndNonCommentAreas(s)
 	let rv = ''
 	for (const ele of arr) {

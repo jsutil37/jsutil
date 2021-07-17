@@ -44,9 +44,9 @@ function waitToRun(fn, conditionfn, sleeptime, timeout, timeoutsofar) {
 		)
 }
 
-window.waitToRun = waitToRun
+globalThis.waitToRun = waitToRun
 
-window.waitUntilSymbolAppearsAndThenRun =
+globalThis.waitUntilSymbolAppearsAndThenRun =
 	function (fn, symName, sleeptime, timeout) {
 		assert(typeof fn == 'function')
 		assert(typeof symName == 'string')
@@ -55,16 +55,16 @@ window.waitUntilSymbolAppearsAndThenRun =
 				fn,
 				function () {
 					//console.log('Waiting for symbol \''+symName+'\' to appear...')
-					return (typeof (window[symName]) != 'undefined')
+					return (typeof (globalThis[symName]) != 'undefined')
 				},
 				sleeptime,
 				timeout
 			)
 	}
-window.waitForSymbol = window.waitUntilSymbolAppearsAndThenRun
-window.waitForSymbolAndThenRun = window.waitUntilSymbolAppearsAndThenRun
+globalThis.waitForSymbol = globalThis.waitUntilSymbolAppearsAndThenRun
+globalThis.waitForSymbolAndThenRun = globalThis.waitUntilSymbolAppearsAndThenRun
 
-window.waitForSymbolsAndThenRun =
+globalThis.waitForSymbolsAndThenRun =
 	function (fn, symNames, sleeptime, timeout) {
 		waitForSymbolAndThenRun
 			(
@@ -80,8 +80,8 @@ window.waitForSymbolsAndThenRun =
 			)
 	}
 
-window.waitForFnAndThenRunIt = function (s, args, timeoutInMilliSec) {
+globalThis.waitForFnAndThenRunIt = function (s, args, timeoutInMilliSec) {
 	waitForSymbol(async function () {
-		try { await window[s](args) } catch (e) { throw e }
+		try { await globalThis[s](args) } catch (e) { throw e }
 	}, s, 200, timeoutInMilliSec)
 }
