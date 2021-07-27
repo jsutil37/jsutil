@@ -25,8 +25,6 @@ export * from './syncUtil.js'
 export * from './taResizeUtil.js'
 export * from './uiUtil.js'
 
-export { loopFn, ifFn }
-
 //In a js file imported as a module, "use strict" is not necessary
 //"use strict";
 let dbgload = window.dbgload
