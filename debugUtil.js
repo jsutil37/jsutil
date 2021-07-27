@@ -56,16 +56,25 @@ globalThis.stringBetween = function (/** @type {string} */ s, /** @type {string 
 	return s.substr(0, i)
 }
 
-globalThis.assert =
-	function (/** @type {any} */ x, /** @type {string | null} */ errMsg) {
-		if (x) { return }
-		let s = (errMsg == null) ? 'assert failed' : "Assert Failed\n" + errMsg
-		debugger
-		a(s)
-		throw new Error(s)
+function assert(
+	/** @type {any} */ x,
+	/** @type {string | null | Function} */ errMsg) {
+	if (x) { return }
+	let s = (errMsg == null) ? 'assert failed' : "Assert Failed\n"
+	if (typeof (errMsg) === 'string') {
+		s += errMsg
+	} else if (errMsg != null) {
+		const fnVal = errMsg()
+		if (typeof (fnVal) === 'string') {
+			s += fnVal
+		}
 	}
+	debugger
+	a(s)
+	throw new Error(s)
+}
 
-const assert = globalThis.assert
+globalThis.assert = assert
 
 /** shortcut for alert*/
 globalThis.a = alert
