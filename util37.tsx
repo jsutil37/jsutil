@@ -2,8 +2,26 @@
 This file acts as a bridge between non-typescript jsutil code and typescript
 clients of jsutil
 
-Original location of this file:
+Original location of this file: https://github.com/jsutil37/jsutil/blob/master/util37.tsx
 
+license: MIT
+
+how to use:
+In index.html of the single-page app you can add code similar to the following:
+  <!--
+    typescript does not yet support importing es6 modules by their cdn urls,
+    see https://github.com/microsoft/TypeScript/issues/29854
+  So use a combination of global window variable and typescript interface implementation
+  using the global variable
+  -->
+  <script>
+    window.dontUseTitleAsPageHeading = true
+  </script>
+  <script type="module">
+    import * as jsutil37 from "https://jsutil37.github.io/jsutil/util.js"
+    globalThis.util37 = jsutil37
+  </script>
+... then COPY this file into your SPA and import this file 
 */
 
 export {
