@@ -24,45 +24,57 @@ In index.html of the single-page app you can add code similar to the following:
 ... then COPY this file into your SPA and import this file 
 */
 
-export {
-    htmlEncode, el, sendJsonRequest, nxtId, setGlobVar, areFrmInpsValid,
-    enableDisableChildInputCtrls
-}
+import { HTTPMethod } from 'http-method-enum';
 
-import { HTTPMethod } from 'http-method-enum'
+export {
+  htmlEncode,
+  el,
+  sendJsonRequest,
+  nxtId,
+  setGlobVar,
+  areFrmInpsValid,
+  enableDisableChildInputCtrls,
+  assert,
+};
 
 function util37() {
-    //@ts-ignore
-    return globalThis.util37
+  //@ts-ignore
+  return globalThis.util37;
 }
 
 function htmlEncode(s: string) {
-    return util37().htmlEncode(s) as string
+  return util37().htmlEncode(s) as string;
 }
 
 function el(id: string) {
-    return util37().el(id) as HTMLElement
+  return util37().el(id) as HTMLElement;
 }
 
 function nxtId() {
-    return util37().nxtId() as number
+  return util37().nxtId() as number;
 }
 
-async function sendJsonRequest(method: HTTPMethod, objForBody: any,
-    commonPartOfApiUrl: string, uniquePartOfApiUrl: string) {
-    /**
+async function sendJsonRequest(
+  method: HTTPMethod,
+  objForBody: any,
+  commonPartOfApiUrl: string,
+  uniquePartOfApiUrl: string
+) {
+  /**
      *        checkParams(params, ['method', 'objForBody','commonPartOfApiUrl',
                 'uniquePartOfApiUrl'])
      */
-    const params = {
-        method, objForBody, commonPartOfApiUrl, uniquePartOfApiUrl
-    }
-    return await util37().sendJsonRequest(params)
+  const params = {
+    method,
+    objForBody,
+    commonPartOfApiUrl,
+    uniquePartOfApiUrl,
+  };
+  return await util37().sendJsonRequest(params);
 }
 
 function setGlobVar(name: string, val: any) {
-    (window as { [key: string]: any })[name] = val;
-
+  (window as { [key: string]: any })[name] = val;
 }
 /*
 function bindAllFns(thisObj: any, fnList: string[]) {
@@ -70,10 +82,20 @@ function bindAllFns(thisObj: any, fnList: string[]) {
 }*/
 
 function areFrmInpsValid(frmSubmitBtn: HTMLButtonElement): boolean {
-    return util37().areFrmInpsValid(frmSubmitBtn)
+  return util37().areFrmInpsValid(frmSubmitBtn);
 }
 
 function enableDisableChildInputCtrls(
-    ctnrEl: HTMLFormElement, enableOrDisable: boolean): void {
-    util37().enableDisableChildInputCtrls(ctnrEl, enableOrDisable);
+  ctnrEl: HTMLFormElement,
+  enableOrDisable: boolean
+): void {
+  util37().enableDisableChildInputCtrls(ctnrEl, enableOrDisable);
+}
+
+/**
+ * a more intelligent version of assert() that should be more helpful for
+ * debugging
+ */
+function assert(condition: boolean): void {
+  util37().assert(condition);
 }
