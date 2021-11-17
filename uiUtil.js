@@ -64,3 +64,43 @@ function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
 	//The :input selector basically selects all form controls
 	$(ctnrEl).find(":input").prop("disabled", (!enableOrDisable))
 }
+
+// https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
+  export const openInPopupWindow = (url, title, w, h) => {
+    assert(w >= 0);
+    assert(h >= 0);
+    // Fixes dual-screen position                             Most browsers      Firefox
+    const dualScreenLeft =
+      window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const dualScreenTop =
+      window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+    const width = window.innerWidth
+      ? window.innerWidth
+      : document.documentElement.clientWidth
+      ? document.documentElement.clientWidth
+      : screen.width;
+    const height = window.innerHeight
+      ? window.innerHeight
+      : document.documentElement.clientHeight
+      ? document.documentElement.clientHeight
+      : screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+    assert(!isNaN(systemZoom));
+    assert(systemZoom > 0);
+    assert(!isNaN(dualScreenLeft));
+    const left = (width - w) / 2 / systemZoom + dualScreenLeft;
+    assert(!isNaN(left));
+    const top = (height - h) / 2 / systemZoom + dualScreenTop;
+    const windowOpenOptions = `
+        scrollbars=yes,
+        width=${w / systemZoom},
+        height=${h / systemZoom},
+        top=${top},
+        left=${left}
+        `;
+    //alert("windowOpenOptions=" + windowOpenOptions);
+    const newWindow = window.open(url, title, windowOpenOptions);
+    if (window.focus) newWindow.focus();
+  };
