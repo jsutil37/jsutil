@@ -158,7 +158,7 @@ window.dontShowPathInTitle = window.dontShowPathInTitle || false
 
 window.autoTitlePageFromUrl =
 	function autoTitlePageFromUrl() {
-		if (document.title != '') { return }
+		if (!['','auto-generated'].includes(document.title)) { return }
 		let url = window.location.href
 		url = url.replaceAll('.github.io', '')
 		url = url.replaceAll('/index.html', '')
