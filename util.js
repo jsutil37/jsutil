@@ -121,7 +121,7 @@ window.dontShowGoToParentPageLink = window.dontShowGoToParentPageLink || false
 window.useTitleAsPageHeading =
 	function useTitleAsPageHeading() {
 		let d = document
-		if (d.title == '') { return }
+		if (['','auto-generated'].includes(d.title)) { return }
 		let heading = d.createElement('p')
 		heading.innerText = d.title
 		heading.style.fontSize = 'large'
