@@ -7,7 +7,7 @@
 let dbgload = window.dbgload
 dbgload && console.log('Loaded '+scriptPath())
 
-export {sendAndReceiveJson, sendJsonRequest}
+export {sendAndReceiveJson, sendJsonRequest, getTextAtUrl}
 /*
 Functions made globally available (attached to the global 'window' object):
 
