@@ -1,0 +1,15 @@
+<script type="module">
+import {getTextAtUrl} from 'https://jsutil37.github.io/jsutil/util.js'
+
+  async function main() {
+    const url = 'https://github.com/jsutil37'
+    let txt
+	  try{txt = await getTextAtUrl(url)}catch(e){throw e}
+    el('renderAreaDiv').innerHTML = txt
+  }
+  
+  void main()
+  
+</script>
+<div>Below is rendered content:</div>
+<div id="renderAreaDiv"></div>
