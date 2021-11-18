@@ -437,8 +437,8 @@ function loadWidgetContent_inner(templateClass, container)
 		document.body.outerHTML.split('appdescdesc').length)
 }
 
-window.getTextAtUrl =
-async function (url)
+
+async function getTextAtUrl(url)
 {
 	//alert('getTextAtUrl(): Entry. window.dbgGetTextAtUrl='+dbgGetTextAtUrl);
 	let dbg = false || window.dbgGetTextAtUrl;
@@ -486,6 +486,7 @@ async function (url)
 		}
 	)
 }
+window.getTextAtUrl = getTextAtUrl
 
 async function loadScriptFromTextAtUrl2(
 	url, integrity, crossOrigin, resourceType)
