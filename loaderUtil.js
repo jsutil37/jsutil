@@ -43,10 +43,11 @@ dbgload && console.log('before util import')
 import './util.js'
 dbgload && console.log('after util import')
 
-function exportToWindow(fn){window[fn.name]=fn}
-exportToWindow(exportToWindow)
-window.exportToWnd = exportToWindow
-window.expToWnd = exportToWnd
+function mkFnGlobal(fn){globalThis[fn.name]=fn}
+mkFnGlobal(mkFnGlobal)
+globalThis.exportToWindow = mkFnGlobal
+window.exportToWnd = mkFnGlobal
+window.expToWnd = mkFnGlobal
 
 window.getFullUrlOfUrlXThatIsRelativeToUrlY =
 function(x,y){return new URL(x,y).href}
