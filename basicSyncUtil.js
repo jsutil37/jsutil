@@ -79,6 +79,7 @@ globalThis.waitForSymbolsAndThenRun =
 				symNames[0], sleeptime, timeout
 			)
 	}
+globalThis.waitForSymbols = waitForSymbolsAndThenRun
 
 globalThis.waitForFnAndThenRunIt = function (s, args, timeoutInMilliSec) {
 	waitForSymbol(async function () {
