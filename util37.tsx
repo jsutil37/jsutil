@@ -35,6 +35,7 @@ export {
   areFrmInpsValid,
   enableDisableChildInputCtrls,
   assert,
+  getTextAtUrl
 };
 
 function util37() {
@@ -98,4 +99,8 @@ function enableDisableChildInputCtrls(
  */
 function assert(condition: boolean): void {
   util37().assert(condition);
+}
+
+async function getTextAtUrl(url: string): string {
+  return await util37().getTextAtUrl(url);
 }
