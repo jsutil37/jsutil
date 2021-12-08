@@ -101,6 +101,6 @@ function assert(condition: boolean): void {
   util37().assert(condition);
 }
 
-async function getTextAtUrl(url: string): string {
+async function getTextAtUrl(url: string): Promise<string> {
   return await util37().getTextAtUrl(url);
 }
