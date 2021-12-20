@@ -292,4 +292,12 @@ export function preventCircularJson(source, encounteredObjects, path) {
     	return retVal;
 }
 
+/**
+	like JSON.stringify() but handles circular references. Useful for debugging.
+	See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify for parameter
+*/
+export function safeJsonStringify(object o, replacer, space) {
+	return JSON.stringify(preventCircularJson(o),replacer,space)
+}
+
 dbgload && console.log('reached end')
