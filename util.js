@@ -4,7 +4,7 @@
 //Github repository: https://github.com/jsutil37/jsutil
 
 //Import this file as an ES6 module.
-//Once this file is run, it also exposes itself as window.u
+//Once this file is run, it also exposes itself as window.jsutil37_jsutil and also window.u (deprecated) 
 //TODO: Get rid of all 'window.' stuff and be a good citizen following es6 module explicit exports and imports
 
 //Always use the latest version of jquery and hope for the best
