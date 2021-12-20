@@ -247,4 +247,49 @@ globalThis.scriptPath = function scriptPath() {
 	}
 }
 
+const primitiveTypes = ['string', 'number', 'bigint', 'boolean', 'undefined', 'symbol']
+
+/**
+ * Traverses a javascript object, and deletes all circular and duplicate values.
+ * This can be used to print out circular objects in JSON format, for debugging purposes.
+ * @returns a clone of the object with circular values deleted
+ */
+export function preventCircularJson(source, encounteredObjects, path) {
+	//  primitive data types: string, number, bigint, boolean, undefined, symbol, and null
+	if(source == null) {
+		return null
+	}
+	const typeStr = typeof source
+	if(primitiveTypes.includes(typeStr)) {
+		return source
+	}
+
+	//init recursive values if this is the first call
+    	encounteredObjects= encounteredObjects || new Map();
+	path = path || ['$$$rootObj'];
+
+	const check = encounteredObjects.get(source) 
+	if(check != null) {
+		return check 
+	}
+	encounteredObjects.set(source, path.join("/"))
+	if(Array.isArray(source)) {	
+		let idx = -1
+		let newArr = []
+		for(const ele of source) {
+			idx++
+			newArr.push(preventCircularJson(ele,encounteredObjects,[...path].push(`[${idx}]`)))
+		}
+		return newArr
+	}
+	if(typeStr != 'object') {
+		return 'object of type '+type
+	}
+	let retVal = {}
+	for (const [key, value] of Object.entries(source)) {
+		retVal[key] = preventCircularJson(value, encounteredObjects, [...path].push(key))
+	}
+    	return retVal;
+}
+
 dbgload && console.log('reached end')
