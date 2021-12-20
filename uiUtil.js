@@ -105,9 +105,10 @@ function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
     if (window.focus) newWindow.focus();
   };
 
+
 // reference: https://stackoverflow.com/questions/7018337/find-closest-previous-element-jquery
-(function($) {
-    $.fn.closestPrior = function(selector) {
+
+export function closestPrevious(selector) {
         selector = selector.replace(/^\s+|\s+$/g, "");
         var combinator = selector.search(/[ +~>]|$/);
         var parent = selector.substr(0, combinator);
@@ -137,4 +138,9 @@ function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
         }
         return match;
     }
+
+export const closestPrior = closestPrevious;
+
+(function($) {
+    $.fn.closestPrior = closestPrior
 })(jQuery);
