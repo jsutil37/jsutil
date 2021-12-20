@@ -73,7 +73,8 @@ assert($("textarea").resizable != null)
 dbgload && console.log('here')
 import * as u from "./util.js"
 dbgload && console.log('end here')
-window.u = u
+window.u = u // todo: deprecate this as very high chance of collision in global namespace
+window.jsutil37_jsutil = u // has negligible chance of colliding with anything in the global namespace
 
 //CSS is always loaded in the <head> tag
 //AFAIK there is no way to restrict css scope (or need to)
