@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /*
 This file acts as a bridge between non-typescript jsutil code and typescript
 clients of jsutil
@@ -11,17 +12,15 @@ In index.html of the single-page app you can add code similar to the following:
   <!--
     typescript does not yet support importing es6 modules by their cdn urls,
     see https://github.com/microsoft/TypeScript/issues/29854
-  So use a combination of global window variable and typescript interface implementation
-  using the global variable
+  So import the es6 module in the index.html as follows:
   -->
   <script>
     window.dontUseTitleAsPageHeading = true
   </script>
   <script type="module">
     import * as jsutil37 from "https://jsutil37.github.io/jsutil/util.js"
-    globalThis.util37 = jsutil37
   </script>
-... then COPY this file into your SPA and import this file 
+... then COPY this file into your SPA and import this file
 */
 
 import { HTTPMethod } from 'http-method-enum';
@@ -35,32 +34,60 @@ export {
   areFrmInpsValid,
   enableDisableChildInputCtrls,
   assert,
-  getTextAtUrl
+  getTextAtUrl,
+  awaitUtil37Import,
 };
-
-function util37() {
-  //@ts-ignore
-  return globalThis.util37;
+//reference: https://stackoverflow.com/questions/64195920/typescript-error-accessing-globalthis-property
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-var
+  var jsutil37_jsutil: any;
 }
 
-function htmlEncode(s: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function util37(): any {
+  //@ts-ignore
+  if (globalThis.jsutil37_jsutil == null) {
+    const errMsg = 'fatal error: globalThis.jsutil37_jsutil is null!!!';
+    alert(errMsg);
+    throw new Error(errMsg);
+  }
+  return globalThis.jsutil37_jsutil;
+}
+
+const sleep = (milliseconds: number) =>
+  new Promise((r) => setTimeout(r, milliseconds));
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function awaitUtil37Import(): Promise<any> {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    if (globalThis.jsutil37_jsutil != null) {
+      return globalThis.jsutil37_jsutil;
+    }
+    await sleep(400);
+  }
+}
+
+function htmlEncode(s: string): string {
   return util37().htmlEncode(s) as string;
 }
 
-function el(id: string) {
+function el(id: string): HTMLElement {
   return util37().el(id) as HTMLElement;
 }
 
-function nxtId() {
+function nxtId(): number {
   return util37().nxtId() as number;
 }
 
 async function sendJsonRequest(
   method: HTTPMethod,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   objForBody: any,
   commonPartOfApiUrl: string,
   uniquePartOfApiUrl: string
-) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> {
   /**
      *        checkParams(params, ['method', 'objForBody','commonPartOfApiUrl',
                 'uniquePartOfApiUrl'])
@@ -74,7 +101,11 @@ async function sendJsonRequest(
   return await util37().sendJsonRequest(params);
 }
 
-function setGlobVar(name: string, val: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+function setGlobVar(name: string, val: any): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as { [key: string]: any })[name] = val;
 }
 /*
@@ -103,4 +134,11 @@ function assert(condition: boolean): void {
 
 async function getTextAtUrl(url: string): Promise<string> {
   return await util37().getTextAtUrl(url);
+}
+
+export function closesPrevious(
+  ele: HTMLElement,
+  searchPattern: string
+): HTMLElement {
+  return util37().closesPrevious(ele, searchPattern);
 }
