@@ -136,9 +136,9 @@ async function getTextAtUrl(url: string): Promise<string> {
   return await util37().getTextAtUrl(url);
 }
 
-export function closesPrevious(
+export function closestPrevious(
   ele: HTMLElement,
   searchPattern: string
 ): HTMLElement {
-  return util37().closesPrevious(ele, searchPattern);
+  return util37().closestPrevious(ele, searchPattern);
 }
