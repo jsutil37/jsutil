@@ -266,8 +266,10 @@ export function preventCircularJson(source, encounteredObjects, path) {
 
 	//init recursive values if this is the first call
     	encounteredObjects= encounteredObjects || new Map();
+	assert(path == null || Array.isArray(path));
 	path = path || ['$$$rootObj'];
-
+	assert(path == null || Array.isArray(path));
+	
 	const check = encounteredObjects.get(source) 
 	if(check != null) {
 		return check 
