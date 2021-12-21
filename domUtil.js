@@ -522,47 +522,28 @@ window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByC
     return filteredEles;
   }
 
-// reference: https://stackoverflow.com/questions/7018337/find-closest-previous-element-jquery
-
-export function closestPrevious(el, selector) {
+/**
+ * @param selectors string that uses css syntax, see https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors 
+ */
+export function closestPrevious(el, selectors) {
 	function log(...args) {
 		console.log("closestPrevious(): ", ...args);
 	}
 	const p = globalThis.jsutil37_dbgClosestPrevious && log;
 	p('input el = ', el.outerHTML);
 	p('input selector = '+selector);
-        selector = selector.replace(/^\s+|\s+$/g, "");
-	p('now selector = ',selector);
-        var combinator = selector.search(/[ +~>]|$/);
-        var parent = selector.substr(0, combinator);
-	// p('now parent = ', parent);
-        var children = selector.substr(combinator);
-        var match = $();
-        while (el.length && !match.length) {
-            el = el.prev();
-		p('1. now el to check = ' , el.outerHTML);	
-            if (!el.length) {
-                var par = el.parent();
-                // Don't use the parent - you've already checked all of the previous 
-                // elements in this parent, move to its previous sibling, if any.
-                while (par.length && !par.prev().length) {
-                    par = par.parent();
-                }
-                el = par.prev();
-		p('2. now el to check = ' , el.outerHTML);	    
-                if (!el.length) {
-                    break;
-                }
-            }
-            if (el.is(parent) && el.find(children).length) {
-                match = el.find(children).last();
-            }
-            else if (el.find(selector).length) {
-                match = el.find(selector).last();
-            }
-        }
-	p('Now returning match ' + match.outerHTML);
-        return match;
+	let previous = el.previousSibling
+	if(previous == null) {
+		previous = el.parentElement;
+		if(previous == null) {
+			return null;
+		}
+	}
+	const findResult = previous.querySelector(selectors)
+	if(finfResult != null){
+	   return findResult;
+	}
+	return closestPrevious(previous, selectors);
     }
 
 export const closestPrior = closestPrevious;
