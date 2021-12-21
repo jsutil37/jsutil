@@ -525,14 +525,19 @@ window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByC
 // reference: https://stackoverflow.com/questions/7018337/find-closest-previous-element-jquery
 
 export function closestPrevious(el, selector) {
+	const p = globalThis.jsutil37_dbgClosestPrevious && (...args)=>console.log("closestPrevious: ", ...args);
+	p('input el = ', el.outerHTML);
+	p('input selector = '+selector);
         selector = selector.replace(/^\s+|\s+$/g, "");
+	p('now selector = ',selector);
         var combinator = selector.search(/[ +~>]|$/);
         var parent = selector.substr(0, combinator);
+	// p('now parent = ', parent);
         var children = selector.substr(combinator);
-        //var el = this;
         var match = $();
         while (el.length && !match.length) {
             el = el.prev();
+		p('1. now el to check = ' , el.outerHTML);	
             if (!el.length) {
                 var par = el.parent();
                 // Don't use the parent - you've already checked all of the previous 
@@ -541,6 +546,7 @@ export function closestPrevious(el, selector) {
                     par = par.parent();
                 }
                 el = par.prev();
+		p('2. now el to check = ' , el.outerHTML);	    
                 if (!el.length) {
                     break;
                 }
@@ -552,6 +558,7 @@ export function closestPrevious(el, selector) {
                 match = el.find(selector).last();
             }
         }
+	p('Now returning match ' + match.outerHTML);
         return match;
     }
 
