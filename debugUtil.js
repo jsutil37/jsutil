@@ -280,7 +280,9 @@ export function preventCircularJson(source, encounteredObjects, path) {
 		let newArr = []
 		for(const ele of source) {
 			idx++
-			newArr.push(preventCircularJson(ele,encounteredObjects,[...path].push(`[${idx}]`)))
+			const newPath = [...path]
+			newPath.push(`[${idx}]`)
+			newArr.push(preventCircularJson(ele,encounteredObjects,newPath))
 		}
 		return newArr
 	}
@@ -289,7 +291,9 @@ export function preventCircularJson(source, encounteredObjects, path) {
 	}
 	let retVal = {}
 	for (const [key, value] of Object.entries(source)) {
-		retVal[key] = preventCircularJson(value, encounteredObjects, [...path].push(key))
+		const newPath = [...path]
+		newPath.push(key)
+		retVal[key] = preventCircularJson(value, encounteredObjects, newPath)
 	}
     	return retVal;
 }
