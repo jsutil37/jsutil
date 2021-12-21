@@ -534,11 +534,14 @@ export function closestPrevious(el, selectors) {
 	p('input selector = '+selector);
 	let previous = el.previousSibling
 	if(previous == null) {
+		p('previous is null');
 		previous = el.parentElement;
 		if(previous == null) {
+			p('parent is also null');
 			return null;
 		}
 	}
+	p('previous = ', previous.outerHTML);
 	const findResult = previous.querySelector(selectors)
 	if(finfResult != null){
 	   return findResult;
