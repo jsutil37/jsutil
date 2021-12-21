@@ -287,7 +287,7 @@ export function preventCircularJson(source, encounteredObjects, path) {
 		return newArr
 	}
 	if(typeStr != 'object') {
-		return 'object of type '+type
+		return 'object of type '+typeStr
 	}
 	let retVal = {}
 	for (const [key, value] of Object.entries(source)) {
