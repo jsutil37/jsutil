@@ -106,41 +106,4 @@ function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
   };
 
 
-// reference: https://stackoverflow.com/questions/7018337/find-closest-previous-element-jquery
 
-export function closestPrevious(el, selector) {
-        selector = selector.replace(/^\s+|\s+$/g, "");
-        var combinator = selector.search(/[ +~>]|$/);
-        var parent = selector.substr(0, combinator);
-        var children = selector.substr(combinator);
-        //var el = this;
-        var match = $();
-        while (el.length && !match.length) {
-            el = el.prev();
-            if (!el.length) {
-                var par = el.parent();
-                // Don't use the parent - you've already checked all of the previous 
-                // elements in this parent, move to its previous sibling, if any.
-                while (par.length && !par.prev().length) {
-                    par = par.parent();
-                }
-                el = par.prev();
-                if (!el.length) {
-                    break;
-                }
-            }
-            if (el.is(parent) && el.find(children).length) {
-                match = el.find(children).last();
-            }
-            else if (el.find(selector).length) {
-                match = el.find(selector).last();
-            }
-        }
-        return match;
-    }
-
-export const closestPrior = closestPrevious;
-
-(function($) {
-    $.fn.closestPrior = function(selector){return closestPrior(this, selector);};
-})(jQuery);
