@@ -525,7 +525,10 @@ window.getElsByClsNm = function getElsByClsNm(nm){return document.getElementsByC
 // reference: https://stackoverflow.com/questions/7018337/find-closest-previous-element-jquery
 
 export function closestPrevious(el, selector) {
-	const p = globalThis.jsutil37_dbgClosestPrevious && (...args)=>console.log("closestPrevious: ", ...args);
+	function log(...args) {
+		console.log("closestPrevious(): ", ...args);
+	}
+	const p = globalThis.jsutil37_dbgClosestPrevious && log;
 	p('input el = ', el.outerHTML);
 	p('input selector = '+selector);
         selector = selector.replace(/^\s+|\s+$/g, "");
