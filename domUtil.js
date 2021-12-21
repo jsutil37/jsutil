@@ -543,7 +543,7 @@ export function closestPrevious(el, selectors) {
 	}
 	p('previous = ', previous.outerHTML);
 	const findResult = previous.querySelector(selectors)
-	if(finfResult != null){
+	if(findResult != null){
 	   return findResult;
 	}
 	return closestPrevious(previous, selectors);
