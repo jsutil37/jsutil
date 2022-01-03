@@ -247,7 +247,7 @@ globalThis.scriptPath = function scriptPath() {
 	}
 }
 
-const primitiveTypes = ['string', 'number', 'bigint', 'boolean', 'undefined', 'symbol']
+export const primitiveTypes = ['string', 'number', 'bigint', 'boolean', 'undefined', 'symbol']
 
 /**
  * Traverses a javascript object, and deletes all circular and duplicate values.
