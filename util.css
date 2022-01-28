@@ -41,4 +41,8 @@ input:read-only, textarea:read-only {
     background-color:#efefef;
 }
 
+/* fade the text of disabled controls so that they really look disabled */
+input:disabled, textarea:disabled {
+    background-color:#aaaaaa;
+}
 
