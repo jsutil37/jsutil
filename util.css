@@ -34,3 +34,11 @@ body {
 code {
 	background: WhiteSmoke;
 }
+
+
+/* by default, let read-only textboxes have a grey background: */
+input:read-only, textarea:read-only {
+    background-color:#efefef;
+}
+
+
