@@ -54,8 +54,9 @@ function util37(): any {
   return globalThis.jsutil37_jsutil;
 }
 
-const sleep = (milliseconds: number) =>
-  new Promise((r) => setTimeout(r, milliseconds));
+export async function sleep(milliseconds: number): Promise<unknown> {
+  return new Promise((r) => setTimeout(r, milliseconds));
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function awaitUtil37Import(): Promise<any> {
@@ -98,7 +99,8 @@ async function sendJsonRequest(
     commonPartOfApiUrl,
     uniquePartOfApiUrl,
   };
-  return await util37().sendJsonRequest(params);
+  //'await' in below if added, is called out as redundant by Sonarlint
+  return util37().sendJsonRequest(params);
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
@@ -108,10 +110,7 @@ function setGlobVar(name: string, val: any): void {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as { [key: string]: any })[name] = val;
 }
-/*
-function bindAllFns(thisObj: any, fnList: string[]) {
-    return util37().bindAllFns(thisObj, fnList)
-}*/
+export const setGlobalVar = setGlobVar;
 
 function areFrmInpsValid(frmSubmitBtn: HTMLButtonElement): boolean {
   return util37().areFrmInpsValid(frmSubmitBtn);
@@ -133,7 +132,8 @@ function assert(condition: boolean): void {
 }
 
 async function getTextAtUrl(url: string): Promise<string> {
-  return await util37().getTextAtUrl(url);
+  //'await' if added in line below, is called out as redundant by Sonarlint as this is a 'return' statement:
+  return util37().getTextAtUrl(url);
 }
 
 export function closestPrevious(
@@ -141,4 +141,25 @@ export function closestPrevious(
   searchPattern: string
 ): HTMLElement {
   return util37().closestPrevious(ele, searchPattern);
+}
+
+export function preventCircularJson(
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+  source: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  encounteredObjects: undefined | Map<string, any>,
+  path: string[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any {
+  return util37().preventCircularJson(source, encounteredObjects, path);
+}
+
+export function safeJsonStringify(
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+  value: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  replacer?: ((this: any, key: string, value: any) => any) | undefined,
+  space?: string | number | undefined
+): string {
+  return util37().safeJsonStringify(value, replacer, space);
 }
