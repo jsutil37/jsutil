@@ -163,3 +163,10 @@ export function safeJsonStringify(
 ): string {
   return util37().safeJsonStringify(value, replacer, space);
 }
+
+export async function submitForm(
+  submitButton: HTMLButtonElement,
+  clickHandlerFn: (submitButton: HTMLButtonElement) => void
+): Promise<void> {
+  return util37().submitForm(submitButton, clickHandlerFn);
+}
