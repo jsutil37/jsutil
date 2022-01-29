@@ -247,7 +247,7 @@ globalThis.scriptPath = function scriptPath() {
 	}
 }
 
-const primitiveTypes = ['string', 'number', 'bigint', 'boolean', 'undefined', 'symbol']
+export const primitiveTypes = ['string', 'number', 'bigint', 'boolean', 'undefined', 'symbol']
 
 /**
  * Traverses a javascript object, and deletes all circular and duplicate values.
@@ -266,8 +266,10 @@ export function preventCircularJson(source, encounteredObjects, path) {
 
 	//init recursive values if this is the first call
     	encounteredObjects= encounteredObjects || new Map();
+	assert(path == null || Array.isArray(path));
 	path = path || ['$$$rootObj'];
-
+	assert(path == null || Array.isArray(path));
+	
 	const check = encounteredObjects.get(source) 
 	if(check != null) {
 		return check 
@@ -278,16 +280,20 @@ export function preventCircularJson(source, encounteredObjects, path) {
 		let newArr = []
 		for(const ele of source) {
 			idx++
-			newArr.push(preventCircularJson(ele,encounteredObjects,[...path].push(`[${idx}]`)))
+			const newPath = [...path]
+			newPath.push(`[${idx}]`)
+			newArr.push(preventCircularJson(ele,encounteredObjects,newPath))
 		}
 		return newArr
 	}
 	if(typeStr != 'object') {
-		return 'object of type '+type
+		return 'object of type '+typeStr
 	}
 	let retVal = {}
 	for (const [key, value] of Object.entries(source)) {
-		retVal[key] = preventCircularJson(value, encounteredObjects, [...path].push(key))
+		const newPath = [...path]
+		newPath.push(key)
+		retVal[key] = preventCircularJson(value, encounteredObjects, newPath)
 	}
     	return retVal;
 }
