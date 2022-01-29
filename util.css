@@ -46,3 +46,9 @@ input:disabled, textarea:disabled {
     background-color:#aaaaaa;
 }
 
+/* We would like visible and bevelled form borders, with padded content: */
+form {
+    padding: '5px',
+    border: '5px groove',
+    borderRadius: '10px'
+}
