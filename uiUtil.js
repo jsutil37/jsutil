@@ -48,12 +48,27 @@ id="${id}btn" class="btn btn-primary" data-toggle="collapse" data-target="#${id}
  * true/false accordingly. IF valid, also disables the form's input controls
  * (they can be re-enabled once the server response is received)
  * @param {HTMLButtonElement} frmSubmitBtn
+ *
+ * TODO: deprecate this and make it private. Use submitForm() instead!
  */
 function areFrmInpsValid(frmSubmitBtn) {
 	const form = frmSubmitBtn.form
 	if ((!form.reportValidity())) { return false }
 	enableDisableChildInputCtrls(form, false)
 	return true
+}
+
+export async function submitForm(
+  submitButton,//: HTMLButtonElement,
+  clickHandlerFn,//: (submitButton: HTMLButtonElement) => void
+){//: Promise<void> {
+  if (areFrmInpsValid(submitButton)) {
+    try {
+      clickHandlerFn(submitButton);
+    } finally {
+      enableDisableChildInputCtrls(submitButton.form /*as HTMLFormElement*/, true);
+    }
+  }
 }
 
 /**
