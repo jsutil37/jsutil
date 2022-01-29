@@ -48,7 +48,7 @@ input:disabled, textarea:disabled {
 
 /* We would like visible and bevelled form borders, with padded content: */
 form {
-    padding: '5px',
-    border: '5px groove',
-    border-radius: '10px'
+    padding: 5px;
+    border: 5px groove;
+    border-radius: 10px;
 }
