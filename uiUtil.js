@@ -138,7 +138,7 @@ export function objToCollapsibleDivs(obj) {
 		}
 		return s+"</ul>";
 	}
-	return htmlEncode(obj);
+	return htmlEncode(""+obj);
 }
 
 
