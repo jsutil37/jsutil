@@ -124,19 +124,19 @@ export function objToCollapsibleDivs(obj) {
 	if(typeof obj == null) {
 		return "(null)";
 	}
-	if(typeof obj == "object") {
-		let s="";
-		for(const key in obj) {
-			s+= "<div data-title=\""+htmlEncode(key)+"\">\n" + objToCollapsibleDivs(obj[key]) + "\n</div>"
-		}
-		return s;
-	}
 	if(isArray(obj)) {
 		let s="<ul>\n";
 		for(const ele of obj) {
 			s+="<li>\n"+objToCollapsibleDivs(ele)+"\n</li>\n";
 		}
 		return s+"</ul>";
+	}
+	if(typeof obj == "object") {
+		let s="";
+		for(const key in obj) {
+			s+= "<div data-title=\""+htmlEncode(key)+"\">\n" + objToCollapsibleDivs(obj[key]) + "\n</div>"
+		}
+		return s;
 	}
 	return htmlEncode(""+obj);
 }
