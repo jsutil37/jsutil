@@ -1,6 +1,6 @@
 export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls}
 
-import {randEl,nxtId} from './util.js'
+import {randEl,nxtId,isArray} from './util.js'
 
 function randLightColor() {
 	let letters = 'BCDEF'.split(''), color = '#'
@@ -120,5 +120,25 @@ function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
     if (window.focus) newWindow.focus();
   };
 
+export function objToCollapsibleDivs(obj) {
+	if(typeof obj == null) {
+		return "(null)";
+	}
+	if(typeof obj == "object") {
+		let s="";
+		for(const key in json) {
+			s+= "<div data-title=\""+htmlEncode(key)+"\">\n" + objToCollapsibleDivs(obj[key]) + "\n</div>"
+		}
+		return s;
+	}
+	if(isArray(obj)) {
+		let s="<ul>\n";
+		for(const ele of json) {
+			s+="<li>\n"+objToCollapsibleDivs(ele)+"\n</li>\n";
+		}
+		return s+"</ul>";
+	}
+	return htmlEncode(json);
+}
 
 
