@@ -2,7 +2,7 @@
 <html lang="en">
 <!--
 BEGIN Do not remove this notice
-Copyright 2018-2021 jsutil37 Github user(s)
+Copyright 2018-2022 jsutil37 Github user(s)
 License location: https://github.com/jsutil37/jsutil/blob/master/LICENSE
 File location: https://github.com/jsutil37/jsutil/blob/master/test/ui/testLatestCollapsibleDiv.html
 Deployment location: https://jsutil37.github.io/jsutil/test/ui/testLatestCollapsibleDiv.html
@@ -10,7 +10,9 @@ END Do not remove this notice
 -->
 <head>
 	  <script type="module">
-		import 'https://jsutil37.github.io/jsutil/util.js'
+		import {el, objToCollapsibleDivs} from 'https://jsutil37.github.io/jsutil/util.js'
+		  const  o= {a:1,b:null,c:{d:1,e:"ddd\neee"},f:[1,"two","third\nvalue\n   here"]};
+		  el('div1').innerHTML = objToCollapsibleDivs(o);
     </script>
 </head>
 <body>
@@ -20,5 +22,8 @@ This is some description.
         This is some text in the subtitle
     </div>  
 </div>
+	<hr>
+	<div id="div1">
+		</div>
 </body>
 </html>
