@@ -6,6 +6,8 @@ dbgload && console.log('start')
 import './stringUtil.js'
 import './debugUtil.js'
 
+export const isArray = Array.isArray
+
 globalThis.deepClone =
 function(o)
 {
