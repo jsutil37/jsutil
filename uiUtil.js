@@ -138,7 +138,7 @@ export function objToCollapsibleDivs(obj) {
 		}
 		return s;
 	}
-	return htmlEncode(""+obj);
+	return "<span style=\"white-space: pre-wrap;\">"+htmlEncode(""+obj)+"</span>";
 }
 
 
