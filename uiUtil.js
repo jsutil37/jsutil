@@ -126,19 +126,19 @@ export function objToCollapsibleDivs(obj) {
 	}
 	if(typeof obj == "object") {
 		let s="";
-		for(const key in json) {
+		for(const key in obj) {
 			s+= "<div data-title=\""+htmlEncode(key)+"\">\n" + objToCollapsibleDivs(obj[key]) + "\n</div>"
 		}
 		return s;
 	}
 	if(isArray(obj)) {
 		let s="<ul>\n";
-		for(const ele of json) {
+		for(const ele of obj) {
 			s+="<li>\n"+objToCollapsibleDivs(ele)+"\n</li>\n";
 		}
 		return s+"</ul>";
 	}
-	return htmlEncode(json);
+	return htmlEncode(obj);
 }
 
 
