@@ -13,9 +13,9 @@ $(initCollapsibleDivs)
 export function initCollapsibleDivs() {
    const collapsibleDivs = document.querySelectorAll('[data-title]')
     //alert('test.length='+test.length)
-    for(const collapsibleDiv of collapsibleDivs) {
-	collapsibleDiv.removeAttribute("data-title");	    
+    for(const collapsibleDiv of collapsibleDivs) {	    
       initCollapsibleDiv(collapsibleDiv)
+	    collapsibleDiv.removeAttribute("data-title");
     }
 }
 
