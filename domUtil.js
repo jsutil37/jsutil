@@ -530,18 +530,18 @@ export function closestPrevious(el, selectors) {
 		console.log("closestPrevious(): ", ...args);
 	}
 	const p = globalThis.jsutil37_dbgClosestPrevious && log;
-	p('input el = ', el.outerHTML);
-	p('input selectors = '+selectors);
+	p?.('input el = ', el.outerHTML);
+	p?.('input selectors = '+selectors);
 	let previous = el.previousSibling
 	if(previous == null) {
-		p('previous is null');
+		p?.('previous is null');
 		previous = el.parentElement;
 		if(previous == null) {
 			p('parent is also null');
 			return null;
 		}
 	}
-	p('previous = ', previous.outerHTML);
+	p?.('previous = ', previous.outerHTML);
 	const findResult = previous.querySelector(selectors)
 	if(findResult != null){
 	   return findResult;
