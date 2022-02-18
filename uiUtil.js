@@ -10,10 +10,11 @@ function randLightColor() {
 
 $(initCollapsibleDivs)
 
-function initCollapsibleDivs() {
+export function initCollapsibleDivs() {
    const collapsibleDivs = document.querySelectorAll('[data-title]')
     //alert('test.length='+test.length)
     for(const collapsibleDiv of collapsibleDivs) {
+	collapsibleDiv.removeAttribute("data-title");	    
       initCollapsibleDiv(collapsibleDiv)
     }
 }
