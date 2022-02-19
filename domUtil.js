@@ -529,7 +529,7 @@ export function closestPrevious(el, selectors) {
 	function log(...args) {
 		console.log("closestPrevious(): ", ...args);
 	}
-	const p = globalThis.jsutil37_dbgClosestPrevious && log;
+	const p = globalThis.jsutil37_dbgClosestPrevious ? log : null;
 	p?.('input el = ', el.outerHTML);
 	p?.('input selectors = '+selectors);
 	let previous = el.previousSibling
