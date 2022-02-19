@@ -537,7 +537,7 @@ export function closestPrevious(el, selectors) {
 		p?.('previous is null');
 		previous = el.parentElement;
 		if(previous == null) {
-			p('parent is also null');
+			p?.('parent is also null');
 			return null;
 		}
 	}
