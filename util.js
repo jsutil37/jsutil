@@ -119,8 +119,11 @@ window.copyToClipboard =
 
 window.dontShowGoToParentPageLink = window.dontShowGoToParentPageLink || false
 
+window.dontShowPageHeadingAutomatically = window.dontShowPageHeadingAutomatically || false
+
 window.useTitleAsPageHeading =
 	function useTitleAsPageHeading() {
+		if(dontShowPageHeadingAutomatically) { return }
 		let d = document
 		if (['','auto-generated'].includes(d.title)) { return }
 		let heading = d.createElement('p')
