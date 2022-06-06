@@ -1,6 +1,4 @@
-export { waitToRun, sleep }
-
-var fncallIdCtr = 0
+export async function sleep(ms) {await new Promise(resolve => setTimeout(resolve, ms));}
 
 /**
  * Periodically checks whether the specified 'condition function' is true, at an
@@ -10,7 +8,7 @@ var fncallIdCtr = 0
  * internal one, not to be specified by the user sleeptime and timeout are
  * optional parameters and default to 200 ms and 3 seconds respectively.
  */
-function waitToRun(fn, conditionfn, sleeptime, timeout, timeoutsofar) {
+export function waitToRun(fn, conditionfn, sleeptime, timeout, timeoutsofar) {
 	let dbg = false
 	fncallIdCtr++
 	let fncallId = fncallIdCtr
@@ -43,8 +41,9 @@ function waitToRun(fn, conditionfn, sleeptime, timeout, timeoutsofar) {
 			sleeptime
 		)
 }
-
 globalThis.waitToRun = waitToRun
+
+var fncallIdCtr = 0
 
 globalThis.waitUntilSymbolAppearsAndThenRun =
 	function (fn, symName, sleeptime, timeout) {
@@ -87,4 +86,4 @@ globalThis.waitForFnAndThenRunIt = function (s, args, timeoutInMilliSec) {
 	}, s, 200, timeoutInMilliSec)
 }
 
-export async function sleep(ms) {await new Promise(resolve => setTimeout(resolve, ms));}
+
