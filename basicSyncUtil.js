@@ -1,4 +1,4 @@
-export { waitToRun }
+export { waitToRun, sleep }
 
 var fncallIdCtr = 0
 
@@ -86,3 +86,5 @@ globalThis.waitForFnAndThenRunIt = function (s, args, timeoutInMilliSec) {
 		try { await globalThis[s](args) } catch (e) { throw e }
 	}, s, 200, timeoutInMilliSec)
 }
+
+export async function sleep(ms) {await new Promise(resolve => setTimeout(resolve, ms));}
