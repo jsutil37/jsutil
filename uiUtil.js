@@ -1,4 +1,4 @@
-export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP, logDivHtml, appendLogDiv, createOrUpdateDiv}
+export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP, logDivHtml, appendLogDiv, createOrUpdateDiv, createOrUpdateSpan}
 
 import {randEl,nxtId,isArray,el, appendHtml} from './util.js'
 
