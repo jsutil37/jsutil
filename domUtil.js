@@ -280,7 +280,7 @@ function appendHtmlStrToBody(html, url, doc)
 		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
 	*/
 }
-export const appendHtml = window.appendHtmlTxtToBody = window.appendHtmlStrToBody = appendHtmlStrToBody;
+/*export*/ const appendHtml = window.appendHtmlTxtToBody = window.appendHtmlStrToBody = appendHtmlStrToBody;
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
 //http://plnkr.co/edit/MMegiu?p=preview
