@@ -1,4 +1,4 @@
-export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP, logDivHtml, appendLogDiv}
+export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP, logDivHtml, appendLogDiv, createOrUpdateDiv}
 
 import {randEl,nxtId,isArray,el, appendHtml} from './util.js'
 
@@ -173,4 +173,13 @@ function logDivHtml(id) {
 function appendLogDiv(id) {
 	appendHtml(logDivHtml(id));
 	configP(id);
+}
+
+function createOrUpdateDiv(divId, divText) {
+	const div = el(divId)
+	if(div==null) {
+		appendHtml(/*html*/`<div id=${divId}></div>`);
+		div = el(divId);
+	}
+	div.innerText = divId+':\n'+divText;
 }
