@@ -176,7 +176,8 @@ function appendLogDiv(id) {
 }
 
 function createOrUpdateDiv(divId, divText) {
-	const div = el(divId)
+	const el = document.getElementById;
+	let div = el(divId)
 	if(div==null) {
 		appendHtml(/*html*/`<div id=${divId}></div>`);
 		div = el(divId);
@@ -185,7 +186,8 @@ function createOrUpdateDiv(divId, divText) {
 }
 
 function createOrUpdateSpan(spanId, spanText) {
-	const span = el(spanId)
+	const el = document.getElementById;
+	let span = el(spanId)
 	if(span==null) {
 		appendHtml(/*html*/`<span id=${spanId}></span>`);
 		span = el(spanId);
