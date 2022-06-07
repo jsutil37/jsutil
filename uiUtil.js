@@ -190,5 +190,5 @@ function createOrUpdateSpan(spanId, spanText) {
 		appendHtml(/*html*/`<span id=${spanId}></span>`);
 		span = el(spanId);
 	}
-	span.innerText = spanId+':\n'+spanText;
+	span.innerText = spanId+': '+spanText;
 }
