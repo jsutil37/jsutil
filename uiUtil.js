@@ -183,3 +183,12 @@ function createOrUpdateDiv(divId, divText) {
 	}
 	div.innerText = divId+':\n'+divText;
 }
+
+function createOrUpdateSpan(spanId, spanText) {
+	const span = el(spanId)
+	if(span==null) {
+		appendHtml(/*html*/`<span id=${spanId}></span>`);
+		span = el(spanId);
+	}
+	span.innerText = spanId+':\n'+spanText;
+}
