@@ -9,7 +9,7 @@ File location: https://github.com/jsutil37/jsutil/blob/master/domUtil.js
 Deployment location: https://jsutil37.github.io/jsutil/domUtil.js
 END Do not remove this notice
 */
-export {htmlEncode,el, getElementsIncludingSelfByTextContent, appendHtmlStrToBody}
+export {htmlEncode,el, getElementsIncludingSelfByTextContent, appendHtmlStrToBody, appendHtml}
 
 let dbgload = window.dbgload
 dbgload && console.log('start')
@@ -280,7 +280,7 @@ function appendHtmlStrToBody(html, url, doc)
 		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
 	*/
 }
-window.appendHtmlTxtToBody = window.appendHtmlStrToBody = appendHtmlStrToBody;
+export const appendHtml = window.appendHtmlTxtToBody = window.appendHtmlStrToBody = appendHtmlStrToBody;
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
 //http://plnkr.co/edit/MMegiu?p=preview
