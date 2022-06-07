@@ -1,6 +1,6 @@
-export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls}
+export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP}
 
-import {randEl,nxtId,isArray} from './util.js'
+import {randEl,nxtId,isArray,el} from './util.js'
 
 function randLightColor() {
 	let letters = 'BCDEF'.split(''), color = '#'
@@ -142,4 +142,17 @@ export function objToCollapsibleDivs(obj) {
 	return "<span style=\"white-space: pre-wrap;\">"+htmlEncode(""+obj)+"</span>";
 }
 
+function p(s) {
+	s = new Date() + ": " + s;
+	//assert(loggingDivId != null);
+	const oldText = loggingDivId.innerText ?? "";
+	const newText = oldText + s + "\n";
+	loggingDivId.innerText = newText;
+	console.log(s);
+}
 
+function configP(loggingDivId) {
+	loggingDiv = el(loggingDivId)
+}
+
+let loggingDiv;
