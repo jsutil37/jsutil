@@ -187,7 +187,8 @@ function createOrUpdateDiv(divId, divText) {
 function createOrUpdateSpan(spanId, spanText) {
 	let span = document.getElementById(spanId)
 	if(span==null) {
-		appendHtml(/*html*/`<span id=${spanId} style="padding:5px;background:${randLightColor()}"></span>`);
+		//w/o inline-block, padding overlaps with div on previous row etc. see https://stackoverflow.com/a/6078087/15814452
+		appendHtml(/*html*/`<span id=${spanId} style="display:inline-block;padding:5px;background:${randLightColor()}"></span>`);
 		span = el(spanId);
 	}
 	span.innerText = spanId+': '+spanText;
