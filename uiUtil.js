@@ -187,7 +187,7 @@ function createOrUpdateDiv(divId, divText) {
 function createOrUpdateSpan(spanId, spanText) {
 	let span = document.getElementById(spanId)
 	if(span==null) {
-		appendHtml(/*html*/`<span id=${spanId}></span>`);
+		appendHtml(/*html*/`<span id=${spanId} style="padding:5px;background:${randLightColor()}"></span>`);
 		span = el(spanId);
 	}
 	span.innerText = spanId+': '+spanText;
