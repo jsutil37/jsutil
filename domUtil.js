@@ -3,13 +3,13 @@ DOM (document object model) utils
 
  
 BEGIN Do not remove this notice
-Copyright 2018-20 jsutil37 Github user(s)
+Copyright 2018-22 jsutil37 Github user(s)
 License location: https://github.com/jsutil37/jsutil/blob/master/LICENSE
 File location: https://github.com/jsutil37/jsutil/blob/master/domUtil.js
 Deployment location: https://jsutil37.github.io/jsutil/domUtil.js
 END Do not remove this notice
 */
-export {htmlEncode,el, getElementsIncludingSelfByTextContent}
+export {htmlEncode,el, getElementsIncludingSelfByTextContent, appendHtmlStrToBody}
 
 let dbgload = window.dbgload
 dbgload && console.log('start')
@@ -242,10 +242,9 @@ function (el,nodesMadeVisible)
 
 ///url: url from which the html was imported. The html will be changed so that 
 ///relative links are made absolute w.r.t. this url.
-window.appendHtmlTxtToBody =
-function(html, url, doc)
+function appendHtmlStrToBody(html, url, doc)
 {
-	let dbg = false
+	const dbg = false
 	dbg && console.log('appendHtmlTxtToBody: Entry. url=\''+url+'\'')
 
 	if(doc == null){doc = document}
@@ -281,6 +280,7 @@ function(html, url, doc)
 		"> in doc.body.innerHTML = " + doc.body.innerHTML.indexOf("<span id=\"appdescdesc\""))
 	*/
 }
+window.appendHtmlTxtToBody = window.appendHtmlStrToBody = appendHtmlStrToBody;
 
 //See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
 //http://plnkr.co/edit/MMegiu?p=preview
