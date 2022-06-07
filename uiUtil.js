@@ -143,11 +143,16 @@ export function objToCollapsibleDivs(obj) {
 }
 
 function p(s) {
-	s = new Date() + ": " + s;
-	//assert(loggingDivId != null);
-	const oldText = loggingDivId.innerText ?? "";
-	const newText = oldText + s + "\n";
-	loggingDivId.innerText = newText;
+	s = new Date() + ": " + s + "\n";
+	//assert(loggingDiv != null);
+	try{
+		loggingDiv.innerText += s;
+	} catch(e) {
+		if(loggingDiv.innerText != null) {
+			throw e
+		}
+		loggingDiv.innerText = s;
+	}
 	console.log(s);
 }
 
