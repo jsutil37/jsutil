@@ -157,6 +157,9 @@ function p(s) {
 }
 
 function configP(loggingDivId) {
+	if(loggingDivId==null) {
+		loggingDivId = 'logDiv';
+	}
 	loggingDiv = el(loggingDivId)
 }
 
