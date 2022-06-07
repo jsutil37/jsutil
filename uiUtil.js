@@ -1,6 +1,6 @@
-export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP}
+export {randLightColor, areFrmInpsValid, enableDisableChildInputCtrls, p, configP, logDivHtml, appendLogDiv}
 
-import {randEl,nxtId,isArray,el} from './util.js'
+import {randEl,nxtId,isArray,el, appendHtml} from './util.js'
 
 function randLightColor() {
 	let letters = 'BCDEF'.split(''), color = '#'
@@ -161,3 +161,12 @@ function configP(loggingDivId) {
 }
 
 let loggingDiv;
+
+function logDivHtml(id) {
+	if(id==null) {id = 'logDiv'}
+	return /*html*/ `<div id="${id}" style="background: gainsboro"></div>`
+}
+
+function appendLogDiv(id) {
+	appendHtml(logDivHtml(id));
+}
