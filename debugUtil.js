@@ -69,8 +69,8 @@ function assert(
 			s += fnVal
 		}
 	}
-	debugger
 	a(s)
+	debugger
 	throw new Error(s)
 }
 

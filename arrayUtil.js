@@ -1,27 +1,41 @@
-export { removeFirstEle }
+export { removeFirstEle };
 // TODO: convert all to (or at least add) non-prototype-changing forms
 
-import { assert } from './bothClientAndServerSideUtil.js'
+import { assert } from "./bothClientAndServerSideUtil.js";
 
-assert(Array.prototype.removeFirstEle == null)
-Array.prototype.removeFirstEle = function () { return this.shift() }
+const dbgLoad = globalThis["dbgload"];
+dbgLoad && console.log("loading arrayUtil.js");
+
+assert(
+  Array.prototype.removeFirstEle == null,
+  () =>
+    "oops! Instead Array.prototype.removeFirstEle is " +
+    Array.prototype.removeFirstEle
+);
+Array.prototype.removeFirstEle = function () {
+  return this.shift();
+};
 
 function removeFirstEle(arr) {
-	return arr.shift()
+  return arr.shift();
 }
 
-assert(Array.prototype.lastEle == null)
-Array.prototype.lastEle = function () { return this[this.length - 1] }
+assert(Array.prototype.lastEle == null);
+Array.prototype.lastEle = function () {
+  return this[this.length - 1];
+};
 
-assert(Array.prototype.removeLastEle == null)
-Array.prototype.removeLastEle = function () { return this.pop() }
+assert(Array.prototype.removeLastEle == null);
+Array.prototype.removeLastEle = function () {
+  return this.pop();
+};
 
-assert(Array.prototype.asyncForEach == null)
+assert(Array.prototype.asyncForEach == null);
 Array.prototype.asyncForEach = async function (fn) {
-	for (let i = 0; i < this.length; i++) {
-		await fn(this[i], i);
-	}
-}
+  for (let i = 0; i < this.length; i++) {
+    await fn(this[i], i);
+  }
+};
 
 /*
 const mapWithThrow = <T,U>(arr:T[],func:(arg0:T)=>U):U[] {
