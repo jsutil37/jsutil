@@ -1,4 +1,4 @@
-export { todo, assert }
+export { todo, assert, printAndReturn }
 
 let dbgload = globalThis.dbgload
 dbgload && console.log('start')
@@ -69,6 +69,7 @@ function assert(
 			s += fnVal
 		}
 	}
+	console.log(s);
 	a(s)
 	debugger
 	throw new Error(s)
@@ -305,5 +306,10 @@ export function preventCircularJson(source, encounteredObjects, path) {
 export function safeJsonStringify(o, replacer, space) {
 	return JSON.stringify(preventCircularJson(o),replacer,space)
 }
+
+const printAndReturn = (s, o) => {
+  console.log(s + ': ', o);
+  return o;
+};
 
 dbgload && console.log('reached end')

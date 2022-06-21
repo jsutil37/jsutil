@@ -1,10 +1,10 @@
-@import url('https://cdn.jsdelivr.net/npm/jquery.growl/stylesheets/jquery.growl.min.css');
+@import url("https://cdn.jsdelivr.net/npm/jquery.growl/stylesheets/jquery.growl.min.css");
 
 /*Somehow it seems that if bootstrap comes before jquery-us CSS, then on FireFox the textarea resize gripper is displayed at incorrect location!*/
-@import url('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/theme.css');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/theme.css");
 
 /*Unfortunately https://stackpath.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css points to an older version!!!*/
-@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
 
 /*Using JQuery UI resizable plugin, show resizing gripper for all textareas even for the browsers
 like IE that don't support this gripper
@@ -18,37 +18,44 @@ We are interested to use pre to avoid <BR> and &nbsp; etc.
 As far as the remaining things are concerned, they should be same...
 */
 pre {
-	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-	font-size: medium;
-	white-space: pre-wrap;       /* Since CSS 2.1 */
-	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-	white-space: -pre-wrap;      /* Opera 4-6 */
-	white-space: -o-pre-wrap;    /* Opera 7 */
-	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: medium;
+  white-space: pre-wrap; /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 body {
-	padding: 4px;	/*A waste of real estate perhaps, but certainly to counteract hardware errors hiding the edge pixels of the screen. */	
+  padding: 4px; /*A waste of real estate perhaps, but certainly to counteract hardware errors hiding the edge pixels of the screen. */
 }
 
 code {
-	background: WhiteSmoke;
+  background: WhiteSmoke;
 }
 
-
 /* by default, let read-only textboxes have a grey background: */
-input:read-only, textarea:read-only {
-    background-color:#efefef;
+input:read-only,
+textarea:read-only {
+  background-color: #efefef;
 }
 
 /* fade the text of disabled controls so that they really look disabled */
-input:disabled, textarea:disabled {
-    background-color:#aaaaaa;
+input:disabled,
+textarea:disabled {
+  background-color: #aaaaaa;
 }
 
 /* We would like visible and bevelled form borders, with padded content: */
 form {
-    padding: 5px;
-    border: 5px groove;
-    border-radius: 10px;
+  padding: 5px;
+  border: 5px groove;
+  border-radius: 10px;
+}
+
+/** collapsible div css class */
+.collapsibleDiv {
+  overflow-y: scroll;
+  max-height: 300px;
 }
