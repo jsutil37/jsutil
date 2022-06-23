@@ -215,22 +215,22 @@ function appendLogDiv(id) {
 
 export function createOrUpdateEl(id, initialHtml, updateFn) {
   let ele = document.getElementById(id);
-  if (ele == null) {
-    initialHtml =
-      leftOf(initialHtml, " ") + 'id="' + id + '" ' + rightOf(initialHtml, " ");
-    appendHtml(initialHtml);
-    const tryUpdate = () => {
-      ele = document.getElementById(id);
-      if (ele == null) {
-        setTimeout(tryUpdate, 100);
-        return;
-      }
-      updateFn(ele);
-    };
-    tryUpdate();
+  if (ele != null) {
+    updateFn(ele);
     return;
   }
-  updateFn(ele);
+  initialHtml =
+    leftOf(initialHtml, " ") + ' id="' + id + '" ' + rightOf(initialHtml, " ");
+  appendHtml(initialHtml);
+  const tryUpdate = () => {
+    ele = document.getElementById(id);
+    if (ele == null) {
+      setTimeout(tryUpdate, 100);
+      return;
+    }
+    updateFn(ele);
+  };
+  tryUpdate();
 }
 
 function createOrUpdateDiv(divId, divText) {

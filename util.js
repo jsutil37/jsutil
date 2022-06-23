@@ -61,14 +61,6 @@ $('head').prepend('<meta http-equiv="X-UA-Compatible" content="ie=edge">' +
 assert($("textarea").resizable != null)
 //Note: this is also needed by the jquery plugin blockUI
 
-//Guard against duplicate inclusion of the jquery imports by recording that 
-//they are imported:
-//TODO: can't remember how exactly this will help to avoid duplicate imports given that we are using 'import'
-// This might be reinventing the wheel; import might be taking care of this already?
-//checkAndRecordUrl('https://unpkg.com/jquery/dist/jquery.min.js')
-
-//checkAndRecordUrl("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
-
 //It has been experimentally validated that relative paths are relative to this file's folder:
 dbgload && console.log('here')
 import * as u from "./util.js"

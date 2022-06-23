@@ -1,7 +1,6 @@
 /*
 DOM (document object model) utils
 
- 
 BEGIN Do not remove this notice
 Copyright 2018-22 jsutil37 Github user(s)
 License location: https://github.com/jsutil37/jsutil/blob/master/LICENSE
@@ -253,7 +252,6 @@ function appendHtmlStrToBody(html, url, doc)
 	let docFragment = doc.createRange().createContextualFragment(html)
 	dbg && console.log('After parsing html...')
 	
-	//let dbghtml=''
 	let dbghtml='\''+html+'\''
 	dbg && console.log('parsed HTML but without urls made absolute='+dbghtml)
 	
