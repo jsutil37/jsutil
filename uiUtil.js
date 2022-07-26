@@ -8,6 +8,7 @@ export {
   appendLogDiv,
   createOrUpdateDiv,
   createOrUpdateSpan,
+  persist,
 };
 
 import {
@@ -179,15 +180,18 @@ export function objToCollapsibleDivs(obj) {
 }
 
 function p(s) {
-  s = new Date() + ": " + s + "\n";
-  //assert(loggingDiv != null);
-  try {
-    loggingDiv.innerText += s;
-  } catch (e) {
-    if (loggingDiv.innerText != null) {
-      throw e;
+  s = new Date() + ": " + s;
+  if (loggingDiv == null) {
+    s = "(no loggingDiv yet) " + s;
+  } else {
+    try {
+      loggingDiv.innerText += s + "\n";
+    } catch (e) {
+      if (loggingDiv.innerText != null) {
+        throw e;
+      }
+      loggingDiv.innerText = s + "\n";
     }
-    loggingDiv.innerText = s;
   }
   console.log(s);
 }
@@ -261,4 +265,15 @@ function createOrUpdateSpan(spanId, spanText) {
     span = el(spanId);
   }
   span.innerText = spanId + ": " + spanText;
+}
+
+function persist(textBoxOrTextAreaId) {
+  const textBoxOrArea = el(textBoxOrTextAreaId);
+  textBoxOrArea.value = localStorage.getItem(textBoxOrTextAreaId) ?? "";
+  textBoxOrArea.addEventListener("keyup", function (e) {
+    localStorage.setItem(textBoxOrTextAreaId, textBoxOrArea.value);
+    /*--console.log(
+      `Saving ${textBoxOrTextAreaId}, value=${textBoxOrArea.value}`
+    );*/
+  });
 }
