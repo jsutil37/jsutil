@@ -41,6 +41,9 @@ export function initCollapsibleDivs() {
   }
 }
 
+/**
+ * @param {Element} collapsibleDiv
+ */
 function initCollapsibleDiv(collapsibleDiv) {
   let id = collapsibleDiv.id;
   if (id == null || id == "") {
@@ -85,6 +88,10 @@ function areFrmInpsValid(frmSubmitBtn) {
   return true;
 }
 
+/**
+ * @param {HTMLButtonElement} submitButton
+ * @param {(arg0: any) => void} clickHandlerFn
+ */
 export async function submitForm(
   submitButton, //: HTMLButtonElement,
   clickHandlerFn //: (submitButton: HTMLButtonElement) => void
@@ -112,7 +119,12 @@ function enableDisableChildInputCtrls(ctnrEl, enableOrDisable) {
 }
 
 // https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
-export const openInPopupWindow = (url, title, w, h) => {
+export const openInPopupWindow = (
+  /** @type {string | URL | undefined} */ url,
+  /** @type {string | undefined} */ title,
+  /** @type {number} */ w,
+  /** @type {number} */ h
+) => {
   assert(w >= 0);
   assert(h >= 0);
   // Fixes dual-screen position                             Most browsers      Firefox
@@ -151,6 +163,9 @@ export const openInPopupWindow = (url, title, w, h) => {
   if (window.focus) newWindow.focus();
 };
 
+/**
+ * @param {string} obj
+ */
 export function objToCollapsibleDivs(obj) {
   if (typeof obj == null) {
     return "(null)";
@@ -179,10 +194,14 @@ export function objToCollapsibleDivs(obj) {
   );
 }
 
-function p(s) {
-  s = new Date() + ": " + s;
+/**
+ * @param {any[]} args
+ */
+function p(...args) {
+  let prefix = new Date() + ": ";
+  let s = prefix + args.map((arg) => arg.toString()).join(" ");
   if (loggingDiv == null) {
-    s = "(no loggingDiv yet) " + s;
+    prefix = "(no loggingDiv yet) " + prefix;
   } else {
     try {
       loggingDiv.innerText += s + "\n";
@@ -193,9 +212,12 @@ function p(s) {
       loggingDiv.innerText = s + "\n";
     }
   }
-  console.log(s);
+  console.log(prefix, ...args);
 }
 
+/**
+ * @param {string | null} loggingDivId
+ */
 function configP(loggingDivId) {
   if (loggingDivId == null) {
     loggingDivId = "logDiv";
@@ -205,6 +227,9 @@ function configP(loggingDivId) {
 
 let loggingDiv;
 
+/**
+ * @param {string | null} id
+ */
 function logDivHtml(id) {
   if (id == null) {
     id = "logDiv";
@@ -212,11 +237,19 @@ function logDivHtml(id) {
   return /*html*/ `<div id="${id}" style="background: gainsboro" class="collapsibleDiv"></div>`;
 }
 
+/**
+ * @param {undefined} [id]
+ */
 function appendLogDiv(id) {
   appendHtml(logDivHtml(id));
   configP(id);
 }
 
+/**
+ * @param {string} id
+ * @param {string} initialHtml
+ * @param {{ (ele: HTMLElement): void; }} updateFn
+ */
 export function createOrUpdateEl(id, initialHtml, updateFn) {
   let ele = document.getElementById(id);
   if (ele != null) {
@@ -237,6 +270,10 @@ export function createOrUpdateEl(id, initialHtml, updateFn) {
   tryUpdate();
 }
 
+/**
+ * @param {string} divId
+ * @param {any} divText
+ */
 function createOrUpdateDiv(divId, divText) {
   return createOrUpdateEl(
     divId,
@@ -255,6 +292,10 @@ function createOrUpdateDiv(divId, divText) {
   */
 }
 
+/**
+ * @param {string } spanId
+ * @param {string | number | undefined} spanText
+ */
 function createOrUpdateSpan(spanId, spanText) {
   let span = document.getElementById(spanId);
   if (span == null) {
@@ -267,6 +308,9 @@ function createOrUpdateSpan(spanId, spanText) {
   span.innerText = spanId + ": " + spanText;
 }
 
+/**
+ * @param {string} textBoxOrTextAreaId
+ */
 function persist(textBoxOrTextAreaId) {
   const textBoxOrArea = el(textBoxOrTextAreaId);
   textBoxOrArea.value = localStorage.getItem(textBoxOrTextAreaId) ?? "";
