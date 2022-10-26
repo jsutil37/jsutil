@@ -86,4 +86,11 @@ globalThis.waitForFnAndThenRunIt = function (s, args, timeoutInMilliSec) {
 	}, s, 200, timeoutInMilliSec)
 }
 
-
+let lastSleepTime = new Date().getTime();
+export async function sleepIfNotSleptRecently(milliseconds) {
+  const millisecondsElapsed = new Date().getTime() - lastSleepTime;
+  if (millisecondsElapsed >= 5000) {
+    await sleep(milliseconds);
+    lastSleepTime = new Date().getTime();
+  }
+}
