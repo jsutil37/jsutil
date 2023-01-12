@@ -207,6 +207,7 @@ globalThis.bigLog =
 function todo() {
 	debugger;
 	alert('TODO (open debugger to see the applicable line)');
+	debugger;
 	throw new Error('TODO');
 }
 
