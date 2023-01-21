@@ -44,9 +44,11 @@ window.el = el;
 window.getel = el;
 window.getEl = el;
 
-window.elVal = function elVal(id) {
+export function elVal(id) {
   return el(id).value;
 };
+
+window.elVal = elVal;
 
 window.setElVal = function setElVal(id, val) {
   el(id).value = val;
