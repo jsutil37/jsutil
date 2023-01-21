@@ -57,21 +57,20 @@ function ThirtyTwoBitBinaryStringToWholeInt(s) {
 }
 
 function stringToBinaryString(s) {
-	let retval = '';
+	let output = '';
 	for (let i = 0; i < s.length; i++) {
 		let charr = s.charAt(i);
-		let binn = charr.charCodeAt(0).toString(2);
-		assert(binn.length <= 8);
-		let numOfZeroesToPrefix = 8 - binn.length;
+		let byteAsBinaryString = charr.charCodeAt(0).toString(2);
+		assert(byteAsBinaryString.length <= 8);
+		let numOfZeroesToPrefix = 8 - byteAsBinaryString.length;
 		for (let j = 0; j < numOfZeroesToPrefix; j++) {
-			binn = '0' + binn;
+			byteAsBinaryString = '0' + byteAsBinaryString;
 		}
-		retval += binn;
+		output += byteAsBinaryString;
 	}
-	//alert('retval='+retval);
-	return retval;
+	return output;
 }
 
 function stringToBigInt(s) {
-	return BigInt('0b' + stringToBinaryString(s));
+	return BigInt('0b1' + stringToBinaryString(s));
 }
