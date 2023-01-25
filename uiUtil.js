@@ -216,7 +216,7 @@ function p(...args) {
 }
 
 /**
- * @param {string | null} loggingDivId
+ * @param {string | null|undefined} loggingDivId
  */
 function configP(loggingDivId) {
   if (loggingDivId == null) {
@@ -225,10 +225,13 @@ function configP(loggingDivId) {
   loggingDiv = el(loggingDivId);
 }
 
+/**
+ * @type {HTMLElement}
+*/
 let loggingDiv;
 
 /**
- * @param {string | null} id
+ * @param {string | null|undefined} id
  */
 function logDivHtml(id) {
   if (id == null) {
@@ -238,7 +241,7 @@ function logDivHtml(id) {
 }
 
 /**
- * @param {undefined} [id]
+ * @param {undefined|null|string} [id]
  */
 function appendLogDiv(id) {
   appendHtml(logDivHtml(id));
