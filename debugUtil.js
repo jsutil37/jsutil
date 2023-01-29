@@ -70,8 +70,9 @@ function assert(
 		}
 	}
 	console.log(s);
+	debugger;
 	a(s)
-	debugger
+	debugger;
 	throw new Error(s)
 }
 
