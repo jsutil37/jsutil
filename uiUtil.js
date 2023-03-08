@@ -19,6 +19,8 @@ import {
   appendHtml,
   leftOf,
   rightOf,
+  htmlEncode,
+  htmlToElement,
 } from "./util.js";
 
 function randLightColor() {
@@ -227,7 +229,7 @@ function configP(loggingDivId) {
 
 /**
  * @type {HTMLElement}
-*/
+ */
 let loggingDiv;
 
 /**
@@ -237,8 +239,39 @@ function logDivHtml(id) {
   if (id == null) {
     id = "logDiv";
   }
-  return /*html*/ `<div id="${id}" style="background: gainsboro" class="collapsibleDiv"></div>`;
+  // @ts-ignore
+  const currentScript = import.meta.url;
+  const jsFileLocation = currentScript.replace("uiUtil.js", ""); // the js folder path
+  return /*html*/ `
+  <div style="background:silver;display:flex;justify-content:flex-end;padding:3px">
+    <div>
+      <img width="25px"
+        src="${jsFileLocation}/ui/icons/copy-to-clipboard.svg"
+        alt="Copy"
+        style="color:black;"
+        onclick="doCopyFrom(`${id.replaceAll("'", "\\'")}`)"
+      />
+    </div>
+  </div>
+  <div id="${id}" style="background: gainsboro" class="collapsibleDiv"></div>`;
 }
+
+/**
+ * @param {any} id
+ */
+function doCopyFrom(id) {
+
+  const copyText = el(id).innerText;
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText);
+
+  // Alert the copied text
+  growl("Copied the text to clipboard");
+}
+
+//Otherwise the event handler for copy icon click won't be able to see this fn
+window.doCopyFrom = doCopyFrom;
 
 /**
  * @param {undefined|null|string} [id]
