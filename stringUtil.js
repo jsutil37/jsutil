@@ -159,7 +159,7 @@ String.prototype.leftOfLast = function leftOfLast(/** @type {any} */ delim) {
 
 globalThis.rightOfLast = function rightOfLast(
   /** @type {string} */ s,
-  /** @type {string | any[]} */ delim
+  /** @type {string } */ delim
 ) {
   if (delim == "") {
     throw new Error("delim cannot be a blank string!");
@@ -199,13 +199,13 @@ function isStr(o) {
 
 /**
  *  checks whether the specified string 's' matches the specified pattern 'pattern'
-	'pattern' is a string that is in my own weird pattern template. 
+	'pattern' is a string that is in my own weird pattern template.
 	It may contain *1, *2 etc. which matches 0 or more characters,
-	It may also contain ?1 ?2 etc. which match 1 and only 1 character. 
-   
+	It may also contain ?1 ?2 etc. which match 1 and only 1 character.
+
    @param {string} s
    @param {string|any[]} pattern
-   
+
    @returns {{ [x: string]: string; } | undefined } the variables'
 					instantiatations if `s` matches `pattern`, else
 					returns `undefined`
@@ -310,4 +310,84 @@ function parsePattern(pattern) {
   assert(numAccum == "");
   assert(accum == "");
   return rv;
+}
+
+/**
+ * @param {string} str
+ */
+export function isFiniteWholeNumber(str) {
+  var n = Math.floor(Number(str));
+  return n !== Infinity && String(n) === str && n >= 0;
+}
+
+/**
+ * @param {string} s
+ * @param {string} endingToken
+ * return {string}
+ */
+export function getJsonStringThatThisStringStartsWith(s, endingToken) {
+  assert(s.startsWith('"'));
+  const len = s.length;
+  for (let i = 1; i < len; i++) {
+    if (s.charAt(i) == '"') {
+      if (s.charAt(i - 1) != "\\") {
+        assert(s.substring(i + 1).startsWith(endingToken));
+        return JSON.parse(s.substring(0, i + 1));
+      }
+    }
+  }
+  assert(false);
+  return "";
+}
+
+/**
+ * @param {string} s
+ * @param {string} endingToken
+ * @return {number|string}
+ */
+export function getJsonFiniteWholeNumberOrStringThatThisStringStartsWith(
+  s,
+  endingToken
+) {
+  if (s.startsWith('"')) {
+    return getJsonStringThatThisStringStartsWith(s, endingToken);
+  }
+  return getFiniteWholeNumberThatThisStringStartsWith(s, endingToken);
+}
+
+/**
+ * @param {string} s
+ * @param {string} endingToken
+ * @return {number}
+ */
+export function getFiniteWholeNumberThatThisStringStartsWith(s, endingToken) {
+  const num = leftOf(s, endingToken);
+  assert(isFiniteWholeNumber(num));
+  return JSON.parse(num);
+}
+
+/**
+ * @typedef {object} ElementParsingCondition
+ * @property {string} delim
+ * @property {(s:string,delim:string)=>any} parsingFn
+ * @property {(parsingFnOutput:any)=>number} lenOfParsedStringFn
+ */
+
+/**
+ * @param {string} s
+ * @param {ElementParsingCondition[]} elementParsingConditions
+ * @return {any[]}
+ */
+export function parseFancyArray(s, elementParsingConditions) {
+  /** @type {any} */
+  const output = [];
+  for (const elementParsingCondition of elementParsingConditions) {
+    const { delim, parsingFn, lenOfParsedStringFn } = elementParsingCondition;
+    const ele = parsingFn(s, delim);
+    output.push(ele);
+    assert(s.substring(lenOfParsedStringFn(ele)).startsWith(delim));
+    s = s.substring(lenOfParsedStringFn(ele) + delim.length);
+  }
+  assert(s === "");
+  return output;
 }
