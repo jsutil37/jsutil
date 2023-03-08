@@ -43,4 +43,17 @@ function(fn)
 	let prevOnload = window.onload
 }
 
+/**
+ * @param {any} storageObject
+ * @param {string } storageAttribute
+ * @param {any} fn
+ */
+export function runOnlyOnce(storageObject, storageAttribute, fn) {
+  if (storageObject[storageAttribute] != null) {
+    return;
+  }
+  storageObject[storageAttribute] = true;
+  fn();
+}
+
 dbgload && console.log('reached end')
