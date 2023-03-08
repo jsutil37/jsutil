@@ -190,4 +190,8 @@ if (!dontUseTitleAsPageHeading) { useTitleAsPageHeading() }
 
 window.growl = function growl(msg) { $.growl.notice({ message: msg }) }
 
+export function getCurrentTimestamp () {
+  return Date.now()
+}
+
 dbgload && console.log('util.js loaded!!!')
