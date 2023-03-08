@@ -249,7 +249,7 @@ function logDivHtml(id) {
         src="${jsFileLocation}/ui/icons/copy-to-clipboard.svg"
         alt="Copy"
         style="color:black;"
-        onclick="doCopyFrom(`${id.replaceAll("'", "\\'")}`)"
+        onclick="doCopyFrom('${id.replaceAll("'", "\\'")}')"
       />
     </div>
   </div>
