@@ -251,6 +251,15 @@ function logDivHtml(id) {
         style="color:black;"
         onclick="doCopyFrom('${id.replaceAll("'", "\\'")}')"
       />
+      <img width="25px"
+      src="${jsFileLocation}/ui/icons/clear.svg"
+      alt="Cleat"
+      style="color:black;"
+      onclick="const el = document.getElementById('${id.replaceAll(
+        "'",
+        "\\'"
+      )}');el.innerText='';"
+    />
     </div>
   </div>
   <div id="${id}" style="background: gainsboro" class="collapsibleDiv"></div>`;
@@ -260,7 +269,6 @@ function logDivHtml(id) {
  * @param {any} id
  */
 function doCopyFrom(id) {
-
   const copyText = el(id).innerText;
 
   // Copy the text inside the text field
