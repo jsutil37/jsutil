@@ -26,6 +26,8 @@ function str(/** @type {any} */ s) {
 /** what legacy clients could still be using this? */
 globalThis.str = str;
 
+export const formattedStr = str;
+
 function rightOf(/** @type {string} */ s, /** @type {string } */ delim) {
   var i = s.indexOf(delim);
   if (i == -1) {
@@ -174,11 +176,14 @@ String.prototype.rightOfLast = function rightOfLast(/** @type {any} */ delim) {
   return globalThis.rightOfLast(this, delim);
 };
 
-globalThis.dosToUnix = function dosToUnix(
+export function dosToUnix(
   /** @type {{ replaceAll: (arg0: string, arg1: string) => any; }} */ s
 ) {
   return s.replaceAll("\r\n", "\n");
-};
+}
+export const dos2unix = dosToUnix;
+
+globalThis.dosToUnix = dosToUnix;
 globalThis.dos2Unix = dosToUnix;
 globalThis.dos2unix = dosToUnix;
 
