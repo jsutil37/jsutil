@@ -396,3 +396,17 @@ export function parseFancyArray(s, elementParsingConditions) {
   assert(s === "");
   return output;
 }
+
+export function simpleBackSlashEscape(s) {
+  let out = ""
+  let escaped = false
+  for (const ch of s) {
+      if (escaped || ch != "\\") {
+          out += ch
+          escaped = false
+      } else {
+          escaped = true
+      }
+  }
+  return out
+}
