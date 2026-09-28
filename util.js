@@ -7,12 +7,12 @@
 //Once this file is run, it also exposes itself as window.jsutil37_jsutil and also window.u (deprecated) 
 //TODO: Get rid of all 'window.' stuff and be a good citizen following es6 module explicit exports and imports
 
-//Always use the latest version of jquery and hope for the best
-export * from 'https://unpkg.com/jquery/dist/jquery.min.js'
+//It is recommended to freeze the versions to prevent surprises.
+export * from 'https://code.jquery.com/jquery-4.0.0.min.js'
 const $ = globalThis.$
 export { $ }
 
-export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+export * from "https://code.jquery.com/ui/1.14.2/jquery-ui.min.js"
 export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
 
 //Put basic functions and shortcuts at the top, and those that depend on them,  further below:
