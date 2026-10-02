@@ -50,7 +50,7 @@ dbgload && console.log(scriptPath() + ': loading started. This log message is ex
 
 //Below bundle includes Popper, but not jquery, and solves the issue of the runtime error of 'Popper not found':
 //Also note that https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.bundle.min.js points to an old version :(
-export * from "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js";
+export * from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js";
 
 //The bootstrap css is included via util.css
 
