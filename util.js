@@ -27,7 +27,7 @@ export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3
 export * from './bothClientAndServerSideUtil.js'
 
 //Very old and incompatible with latest jquery
-//export * from './blockUiUtil.js'
+export * from './blockUiUtil.js'
 
 export * from './domUtil.js'
 export * from './loaderUtil.js'
