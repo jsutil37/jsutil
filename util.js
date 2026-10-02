@@ -12,10 +12,12 @@ export * from 'https://code.jquery.com/jquery-4.0.0.min.js'
 const $ = globalThis.$
 export { $ }
 
-// Legacy function definition thta was removed in latest jquery
-jQuery.isFunction = function(obj) {
-    return typeof obj === "function";
+$.isFunction = function(obj) {
+return typeof obj === "function";
 };
+ 
+console.log('typeof $.isFunction: ',typeof $.isFunction);
+console.log('typeof jQuery.isFunction: ',typeof jQuery.isFunction);
 
 export * from "https://code.jquery.com/ui/1.14.2/jquery-ui.min.js"
 export * from "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
